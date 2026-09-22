@@ -191,7 +191,6 @@
     }
 
 
-
     .trento-hero-photo {
 
       position: absolute;
@@ -213,7 +212,6 @@
       opacity: .88;
 
     }
-
 
 
     .food-hero::before {
@@ -246,7 +244,6 @@
         );
 
     }
-
 
 
     .food-hero::after {
@@ -606,129 +603,6 @@
 
 
     /* ========================================
-       VICINO A ME
-    ======================================== */
-
-    .nearby-tools {
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: space-between;
-
-      gap: 16px;
-
-      flex-wrap: wrap;
-
-      margin:
-        27px 0 0;
-
-      padding:
-        13px 15px;
-
-      border-radius: 18px;
-
-      border:
-        1px solid
-        rgba(23,35,29,.09);
-
-      background:
-        rgba(255,253,248,.68);
-
-    }
-
-
-    .nearby-text {
-
-      min-width: 0;
-
-      color: #687069;
-
-      font-size: 12px;
-
-      line-height: 1.4;
-
-    }
-
-
-    .nearby-text strong {
-
-      display: block;
-
-      margin-bottom: 2px;
-
-      color: #173f32;
-
-      font-size: 12px;
-
-    }
-
-
-    .nearby-button {
-
-      flex: 0 0 auto;
-
-      min-height: 38px;
-
-      padding:
-        0 15px;
-
-      border: 0;
-
-      border-radius: 999px;
-
-      background: #173f32;
-
-      color: #fffdf8;
-
-      cursor: pointer;
-
-      font-family: inherit;
-
-      font-size: 11px;
-
-      font-weight: 800;
-
-      letter-spacing: .3px;
-
-      transition:
-        transform .2s ease,
-        background .2s ease;
-
-    }
-
-
-    .nearby-button:hover {
-
-      transform:
-        translateY(-1px);
-
-      background: #245b48;
-
-    }
-
-
-    .nearby-button:disabled {
-
-      cursor: wait;
-
-      opacity: .65;
-
-      transform: none;
-
-    }
-
-
-    .nearby-button.active {
-
-      background: #ef6a3a;
-
-    }
-
-
-
-    /* ========================================
        CRÉDITO FOTO
     ======================================== */
 
@@ -775,6 +649,301 @@
 
 
     /* ========================================
+       VICINO A ME · DESTAQUE
+    ======================================== */
+
+    .nearby-feature {
+
+      position: relative;
+
+      overflow: hidden;
+
+      display: grid;
+
+      grid-template-columns:
+        auto minmax(0, 1fr) auto;
+
+      align-items: center;
+
+      gap: 22px;
+
+      margin:
+        8px 0 38px;
+
+      padding:
+        24px 27px;
+
+      border-radius: 26px;
+
+      color: #fffdf8;
+
+      background:
+        linear-gradient(
+          120deg,
+          #173f32 0%,
+          #1b4939 58%,
+          #245b48 100%
+        );
+
+      box-shadow:
+        0 17px 42px
+        rgba(23,63,50,.16);
+
+      transition:
+        background .3s ease,
+        box-shadow .3s ease,
+        transform .3s ease;
+
+    }
+
+
+    .nearby-feature::before {
+
+      content: "";
+
+      position: absolute;
+
+      width: 230px;
+
+      height: 230px;
+
+      right: 14%;
+
+      top: -170px;
+
+      border-radius: 50%;
+
+      background:
+        rgba(242,193,78,.13);
+
+      pointer-events: none;
+
+    }
+
+
+    .nearby-feature::after {
+
+      content: "";
+
+      position: absolute;
+
+      width: 130px;
+
+      height: 130px;
+
+      left: -75px;
+
+      bottom: -85px;
+
+      border-radius: 50%;
+
+      border:
+        1px solid
+        rgba(255,255,255,.10);
+
+      pointer-events: none;
+
+    }
+
+
+    .nearby-feature.active {
+
+      background:
+        linear-gradient(
+          120deg,
+          #173f32 0%,
+          #205443 65%,
+          #28634f 100%
+        );
+
+      box-shadow:
+        0 19px 50px
+        rgba(23,63,50,.22);
+
+    }
+
+
+    .nearby-icon {
+
+      position: relative;
+
+      z-index: 2;
+
+      width: 58px;
+
+      height: 58px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      flex: 0 0 auto;
+
+      border-radius: 18px;
+
+      background:
+        rgba(255,255,255,.11);
+
+      border:
+        1px solid
+        rgba(255,255,255,.13);
+
+      font-size: 27px;
+
+    }
+
+
+    .nearby-content {
+
+      position: relative;
+
+      z-index: 2;
+
+      min-width: 0;
+
+    }
+
+
+    .nearby-eyebrow {
+
+      display: block;
+
+      margin-bottom: 4px;
+
+      color: #f2c14e;
+
+      font-size: 9px;
+
+      font-weight: 900;
+
+      letter-spacing: 1.7px;
+
+      text-transform: uppercase;
+
+    }
+
+
+    .nearby-title {
+
+      margin: 0;
+
+      color: #fffdf8;
+
+      font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+      font-size:
+        clamp(23px, 2.3vw, 31px);
+
+      line-height: 1.05;
+
+      letter-spacing: -.7px;
+
+    }
+
+
+    .nearby-text {
+
+      margin-top: 6px;
+
+      max-width: 590px;
+
+      color:
+        rgba(255,255,255,.72);
+
+      font-size: 12px;
+
+      line-height: 1.5;
+
+    }
+
+
+    .nearby-button {
+
+      position: relative;
+
+      z-index: 2;
+
+      flex: 0 0 auto;
+
+      min-height: 48px;
+
+      padding:
+        0 21px;
+
+      border:
+        1px solid
+        rgba(255,255,255,.18);
+
+      border-radius: 999px;
+
+      background: #f2c14e;
+
+      color: #17231d;
+
+      cursor: pointer;
+
+      font-family: inherit;
+
+      font-size: 10px;
+
+      font-weight: 900;
+
+      letter-spacing: .65px;
+
+      white-space: nowrap;
+
+      box-shadow:
+        0 8px 22px
+        rgba(0,0,0,.12);
+
+      transition:
+        transform .2s ease,
+        background .2s ease,
+        color .2s ease;
+
+    }
+
+
+    .nearby-button:hover {
+
+      transform:
+        translateY(-2px);
+
+      background: #f6cf6c;
+
+    }
+
+
+    .nearby-button:disabled {
+
+      cursor: wait;
+
+      opacity: .65;
+
+      transform: none;
+
+    }
+
+
+    .nearby-button.active {
+
+      background: #ef6a3a;
+
+      color: #fff;
+
+      border-color:
+        rgba(255,255,255,.12);
+
+    }
+
+
+
+    /* ========================================
        RESULTADOS
     ======================================== */
 
@@ -789,7 +958,7 @@
         center;
 
       margin:
-        42px 0 18px;
+        0 0 18px;
 
     }
 
@@ -995,7 +1164,6 @@
       z-index: 1;
 
     }
-
 
 
     .restaurant-photo {
@@ -1645,6 +1813,24 @@
       }
 
 
+      .nearby-feature {
+
+        grid-template-columns:
+          auto minmax(0, 1fr);
+
+      }
+
+
+      .nearby-button {
+
+        grid-column:
+          1 / -1;
+
+        width: 100%;
+
+      }
+
+
       .discovery-layout {
 
         grid-template-columns: 1fr;
@@ -1815,14 +2001,45 @@
       }
 
 
-      .nearby-tools {
+      .nearby-feature {
 
-        align-items: stretch;
+        grid-template-columns: 1fr;
+
+        gap: 13px;
+
+        padding:
+          21px 19px;
+
+        margin-bottom: 30px;
+
+        text-align: left;
+
+      }
+
+
+      .nearby-icon {
+
+        width: 49px;
+
+        height: 49px;
+
+        border-radius: 15px;
+
+        font-size: 23px;
+
+      }
+
+
+      .nearby-title {
+
+        font-size: 25px;
 
       }
 
 
       .nearby-button {
+
+        grid-column: auto;
 
         width: 100%;
 
@@ -1925,7 +2142,7 @@
 
 
     <!-- ========================================
-         HERO COM FOTO DE TRENTO
+         HERO
     ======================================== -->
 
     <section class="food-hero">
@@ -2063,38 +2280,6 @@
 
 
 
-      <!-- VICINO A ME -->
-
-      <div class="nearby-tools">
-
-        <div
-          class="nearby-text"
-          id="nearbyStatus"
-          aria-live="polite"
-        >
-
-          <strong>
-            📍 Vicino a me
-          </strong>
-
-          Attiva la posizione per vedere
-          i posti più vicini.
-
-        </div>
-
-
-        <button
-          class="nearby-button"
-          id="nearbyButton"
-          type="button"
-        >
-          USA LA MIA POSIZIONE
-        </button>
-
-      </div>
-
-
-
       <!-- CRÉDITO -->
 
       <a
@@ -2106,6 +2291,55 @@
         Foto: Matteo Ianeselli · Wikimedia Commons
       </a>
 
+
+    </section>
+
+
+
+    <!-- ========================================
+         VICINO A ME · DESTAQUE
+    ======================================== -->
+
+    <section
+      class="nearby-feature"
+      id="nearbyFeature"
+    >
+
+      <div class="nearby-icon">
+        📍
+      </div>
+
+
+      <div class="nearby-content">
+
+        <span class="nearby-eyebrow">
+          ORAVICINO · INTORNO A TE
+        </span>
+
+        <h2 class="nearby-title">
+          Cosa c'è vicino a me?
+        </h2>
+
+        <div
+          class="nearby-text"
+          id="nearbyStatus"
+          aria-live="polite"
+        >
+          Usa la tua posizione per trovare
+          i posti più vicini e ordinarli
+          automaticamente per distanza.
+        </div>
+
+      </div>
+
+
+      <button
+        class="nearby-button"
+        id="nearbyButton"
+        type="button"
+      >
+        USA LA MIA POSIZIONE
+      </button>
 
     </section>
 
@@ -2246,6 +2480,12 @@
     const nearbyStatus =
       document.getElementById(
         "nearbyStatus"
+      );
+
+
+    const nearbyFeature =
+      document.getElementById(
+        "nearbyFeature"
       );
 
 
@@ -2521,16 +2761,8 @@
         !navigator.geolocation
       ) {
 
-        nearbyStatus.innerHTML = `
-
-          <strong>
-            📍 Posizione non disponibile
-          </strong>
-
-          Il browser non supporta
-          la geolocalizzazione.
-
-        `;
+        nearbyStatus.textContent =
+          "Il browser non supporta la geolocalizzazione.";
 
         return;
 
@@ -2545,16 +2777,8 @@
         "LOCALIZZAZIONE…";
 
 
-      nearbyStatus.innerHTML = `
-
-        <strong>
-          📍 Sto cercando la tua posizione…
-        </strong>
-
-        Potrebbe essere richiesta
-        l'autorizzazione del browser.
-
-      `;
+      nearbyStatus.textContent =
+        "Sto cercando la tua posizione. Il browser potrebbe chiederti l'autorizzazione.";
 
 
       navigator.geolocation.getCurrentPosition(
@@ -2585,20 +2809,17 @@
           );
 
 
+          nearbyFeature.classList.add(
+            "active"
+          );
+
+
           nearbyButton.textContent =
             "POSIZIONE ATTIVA ✓";
 
 
-          nearbyStatus.innerHTML = `
-
-            <strong>
-              📍 Vicino a me attivo
-            </strong>
-
-            I risultati sono ordinati
-            dal più vicino.
-
-          `;
+          nearbyStatus.textContent =
+            "Posizione attiva. I risultati sono ordinati automaticamente dal più vicino.";
 
 
           mapBadge.textContent =
@@ -2686,7 +2907,7 @@
           ) {
 
             message =
-              "Permesso di localizzazione non concesso.";
+              "Permesso di localizzazione non concesso. Puoi abilitarlo nelle impostazioni del browser.";
 
           }
 
@@ -2706,20 +2927,13 @@
           ) {
 
             message =
-              "La richiesta della posizione è scaduta.";
+              "La richiesta della posizione è scaduta. Riprova.";
 
           }
 
 
-          nearbyStatus.innerHTML = `
-
-            <strong>
-              📍 Posizione non disponibile
-            </strong>
-
-            ${message}
-
-          `;
+          nearbyStatus.textContent =
+            message;
 
         },
 
