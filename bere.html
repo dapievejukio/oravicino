@@ -22,6 +22,14 @@
     href="style.css"
   >
 
+  <!-- METEO ORAVICINO -->
+
+  <link
+    rel="stylesheet"
+    href="meteo.css"
+  >
+
+
   <!-- LEAFLET -->
 
   <link
@@ -665,6 +673,372 @@
 
       backdrop-filter:
         blur(4px);
+
+    }
+
+
+
+    /* =====================================================
+       VICINO A ME
+    ===================================================== */
+
+    .nearby-feature {
+
+      position: relative;
+
+      overflow: hidden;
+
+      min-height: 118px;
+
+      margin:
+        0 0 36px;
+
+      padding:
+        24px 28px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content:
+        space-between;
+
+      gap: 28px;
+
+      border-radius: 28px;
+
+      color: #fff;
+
+      background:
+
+        radial-gradient(
+          circle at 80% -40%,
+          rgba(242,193,78,.17),
+          transparent 38%
+        ),
+
+        linear-gradient(
+          115deg,
+          #4f1c29 0%,
+          #6f2938 55%,
+          #7c3445 100%
+        );
+
+      box-shadow:
+        0 18px 45px
+        rgba(79,28,41,.16);
+
+    }
+
+
+    .nearby-feature::before {
+
+      content: "";
+
+      position: absolute;
+
+      width: 230px;
+
+      height: 230px;
+
+      right: 15%;
+
+      top: -165px;
+
+      border-radius: 50%;
+
+      background:
+        rgba(255,255,255,.045);
+
+      pointer-events: none;
+
+    }
+
+
+    .nearby-feature::after {
+
+      content: "";
+
+      position: absolute;
+
+      width: 130px;
+
+      height: 130px;
+
+      left: -85px;
+
+      bottom: -95px;
+
+      border-radius: 50%;
+
+      border:
+        1px solid
+        rgba(255,255,255,.12);
+
+      pointer-events: none;
+
+    }
+
+
+    .nearby-main {
+
+      position: relative;
+
+      z-index: 2;
+
+      min-width: 0;
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 20px;
+
+    }
+
+
+    .nearby-icon {
+
+      flex:
+        0 0 58px;
+
+      width: 58px;
+
+      height: 58px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      border-radius: 18px;
+
+      background:
+        rgba(255,255,255,.10);
+
+      border:
+        1px solid
+        rgba(255,255,255,.14);
+
+      font-size: 27px;
+
+      box-shadow:
+        inset 0 1px 0
+        rgba(255,255,255,.08);
+
+    }
+
+
+    .nearby-copy {
+
+      min-width: 0;
+
+    }
+
+
+    .nearby-kicker {
+
+      margin-bottom: 4px;
+
+      color: var(--yellow);
+
+      font-size: 9px;
+
+      font-weight: 900;
+
+      letter-spacing: 1.5px;
+
+      text-transform: uppercase;
+
+    }
+
+
+    .nearby-title {
+
+      margin: 0;
+
+      color: #fff;
+
+      font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+      font-size:
+        clamp(27px, 3vw, 36px);
+
+      line-height: 1;
+
+      letter-spacing: -1px;
+
+    }
+
+
+    .nearby-description {
+
+      margin:
+        8px 0 0;
+
+      max-width: 680px;
+
+      color:
+        rgba(255,255,255,.76);
+
+      font-size: 12px;
+
+      line-height: 1.45;
+
+    }
+
+
+    .nearby-action {
+
+      position: relative;
+
+      z-index: 2;
+
+      flex:
+        0 0 auto;
+
+    }
+
+
+    .nearby-button {
+
+      min-height: 50px;
+
+      padding:
+        0 24px;
+
+      border: 0;
+
+      border-radius: 999px;
+
+      cursor: pointer;
+
+      color: #3f2518;
+
+      background:
+        var(--yellow);
+
+      font-family:
+        "DM Sans",
+        sans-serif;
+
+      font-size: 10px;
+
+      font-weight: 900;
+
+      letter-spacing: .55px;
+
+      text-transform: uppercase;
+
+      box-shadow:
+        0 8px 24px
+        rgba(0,0,0,.13);
+
+      transition:
+        transform .2s ease,
+        background .2s ease,
+        box-shadow .2s ease;
+
+    }
+
+
+    .nearby-button:hover {
+
+      transform:
+        translateY(-2px);
+
+      background: #f6cb62;
+
+      box-shadow:
+        0 11px 28px
+        rgba(0,0,0,.18);
+
+    }
+
+
+    .nearby-feature.active {
+
+      background:
+
+        radial-gradient(
+          circle at 80% -40%,
+          rgba(242,193,78,.18),
+          transparent 38%
+        ),
+
+        linear-gradient(
+          115deg,
+          #173f32 0%,
+          #245b48 100%
+        );
+
+      box-shadow:
+        0 18px 45px
+        rgba(23,63,50,.16);
+
+    }
+
+
+    .nearby-feature.active
+    .nearby-button {
+
+      color: #173f32;
+
+      background: #fffdf8;
+
+    }
+
+
+    .nearby-feature.error {
+
+      background:
+
+        linear-gradient(
+          115deg,
+          #5e3038,
+          #7b3945
+        );
+
+    }
+
+
+
+    /* =====================================================
+       DISTÂNCIA
+    ===================================================== */
+
+    .place-distance {
+
+      display: inline-flex;
+
+      align-items: center;
+
+      gap: 5px;
+
+      margin-top: 9px;
+
+      color: var(--wine);
+
+      font-size: 12px;
+
+      font-weight: 800;
+
+    }
+
+
+    .popup-distance {
+
+      margin-top: 8px;
+
+      color: var(--wine);
+
+      font-size: 12px;
+
+      font-weight: 800;
 
     }
 
@@ -1502,6 +1876,14 @@
 
       }
 
+
+      .nearby-feature {
+
+        padding:
+          23px 24px;
+
+      }
+
     }
 
 
@@ -1636,6 +2018,77 @@
 
         flex:
           0 0 auto;
+
+      }
+
+
+      .nearby-feature {
+
+        min-height: 0;
+
+        padding:
+          22px 20px;
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+        gap: 19px;
+
+        border-radius: 24px;
+
+      }
+
+
+      .nearby-main {
+
+        align-items: flex-start;
+
+        gap: 14px;
+
+      }
+
+
+      .nearby-icon {
+
+        flex:
+          0 0 50px;
+
+        width: 50px;
+
+        height: 50px;
+
+        border-radius: 15px;
+
+        font-size: 23px;
+
+      }
+
+
+      .nearby-title {
+
+        font-size: 27px;
+
+      }
+
+
+      .nearby-description {
+
+        font-size: 11px;
+
+      }
+
+
+      .nearby-action {
+
+        width: 100%;
+
+      }
+
+
+      .nearby-button {
+
+        width: 100%;
 
       }
 
@@ -1909,6 +2362,74 @@
 
 
     <!-- =================================================
+         VICINO A ME
+    ================================================== -->
+
+    <section
+      class="nearby-feature"
+      id="nearbyFeature"
+      aria-live="polite"
+    >
+
+      <div class="nearby-main">
+
+        <div
+          class="nearby-icon"
+          aria-hidden="true"
+        >
+          📍
+        </div>
+
+
+        <div class="nearby-copy">
+
+          <div
+            class="nearby-kicker"
+            id="nearbyKicker"
+          >
+            ORAVICINO · INTORNO A TE
+          </div>
+
+
+          <h2
+            class="nearby-title"
+            id="nearbyTitle"
+          >
+            Cosa c'è vicino a me?
+          </h2>
+
+
+          <p
+            class="nearby-description"
+            id="nearbyDescription"
+          >
+            Usa la tua posizione per trovare
+            i locali più vicini e ordinarli
+            automaticamente per distanza.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="nearby-action">
+
+        <button
+          class="nearby-button"
+          id="nearbyButton"
+          type="button"
+        >
+          USA LA MIA POSIZIONE
+        </button>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =================================================
          RESULTADOS
     ================================================== -->
 
@@ -1993,7 +2514,15 @@
 
 
   <!-- =====================================================
-       JAVASCRIPT
+       METEO
+  ===================================================== -->
+
+  <script src="meteo.js"></script>
+
+
+
+  <!-- =====================================================
+       JAVASCRIPT BERE
   ===================================================== -->
 
   <script>
@@ -2007,6 +2536,10 @@
     let markers = {};
 
     let visiblePlaces = [];
+
+    let userLocation = null;
+
+    let nearbyActive = false;
 
 
     const container =
@@ -2024,6 +2557,36 @@
     const count =
       document.getElementById(
         "resultCount"
+      );
+
+
+    const nearbyFeature =
+      document.getElementById(
+        "nearbyFeature"
+      );
+
+
+    const nearbyButton =
+      document.getElementById(
+        "nearbyButton"
+      );
+
+
+    const nearbyKicker =
+      document.getElementById(
+        "nearbyKicker"
+      );
+
+
+    const nearbyTitle =
+      document.getElementById(
+        "nearbyTitle"
+      );
+
+
+    const nearbyDescription =
+      document.getElementById(
+        "nearbyDescription"
       );
 
 
@@ -2059,6 +2622,425 @@
 
 
     /* =====================================================
+       DISTÂNCIA
+       Fórmula de Haversine
+    ===================================================== */
+
+    function calculateDistance(
+      lat1,
+      lng1,
+      lat2,
+      lng2
+    ) {
+
+      const earthRadius =
+        6371;
+
+
+      const toRadians =
+        value =>
+          value *
+          Math.PI /
+          180;
+
+
+      const deltaLat =
+        toRadians(
+          lat2 - lat1
+        );
+
+
+      const deltaLng =
+        toRadians(
+          lng2 - lng1
+        );
+
+
+      const a =
+        Math.sin(
+          deltaLat / 2
+        )
+        *
+        Math.sin(
+          deltaLat / 2
+        )
+        +
+        Math.cos(
+          toRadians(lat1)
+        )
+        *
+        Math.cos(
+          toRadians(lat2)
+        )
+        *
+        Math.sin(
+          deltaLng / 2
+        )
+        *
+        Math.sin(
+          deltaLng / 2
+        );
+
+
+      const c =
+        2 *
+        Math.atan2(
+          Math.sqrt(a),
+          Math.sqrt(1 - a)
+        );
+
+
+      return (
+        earthRadius * c
+      );
+
+    }
+
+
+
+    /* =====================================================
+       FORMATAÇÃO DA DISTÂNCIA
+    ===================================================== */
+
+    function formatDistance(
+      distance
+    ) {
+
+      if (
+        !Number.isFinite(distance)
+      ) {
+
+        return "";
+
+      }
+
+
+      if (
+        distance < 1
+      ) {
+
+        return (
+          Math.round(
+            distance * 1000
+          )
+          +
+          " m"
+        );
+
+      }
+
+
+      if (
+        distance < 10
+      ) {
+
+        return (
+          distance
+            .toFixed(1)
+            .replace(".", ",")
+          +
+          " km"
+        );
+
+      }
+
+
+      return (
+        Math.round(distance)
+        .toLocaleString("it-IT")
+        +
+        " km"
+      );
+
+    }
+
+
+
+    /* =====================================================
+       CALCULAR DISTÂNCIAS
+    ===================================================== */
+
+    function updateDistances() {
+
+      if (
+        !userLocation
+      ) {
+
+        return;
+
+      }
+
+
+      places =
+        places.map(
+          item => {
+
+
+            const lat =
+              Number(item.lat);
+
+
+            const lng =
+              Number(item.lng);
+
+
+            if (
+              !Number.isFinite(lat)
+              ||
+              !Number.isFinite(lng)
+            ) {
+
+              return {
+                ...item,
+                distance: null
+              };
+
+            }
+
+
+            return {
+
+              ...item,
+
+              distance:
+                calculateDistance(
+                  userLocation.lat,
+                  userLocation.lng,
+                  lat,
+                  lng
+                )
+
+            };
+
+          }
+        );
+
+    }
+
+
+
+    /* =====================================================
+       VICINO A ME
+    ===================================================== */
+
+    function activateNearby() {
+
+      if (
+        !navigator.geolocation
+      ) {
+
+        showLocationError(
+          "La geolocalizzazione non è disponibile su questo dispositivo."
+        );
+
+        return;
+
+      }
+
+
+      nearbyButton.disabled =
+        true;
+
+
+      nearbyButton.textContent =
+        "LOCALIZZAZIONE…";
+
+
+      nearbyKicker.textContent =
+        "ORAVICINO · POSIZIONE";
+
+
+      nearbyTitle.textContent =
+        "Cerchiamo dove sei…";
+
+
+      nearbyDescription.textContent =
+        "Attendi un momento mentre rileviamo la tua posizione.";
+
+
+      navigator.geolocation.getCurrentPosition(
+
+        position => {
+
+          userLocation = {
+
+            lat:
+              position.coords.latitude,
+
+            lng:
+              position.coords.longitude
+
+          };
+
+
+          nearbyActive =
+            true;
+
+
+          nearbyFeature
+            .classList
+            .remove(
+              "error"
+            );
+
+
+          nearbyFeature
+            .classList
+            .add(
+              "active"
+            );
+
+
+          nearbyKicker.textContent =
+            "ORAVICINO · POSIZIONE ATTIVA";
+
+
+          nearbyTitle.textContent =
+            "Ora sai cosa c'è vicino a te.";
+
+
+          nearbyDescription.textContent =
+            "I locali sono ordinati automaticamente dal più vicino alla tua posizione.";
+
+
+          nearbyButton.textContent =
+            "POSIZIONE ATTIVA ✓";
+
+
+          nearbyButton.disabled =
+            false;
+
+
+          updateDistances();
+
+
+          selectedPlaceId =
+            null;
+
+
+          applyFilters();
+
+        },
+
+
+        error => {
+
+          let message =
+            "Non è stato possibile ottenere la tua posizione.";
+
+
+          if (
+            error.code === 1
+          ) {
+
+            message =
+              "Permesso di localizzazione non concesso. Puoi abilitarlo nelle impostazioni del browser.";
+
+          }
+
+
+          else if (
+            error.code === 2
+          ) {
+
+            message =
+              "La tua posizione non è disponibile in questo momento.";
+
+          }
+
+
+          else if (
+            error.code === 3
+          ) {
+
+            message =
+              "La richiesta della posizione ha impiegato troppo tempo.";
+
+          }
+
+
+          showLocationError(
+            message
+          );
+
+        },
+
+        {
+
+          enableHighAccuracy:
+            false,
+
+          timeout:
+            10000,
+
+          maximumAge:
+            300000
+
+        }
+
+      );
+
+    }
+
+
+
+    /* =====================================================
+       ERRO LOCALIZAÇÃO
+    ===================================================== */
+
+    function showLocationError(
+      message
+    ) {
+
+      nearbyActive =
+        false;
+
+
+      nearbyFeature
+        .classList
+        .remove(
+          "active"
+        );
+
+
+      nearbyFeature
+        .classList
+        .add(
+          "error"
+        );
+
+
+      nearbyKicker.textContent =
+        "ORAVICINO · POSIZIONE";
+
+
+      nearbyTitle.textContent =
+        "Posizione non disponibile";
+
+
+      nearbyDescription.textContent =
+        message;
+
+
+      nearbyButton.disabled =
+        false;
+
+
+      nearbyButton.textContent =
+        "RIPROVA";
+
+    }
+
+
+
+    nearbyButton.addEventListener(
+      "click",
+      activateNearby
+    );
+
+
+
+    /* =====================================================
        CARREGAR BERE.JSON
     ===================================================== */
 
@@ -2068,7 +3050,10 @@
 
         const response =
           await fetch(
-            "data/bere.json"
+            "data/bere.json",
+            {
+              cache: "no-store"
+            }
           );
 
 
@@ -2091,26 +3076,16 @@
           places.map(
             (item, index) => ({
               ...item,
-              number: index + 1
+              number: index + 1,
+              distance: null
             })
           );
-
-
-        visiblePlaces =
-          [...places];
 
 
         readSearchFromUrl();
 
 
-        renderPlaces(
-          visiblePlaces
-        );
-
-
-        updateMarkers(
-          visiblePlaces
-        );
+        applyFilters();
 
       }
 
@@ -2163,8 +3138,6 @@
 
         search.value =
           query;
-
-        applyFilters();
 
       }
 
@@ -2309,6 +3282,18 @@
               item.image || null;
 
 
+            const distance =
+              nearbyActive
+              &&
+              Number.isFinite(
+                item.distance
+              )
+                ? formatDistance(
+                    item.distance
+                  )
+                : "";
+
+
             return `
 
               <article
@@ -2419,6 +3404,23 @@
                   >
                     📍 ${item.address || "Trento"}
                   </div>
+
+
+                  ${
+                    distance
+
+                    ? `
+
+                      <div
+                        class="place-distance"
+                      >
+                        ◎ ${distance} da te
+                      </div>
+
+                    `
+
+                    : ""
+                  }
 
 
                   <div
@@ -2617,6 +3619,18 @@
               selectedPlaceId;
 
 
+            const distance =
+              nearbyActive
+              &&
+              Number.isFinite(
+                item.distance
+              )
+                ? formatDistance(
+                    item.distance
+                  )
+                : "";
+
+
             const marker =
               L.marker(
                 [
@@ -2663,6 +3677,22 @@
                 >
                   📍 ${item.address || ""}
                 </div>
+
+                ${
+                  distance
+
+                  ? `
+
+                    <div
+                      class="popup-distance"
+                    >
+                      ◎ ${distance} da te
+                    </div>
+
+                  `
+
+                  : ""
+                }
 
               </div>
 
@@ -2998,6 +4028,41 @@
 
           }
         );
+
+
+
+      if (
+        nearbyActive
+      ) {
+
+        visiblePlaces.sort(
+          (a, b) => {
+
+            const distanceA =
+              Number.isFinite(
+                a.distance
+              )
+                ? a.distance
+                : Infinity;
+
+
+            const distanceB =
+              Number.isFinite(
+                b.distance
+              )
+                ? b.distance
+                : Infinity;
+
+
+            return (
+              distanceA -
+              distanceB
+            );
+
+          }
+        );
+
+      }
 
 
 
