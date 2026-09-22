@@ -1,0 +1,1890 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Stasera a Trento — OraVicino</title>
+
+  <meta
+    name="description"
+    content="Scopri cosa fare stasera a Trento: musica, eventi, cultura, cinema, teatro e appuntamenti vicino a te."
+  >
+
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
+
+  <style>
+
+    /* =====================================================
+       STASERA — ORAVICINO
+    ===================================================== */
+
+    :root {
+      --night: #17231d;
+      --green: #173f32;
+      --orange: #ef6a3a;
+      --yellow: #f2c14e;
+      --cream: #f6f1e7;
+      --paper: #fffdf8;
+      --muted: #6d746f;
+    }
+
+
+    * {
+      box-sizing: border-box;
+    }
+
+
+    body {
+      margin: 0;
+      color: var(--night);
+
+      background:
+        radial-gradient(
+          circle at 90% 5%,
+          rgba(239,106,58,.10),
+          transparent 22%
+        ),
+        radial-gradient(
+          circle at 5% 40%,
+          rgba(242,193,78,.10),
+          transparent 20%
+        ),
+        linear-gradient(
+          180deg,
+          #f7f3e9 0%,
+          #f3eee3 100%
+        );
+    }
+
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -10;
+      pointer-events: none;
+      opacity: .22;
+
+      background-image:
+        linear-gradient(
+          rgba(23,63,50,.018) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          90deg,
+          rgba(23,63,50,.018) 1px,
+          transparent 1px
+        );
+
+      background-size: 42px 42px;
+    }
+
+
+    /* =====================================================
+       CONTAINER
+    ===================================================== */
+
+    .events-container {
+      width: min(calc(100% - 60px), 1240px);
+      margin: 0 auto;
+    }
+
+
+    /* =====================================================
+       HERO
+    ===================================================== */
+
+    .events-hero {
+      position: relative;
+      min-height: 390px;
+      margin-top: 28px;
+      padding: 65px 65px 55px;
+      overflow: hidden;
+      border-radius: 40px;
+      color: #fffdf8;
+      background: #173f32;
+
+      box-shadow:
+        0 25px 70px
+        rgba(25,39,32,.09);
+    }
+
+
+    .events-hero::before {
+      content: "";
+      position: absolute;
+      width: 420px;
+      height: 420px;
+      right: -80px;
+      top: -170px;
+      border-radius: 50%;
+
+      background:
+        rgba(239,106,58,.90);
+    }
+
+
+    .events-hero::after {
+      content: "";
+      position: absolute;
+      width: 330px;
+      height: 330px;
+      right: 180px;
+      bottom: -230px;
+      border-radius: 50%;
+
+      border:
+        1px solid
+        rgba(242,193,78,.38);
+    }
+
+
+    .hero-copy {
+      position: relative;
+      z-index: 2;
+      max-width: 720px;
+    }
+
+
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      color: var(--yellow);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+
+    .hero-kicker::before {
+      content: "";
+      width: 29px;
+      height: 2px;
+      background: var(--yellow);
+    }
+
+
+    .events-hero h1 {
+      margin: 0 0 20px;
+      color: #fffdf8;
+
+      font-size:
+        clamp(58px, 8vw, 94px);
+
+      line-height: .90;
+      letter-spacing: -5px;
+    }
+
+
+    .events-hero h1 em {
+      display: block;
+      color: var(--orange);
+
+      font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+      font-weight: 500;
+    }
+
+
+    .events-hero p {
+      max-width: 570px;
+      margin: 0;
+      color: rgba(255,253,248,.78);
+      font-size: 17px;
+      line-height: 1.6;
+    }
+
+
+    .hero-date {
+      position: absolute;
+      z-index: 3;
+      right: 35px;
+      bottom: 30px;
+
+      padding: 11px 16px;
+      border-radius: 999px;
+
+      background:
+        rgba(10,25,19,.40);
+
+      border:
+        1px solid
+        rgba(255,255,255,.16);
+
+      color: #fffdf8;
+      font-size: 11px;
+      font-weight: 700;
+      backdrop-filter: blur(8px);
+    }
+
+
+    /* =====================================================
+       INTRO
+    ===================================================== */
+
+    .events-intro {
+      padding: 85px 0 30px;
+    }
+
+
+    .section-kicker-local {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 12px;
+      color: var(--orange);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+    }
+
+
+    .section-kicker-local::before {
+      content: "";
+      width: 27px;
+      height: 2px;
+      background: var(--orange);
+    }
+
+
+    .events-intro h2 {
+      max-width: 760px;
+      margin: 0;
+
+      color: var(--green);
+
+      font-size:
+        clamp(40px, 5vw, 62px);
+
+      line-height: .98;
+      letter-spacing: -3px;
+    }
+
+
+    /* =====================================================
+       CONTROLES
+    ===================================================== */
+
+    .events-controls {
+      margin: 35px 0 34px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+
+    .date-filters,
+    .type-filters {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+
+    .filter-button {
+      min-height: 42px;
+      padding: 0 15px;
+
+      border:
+        1px solid
+        rgba(23,35,29,.10);
+
+      border-radius: 999px;
+      cursor: pointer;
+
+      background:
+        rgba(255,253,248,.70);
+
+      color: var(--green);
+
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .5px;
+
+      transition:
+        transform .2s ease,
+        background .2s ease,
+        color .2s ease;
+    }
+
+
+    .filter-button:hover {
+      transform: translateY(-1px);
+    }
+
+
+    .filter-button.active {
+      background: var(--green);
+      color: #fffdf8;
+      border-color: var(--green);
+    }
+
+
+    .type-filters
+    .filter-button.active {
+      background: var(--orange);
+      border-color: var(--orange);
+    }
+
+
+    /* =====================================================
+       CONTADOR
+    ===================================================== */
+
+    .events-summary {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 17px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+
+    .events-summary strong {
+      color: var(--green);
+    }
+
+
+    /* =====================================================
+       GRID EVENTOS
+    ===================================================== */
+
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 17px;
+      padding-bottom: 90px;
+    }
+
+
+    .event-card {
+      position: relative;
+      min-height: 310px;
+      padding: 29px;
+      overflow: hidden;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      border-radius: 28px;
+
+      background:
+        rgba(255,253,248,.88);
+
+      border:
+        1px solid
+        rgba(23,35,29,.08);
+
+      box-shadow:
+        0 12px 35px
+        rgba(25,39,32,.045);
+
+      transition:
+        transform .22s ease,
+        box-shadow .22s ease;
+    }
+
+
+    .event-card:hover {
+      transform: translateY(-4px);
+
+      box-shadow:
+        0 20px 50px
+        rgba(25,39,32,.09);
+    }
+
+
+    .event-card::after {
+      content: "";
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      right: -100px;
+      bottom: -105px;
+      border-radius: 50%;
+
+      border:
+        1px solid
+        rgba(239,106,58,.14);
+    }
+
+
+    .event-top {
+      position: relative;
+      z-index: 2;
+
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+
+    .event-category {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 0 11px;
+      border-radius: 999px;
+
+      background:
+        rgba(239,106,58,.10);
+
+      color: var(--orange);
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+
+    .event-date-box {
+      flex: 0 0 auto;
+      min-width: 64px;
+      padding: 10px;
+      text-align: center;
+      border-radius: 17px;
+      background: var(--green);
+      color: #fffdf8;
+    }
+
+
+    .event-date-box strong {
+      display: block;
+      font-size: 25px;
+      line-height: 1;
+    }
+
+
+    .event-date-box span {
+      display: block;
+      margin-top: 4px;
+      color: var(--yellow);
+      font-size: 8px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+
+    .event-main {
+      position: relative;
+      z-index: 2;
+      margin-top: 30px;
+    }
+
+
+    .event-main h3 {
+      max-width: 520px;
+      margin: 0 0 11px;
+      color: var(--green);
+      font-size: 28px;
+      line-height: 1.05;
+      letter-spacing: -1.3px;
+    }
+
+
+    .event-description {
+      max-width: 520px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+
+    .event-bottom {
+      position: relative;
+      z-index: 2;
+      margin-top: 28px;
+      padding-top: 20px;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 20px;
+
+      border-top:
+        1px solid
+        rgba(23,35,29,.08);
+    }
+
+
+    .event-details {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      color: #5f6862;
+      font-size: 11px;
+    }
+
+
+    .event-price {
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+
+    .event-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 39px;
+      padding: 0 14px;
+      border-radius: 13px;
+      text-decoration: none;
+      background: var(--orange);
+      color: white;
+      font-size: 10px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+
+    /* =====================================================
+       SEM EVENTOS
+    ===================================================== */
+
+    .empty-state {
+      grid-column: 1 / -1;
+      min-height: 300px;
+      padding: 50px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+
+      text-align: center;
+
+      border-radius: 30px;
+
+      background:
+        rgba(255,253,248,.72);
+
+      border:
+        1px solid
+        rgba(23,35,29,.08);
+    }
+
+
+    .empty-icon {
+      margin-bottom: 15px;
+      font-size: 42px;
+    }
+
+
+    .empty-state h3 {
+      margin: 0 0 8px;
+      color: var(--green);
+      font-size: 27px;
+    }
+
+
+    .empty-state p {
+      max-width: 440px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+
+    /* =====================================================
+       FOOTER
+    ===================================================== */
+
+    .events-footer {
+      width: min(calc(100% - 60px), 1240px);
+      margin: 0 auto 30px;
+      padding: 30px 0;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 30px;
+
+      border-top:
+        1px solid
+        rgba(23,35,29,.11);
+
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+
+    .events-footer a {
+      color: var(--green);
+      text-decoration: none;
+      font-weight: 800;
+    }
+
+
+    /* =====================================================
+       RESPONSIVO
+    ===================================================== */
+
+    @media (max-width: 850px) {
+
+      .events-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .events-hero {
+        padding: 55px 40px;
+      }
+
+    }
+
+
+    @media (max-width: 600px) {
+
+      .events-container {
+        width: calc(100% - 30px);
+      }
+
+      .events-hero {
+        min-height: 460px;
+        margin-top: 15px;
+        padding: 42px 24px;
+        border-radius: 28px;
+      }
+
+      .events-hero h1 {
+        font-size:
+          clamp(56px, 18vw, 76px);
+
+        letter-spacing: -4px;
+      }
+
+      .hero-date {
+        left: 24px;
+        right: auto;
+        bottom: 24px;
+      }
+
+      .events-intro {
+        padding-top: 65px;
+      }
+
+      .events-controls {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .event-card {
+        min-height: 340px;
+        padding: 23px;
+      }
+
+      .event-bottom {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .events-footer {
+        width: calc(100% - 30px);
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+  <!-- =====================================================
+       HEADER
+  ===================================================== -->
+
+  <header class="topbar">
+
+    <a
+      class="logo"
+      href="index.html"
+    >
+      ora<span>vicino</span>
+    </a>
+
+
+    <div class="top-actions">
+
+      <button
+        class="city-button"
+        type="button"
+      >
+        📍 Trento
+      </button>
+
+
+      <button
+        class="language-button"
+        type="button"
+      >
+        IT ▾
+      </button>
+
+    </div>
+
+  </header>
+
+
+  <main>
+
+    <div class="events-container">
+
+
+      <!-- =================================================
+           HERO
+      ================================================== -->
+
+      <section class="events-hero">
+
+        <div class="hero-copy">
+
+          <span class="hero-kicker">
+            OGGI A TRENTO
+          </span>
+
+
+          <h1>
+            Cosa facciamo
+            <em>stasera?</em>
+          </h1>
+
+
+          <p>
+
+            Musica, spettacoli, cultura,
+            cinema e appuntamenti da scoprire.
+            Solo quello che succede davvero.
+
+          </p>
+
+        </div>
+
+
+        <div
+          class="hero-date"
+          id="heroDate"
+        >
+          Oggi
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           INTRO
+      ================================================== -->
+
+      <section class="events-intro">
+
+        <span class="section-kicker-local">
+          COSA SUCCEDE?
+        </span>
+
+
+        <h2>
+          Scegli quando.
+          Poi scegli cosa.
+        </h2>
+
+
+        <!-- FILTRI -->
+
+        <div class="events-controls">
+
+
+          <div
+            class="date-filters"
+            id="dateFilters"
+          >
+
+            <button
+              class="filter-button active"
+              data-date="today"
+              type="button"
+            >
+              OGGI
+            </button>
+
+
+            <button
+              class="filter-button"
+              data-date="tomorrow"
+              type="button"
+            >
+              DOMANI
+            </button>
+
+
+            <button
+              class="filter-button"
+              data-date="weekend"
+              type="button"
+            >
+              WEEKEND
+            </button>
+
+
+            <button
+              class="filter-button"
+              data-date="all"
+              type="button"
+            >
+              PROSSIMI
+            </button>
+
+          </div>
+
+
+          <div
+            class="type-filters"
+            id="typeFilters"
+          >
+
+            <button
+              class="filter-button active"
+              data-type="all"
+              type="button"
+            >
+              TUTTO
+            </button>
+
+
+            <button
+              class="filter-button"
+              data-type="musica"
+              type="button"
+            >
+              🎵 MUSICA
+            </button>
+
+
+            <button
+              class="filter-button"
+              data-type="cultura"
+              type="button"
+            >
+              🎭 CULTURA
+            </button>
+
+
+            <button
+              class="filter-button"
+              data-type="famiglie"
+              type="button"
+            >
+              👨‍👩‍👧 FAMIGLIE
+            </button>
+
+
+            <button
+              class="filter-button"
+              data-type="gratis"
+              type="button"
+            >
+              GRATIS
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <div class="events-summary">
+
+          <span>
+            <strong id="eventCount">
+              0
+            </strong>
+            eventi trovati
+          </span>
+
+
+          <span>
+            Trento · Italia
+          </span>
+
+        </div>
+
+
+        <!-- EVENTI -->
+
+        <div
+          class="events-grid"
+          id="eventsGrid"
+        >
+        </div>
+
+      </section>
+
+    </div>
+
+  </main>
+
+
+  <!-- =====================================================
+       FOOTER
+  ===================================================== -->
+
+  <footer class="events-footer">
+
+    <a href="index.html">
+      ← OraVicino
+    </a>
+
+
+    <span>
+      Trento · Progetto pilota
+    </span>
+
+
+    <span>
+      © 2026 OraVicino
+    </span>
+
+  </footer>
+
+
+  <!-- =====================================================
+       JAVASCRIPT
+  ===================================================== -->
+
+  <script>
+
+    let events = [];
+
+    let selectedDate = "today";
+
+    let selectedType = "all";
+
+
+    const eventsGrid =
+      document.getElementById(
+        "eventsGrid"
+      );
+
+
+    const eventCount =
+      document.getElementById(
+        "eventCount"
+      );
+
+
+    /* =====================================================
+       DATA LOCAL
+    ===================================================== */
+
+    function localDate(date = new Date()) {
+
+      return new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate()
+      );
+
+    }
+
+
+    function parseDate(value) {
+
+      const parts =
+        value.split("-");
+
+      return new Date(
+        Number(parts[0]),
+        Number(parts[1]) - 1,
+        Number(parts[2])
+      );
+
+    }
+
+
+    function sameDay(a, b) {
+
+      return (
+        a.getFullYear() === b.getFullYear()
+        &&
+        a.getMonth() === b.getMonth()
+        &&
+        a.getDate() === b.getDate()
+      );
+
+    }
+
+
+    /* =====================================================
+       DATA HERO
+    ===================================================== */
+
+    function renderHeroDate() {
+
+      const now =
+        new Date();
+
+
+      const formatter =
+        new Intl.DateTimeFormat(
+          "it-IT",
+          {
+            weekday: "long",
+            day: "numeric",
+            month: "long"
+          }
+        );
+
+
+      let text =
+        formatter.format(now);
+
+
+      text =
+        text.charAt(0).toUpperCase()
+        +
+        text.slice(1);
+
+
+      document.getElementById(
+        "heroDate"
+      ).textContent = text;
+
+    }
+
+
+    /* =====================================================
+       EVENTO ATIVO NA DATA?
+    ===================================================== */
+
+    function eventOccursOn(
+      event,
+      targetDate
+    ) {
+
+      const start =
+        parseDate(
+          event.dateStart
+        );
+
+
+      const end =
+        parseDate(
+          event.dateEnd
+          ||
+          event.dateStart
+        );
+
+
+      return (
+        targetDate >= start
+        &&
+        targetDate <= end
+      );
+
+    }
+
+
+    /* =====================================================
+       WEEKEND
+    ===================================================== */
+
+    function isWeekendEvent(event) {
+
+      const today =
+        localDate();
+
+
+      const day =
+        today.getDay();
+
+
+      let fridayOffset;
+
+
+      if (day <= 5) {
+
+        fridayOffset =
+          5 - day;
+
+      } else {
+
+        fridayOffset =
+          -(day - 5);
+
+      }
+
+
+      const friday =
+        new Date(today);
+
+      friday.setDate(
+        today.getDate()
+        +
+        fridayOffset
+      );
+
+
+      const sunday =
+        new Date(friday);
+
+      sunday.setDate(
+        friday.getDate() + 2
+      );
+
+
+      const start =
+        parseDate(
+          event.dateStart
+        );
+
+
+      const end =
+        parseDate(
+          event.dateEnd
+          ||
+          event.dateStart
+        );
+
+
+      return (
+        end >= friday
+        &&
+        start <= sunday
+      );
+
+    }
+
+
+    /* =====================================================
+       FILTRO DATA
+    ===================================================== */
+
+    function matchesDate(event) {
+
+      const today =
+        localDate();
+
+
+      if (
+        selectedDate === "today"
+      ) {
+
+        return eventOccursOn(
+          event,
+          today
+        );
+
+      }
+
+
+      if (
+        selectedDate === "tomorrow"
+      ) {
+
+        const tomorrow =
+          new Date(today);
+
+        tomorrow.setDate(
+          today.getDate() + 1
+        );
+
+
+        return eventOccursOn(
+          event,
+          tomorrow
+        );
+
+      }
+
+
+      if (
+        selectedDate === "weekend"
+      ) {
+
+        return isWeekendEvent(
+          event
+        );
+
+      }
+
+
+      /*
+       * PROSSIMI
+       * Exibe somente eventos
+       * que ainda não terminaram.
+       */
+
+      const end =
+        parseDate(
+          event.dateEnd
+          ||
+          event.dateStart
+        );
+
+
+      return end >= today;
+
+    }
+
+
+    /* =====================================================
+       FILTRO TIPO
+    ===================================================== */
+
+    function matchesType(event) {
+
+      if (
+        selectedType === "all"
+      ) {
+
+        return true;
+
+      }
+
+
+      if (
+        selectedType === "gratis"
+      ) {
+
+        return (
+          String(
+            event.price || ""
+          )
+          .toLowerCase()
+          .includes("gratis")
+          ||
+          (event.tags || [])
+            .map(
+              tag =>
+                tag.toLowerCase()
+            )
+            .includes("gratis")
+        );
+
+      }
+
+
+      const category =
+        String(
+          event.category || ""
+        ).toLowerCase();
+
+
+      const tags =
+        (event.tags || [])
+          .map(
+            tag =>
+              tag.toLowerCase()
+          );
+
+
+      return (
+        category.includes(
+          selectedType
+        )
+        ||
+        tags.includes(
+          selectedType
+        )
+      );
+
+    }
+
+
+    /* =====================================================
+       ÍCONE
+    ===================================================== */
+
+    function categoryIcon(event) {
+
+      const text =
+        (
+          String(
+            event.category || ""
+          )
+          +
+          " "
+          +
+          (event.tags || [])
+            .join(" ")
+        )
+        .toLowerCase();
+
+
+      if (
+        text.includes("musica")
+        ||
+        text.includes("live")
+        ||
+        text.includes("dj")
+      ) {
+
+        return "🎵";
+
+      }
+
+
+      if (
+        text.includes("teatro")
+      ) {
+
+        return "🎭";
+
+      }
+
+
+      if (
+        text.includes("cinema")
+      ) {
+
+        return "🎬";
+
+      }
+
+
+      if (
+        text.includes("famiglie")
+      ) {
+
+        return "👨‍👩‍👧";
+
+      }
+
+
+      if (
+        text.includes("food")
+        ||
+        text.includes("gastronomia")
+      ) {
+
+        return "🍴";
+
+      }
+
+
+      return "✦";
+
+    }
+
+
+    /* =====================================================
+       DATA CARD
+    ===================================================== */
+
+    function dateParts(value) {
+
+      const date =
+        parseDate(value);
+
+
+      const day =
+        String(
+          date.getDate()
+        )
+        .padStart(
+          2,
+          "0"
+        );
+
+
+      const month =
+        new Intl.DateTimeFormat(
+          "it-IT",
+          {
+            month: "short"
+          }
+        )
+        .format(date)
+        .replace(".", "")
+        .toUpperCase();
+
+
+      return {
+        day,
+        month
+      };
+
+    }
+
+
+    /* =====================================================
+       ESCAPE HTML
+    ===================================================== */
+
+    function escapeHTML(value) {
+
+      return String(
+        value ?? ""
+      )
+      .replace(
+        /&/g,
+        "&amp;"
+      )
+      .replace(
+        /</g,
+        "&lt;"
+      )
+      .replace(
+        />/g,
+        "&gt;"
+      )
+      .replace(
+        /"/g,
+        "&quot;"
+      )
+      .replace(
+        /'/g,
+        "&#039;"
+      );
+
+    }
+
+
+    /* =====================================================
+       RENDER
+    ===================================================== */
+
+    function renderEvents() {
+
+      const filtered =
+        events
+          .filter(matchesDate)
+          .filter(matchesType)
+          .sort(
+            (a, b) => {
+
+              const dateA =
+                (
+                  a.dateStart
+                  +
+                  " "
+                  +
+                  (
+                    a.timeStart
+                    ||
+                    "00:00"
+                  )
+                );
+
+
+              const dateB =
+                (
+                  b.dateStart
+                  +
+                  " "
+                  +
+                  (
+                    b.timeStart
+                    ||
+                    "00:00"
+                  )
+                );
+
+
+              return dateA.localeCompare(
+                dateB
+              );
+
+            }
+          );
+
+
+      eventCount.textContent =
+        filtered.length;
+
+
+      if (
+        filtered.length === 0
+      ) {
+
+        eventsGrid.innerHTML = `
+
+          <div class="empty-state">
+
+            <div class="empty-icon">
+              🌙
+            </div>
+
+            <h3>
+              Nessun evento trovato.
+            </h3>
+
+            <p>
+              Non ci sono ancora eventi
+              disponibili per questa selezione.
+              Prova un altro giorno o torna presto.
+            </p>
+
+          </div>
+
+        `;
+
+
+        return;
+
+      }
+
+
+      eventsGrid.innerHTML =
+        filtered
+          .map(
+            event => {
+
+              const date =
+                dateParts(
+                  event.dateStart
+                );
+
+
+              const icon =
+                categoryIcon(event);
+
+
+              const time =
+                event.timeStart
+                ?
+                event.timeStart
+                :
+                "Orario da verificare";
+
+
+              const venue =
+                event.venue
+                ||
+                event.address
+                ||
+                "Trento";
+
+
+              const price =
+                event.price
+                ||
+                "Info";
+
+
+              const externalLink =
+                event.url
+                ?
+                `
+                  <a
+                    class="event-link"
+                    href="${escapeHTML(event.url)}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    DETTAGLI ↗
+                  </a>
+                `
+                :
+                "";
+
+
+              return `
+
+                <article class="event-card">
+
+
+                  <div>
+
+
+                    <div class="event-top">
+
+                      <span class="event-category">
+                        ${icon}
+                        &nbsp;
+                        ${escapeHTML(
+                          event.category
+                          ||
+                          "Evento"
+                        )}
+                      </span>
+
+
+                      <div class="event-date-box">
+
+                        <strong>
+                          ${date.day}
+                        </strong>
+
+                        <span>
+                          ${date.month}
+                        </span>
+
+                      </div>
+
+                    </div>
+
+
+                    <div class="event-main">
+
+                      <h3>
+                        ${escapeHTML(
+                          event.title
+                          ||
+                          "Evento"
+                        )}
+                      </h3>
+
+
+                      <p class="event-description">
+
+                        ${escapeHTML(
+                          event.description
+                          ||
+                          "Scopri questo appuntamento a Trento."
+                        )}
+
+                      </p>
+
+                    </div>
+
+
+                  </div>
+
+
+                  <div class="event-bottom">
+
+                    <div class="event-details">
+
+                      <span>
+                        🕒
+                        ${escapeHTML(time)}
+                      </span>
+
+                      <span>
+                        📍
+                        ${escapeHTML(venue)}
+                      </span>
+
+                      <span class="event-price">
+                        ${escapeHTML(price)}
+                      </span>
+
+                    </div>
+
+
+                    ${externalLink}
+
+                  </div>
+
+
+                </article>
+
+              `;
+
+            }
+          )
+          .join("");
+
+    }
+
+
+    /* =====================================================
+       BOTÕES DATA
+    ===================================================== */
+
+    document
+      .querySelectorAll(
+        "[data-date]"
+      )
+      .forEach(
+        button => {
+
+          button.addEventListener(
+            "click",
+            function() {
+
+              selectedDate =
+                this.dataset.date;
+
+
+              document
+                .querySelectorAll(
+                  "[data-date]"
+                )
+                .forEach(
+                  item =>
+                    item.classList.remove(
+                      "active"
+                    )
+                );
+
+
+              this.classList.add(
+                "active"
+              );
+
+
+              renderEvents();
+
+            }
+          );
+
+        }
+      );
+
+
+    /* =====================================================
+       BOTÕES TIPO
+    ===================================================== */
+
+    document
+      .querySelectorAll(
+        "[data-type]"
+      )
+      .forEach(
+        button => {
+
+          button.addEventListener(
+            "click",
+            function() {
+
+              selectedType =
+                this.dataset.type;
+
+
+              document
+                .querySelectorAll(
+                  "[data-type]"
+                )
+                .forEach(
+                  item =>
+                    item.classList.remove(
+                      "active"
+                    )
+                );
+
+
+              this.classList.add(
+                "active"
+              );
+
+
+              renderEvents();
+
+            }
+          );
+
+        }
+      );
+
+
+    /* =====================================================
+       CARREGAR JSON
+    ===================================================== */
+
+    async function loadEvents() {
+
+      try {
+
+        const response =
+          await fetch(
+            "data/eventi.json",
+            {
+              cache: "no-store"
+            }
+          );
+
+
+        if (!response.ok) {
+
+          throw new Error(
+            "Errore caricamento eventi"
+          );
+
+        }
+
+
+        const data =
+          await response.json();
+
+
+        events =
+          Array.isArray(data)
+          ?
+          data
+          :
+          [];
+
+
+        renderEvents();
+
+      } catch (error) {
+
+        console.error(
+          error
+        );
+
+
+        events = [];
+
+
+        eventsGrid.innerHTML = `
+
+          <div class="empty-state">
+
+            <div class="empty-icon">
+              ⚠️
+            </div>
+
+            <h3>
+              Eventi non disponibili.
+            </h3>
+
+            <p>
+              Non è stato possibile caricare
+              l'agenda in questo momento.
+            </p>
+
+          </div>
+
+        `;
+
+      }
+
+    }
+
+
+    /* =====================================================
+       START
+    ===================================================== */
+
+    renderHeroDate();
+
+    loadEvents();
+
+  </script>
+
+
+</body>
+
+</html>
