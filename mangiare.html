@@ -1,607 +1,1880 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Mangiare a Trento — OraVicino</title>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-  <link rel="stylesheet" href="style.css">
+  <title>
+    Mangiare a Trento — OraVicino
+  </title>
+
+  <meta
+    name="description"
+    content="Scopri ristoranti, trattorie, osterie e piccoli posti dove mangiare a Trento."
+  >
+
+
+  <!-- CSS PRINCIPALE -->
+
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
+
+
+  <!-- LEAFLET -->
+
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  >
+
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  ></script>
+
 
   <style>
+
+    /* =========================
+       PAGINA MANGIARE
+    ========================= */
+
     .food-page {
+
       max-width: 1240px;
+
       margin: auto;
-      padding: 35px 30px 100px;
+
+      padding:
+        35px 30px 100px;
+
     }
+
 
     .back {
-      display: inline-block;
-      margin: 15px 0 50px;
-      color: #6d746f;
-      font-weight: 600;
+
+      display:
+        inline-flex;
+
+      align-items:
+        center;
+
+      gap:
+        6px;
+
+      margin:
+        15px 0 50px;
+
+      color:
+        #6d746f;
+
+      font-weight:
+        600;
+
+      transition:
+        color .2s ease;
+
     }
+
+
+    .back:hover {
+
+      color:
+        #173f32;
+
+    }
+
+
+
+    /* =========================
+       CABEÇALHO
+    ========================= */
 
     .food-header {
-      margin-bottom: 35px;
+
+      margin-bottom:
+        35px;
+
     }
+
 
     .food-header h1 {
-      margin: 8px 0 12px;
-      font-size: clamp(48px, 6vw, 78px);
-      letter-spacing: -4px;
-      line-height: .95;
+
+      margin:
+        8px 0 12px;
+
+      font-size:
+        clamp(48px, 6vw, 78px);
+
+      letter-spacing:
+        -4px;
+
+      line-height:
+        .95;
+
     }
+
 
     .food-header p {
-      color: #6d746f;
-      font-size: 18px;
+
+      max-width:
+        600px;
+
+      margin:
+        0;
+
+      color:
+        #6d746f;
+
+      font-size:
+        18px;
+
+      line-height:
+        1.5;
+
     }
+
+
+
+    /* =========================
+       BUSCA
+    ========================= */
 
     .food-search {
-      max-width: 700px;
-      background: white;
-      border-radius: 18px;
-      padding: 8px 18px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      box-shadow: 0 15px 45px rgba(25,39,32,.08);
+
+      max-width:
+        700px;
+
+      background:
+        white;
+
+      border-radius:
+        18px;
+
+      padding:
+        8px 18px;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      gap:
+        10px;
+
+      box-shadow:
+        0 15px 45px
+        rgba(25,39,32,.08);
+
     }
+
+
+    .food-search-icon {
+
+      font-size:
+        22px;
+
+    }
+
 
     .food-search input {
-      flex: 1;
-      padding: 13px 5px;
-      border: 0;
-      outline: none;
-      background: transparent;
-      font-size: 16px;
+
+      flex:
+        1;
+
+      min-width:
+        0;
+
+      padding:
+        13px 5px;
+
+      border:
+        0;
+
+      outline:
+        none;
+
+      background:
+        transparent;
+
+      font-size:
+        16px;
+
+      color:
+        #17231d;
+
     }
+
+
+
+    /* =========================
+       FILTROS
+    ========================= */
 
     .filters {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 9px;
-      margin: 20px 0 45px;
+
+      display:
+        flex;
+
+      flex-wrap:
+        wrap;
+
+      gap:
+        9px;
+
+      margin:
+        20px 0 45px;
+
     }
+
 
     .filter {
-      padding: 10px 16px;
-      border-radius: 999px;
-      border: 1px solid rgba(23,35,29,.15);
-      background: transparent;
-      color: #17231d;
+
+      padding:
+        10px 16px;
+
+      border-radius:
+        999px;
+
+      border:
+        1px solid
+        rgba(23,35,29,.15);
+
+      background:
+        transparent;
+
+      color:
+        #17231d;
+
+      transition:
+        .2s ease;
+
     }
+
+
+    .filter:hover {
+
+      border-color:
+        #173f32;
+
+      background:
+        rgba(23,63,50,.06);
+
+    }
+
 
     .filter.active {
-      background: #173f32;
-      color: white;
-      border-color: #173f32;
+
+      background:
+        #173f32;
+
+      color:
+        white;
+
+      border-color:
+        #173f32;
+
     }
+
+
+
+    /* =========================
+       RESULTADOS
+    ========================= */
 
     .results-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
+
+      display:
+        flex;
+
+      justify-content:
+        space-between;
+
+      align-items:
+        center;
+
+      margin-bottom:
+        20px;
+
     }
+
 
     .results-header strong {
-      font-size: 14px;
+
+      font-size:
+        14px;
+
     }
+
+
+    .map-label {
+
+      color:
+        #6d746f;
+
+      font-size:
+        12px;
+
+      font-weight:
+        600;
+
+    }
+
+
+
+    /* =========================
+       LAYOUT LISTA + MAPA
+    ========================= */
+
+    .discovery-layout {
+
+      display:
+        grid;
+
+      grid-template-columns:
+        minmax(0, 1.15fr)
+        minmax(360px, .85fr);
+
+      gap:
+        24px;
+
+      align-items:
+        start;
+
+    }
+
+
+
+    /* =========================
+       RESTAURANTES
+    ========================= */
 
     .restaurants {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
+
+      display:
+        grid;
+
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+      gap:
+        18px;
+
     }
+
 
     .restaurant {
-      overflow: hidden;
-      background: #fffdf8;
-      border: 1px solid rgba(23,35,29,.12);
-      border-radius: 24px;
-      transition: .25s ease;
+
+      overflow:
+        hidden;
+
+      background:
+        #fffdf8;
+
+      border:
+        1px solid
+        rgba(23,35,29,.12);
+
+      border-radius:
+        24px;
+
+      transition:
+        transform .25s ease,
+        box-shadow .25s ease,
+        border-color .25s ease;
+
     }
+
 
     .restaurant:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 18px 50px rgba(25,39,32,.10);
+
+      transform:
+        translateY(-4px);
+
+      border-color:
+        rgba(23,63,50,.28);
+
+      box-shadow:
+        0 18px 50px
+        rgba(25,39,32,.10);
+
     }
+
+
+
+    /* CAPA TEMPORÁRIA */
 
     .restaurant-cover {
-      height: 175px;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+
+      height:
+        175px;
+
+      position:
+        relative;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
       background:
-        radial-gradient(circle at 75% 20%, rgba(242,193,78,.55), transparent 25%),
-        linear-gradient(145deg, #285d49, #173f32);
-      font-size: 55px;
+
+        radial-gradient(
+          circle at 75% 20%,
+          rgba(242,193,78,.55),
+          transparent 25%
+        ),
+
+        linear-gradient(
+          145deg,
+          #285d49,
+          #173f32
+        );
+
+      font-size:
+        55px;
+
     }
+
+
+
+    /* SELO */
 
     .route-badge {
-      position: absolute;
-      left: 16px;
-      top: 16px;
-      padding: 7px 10px;
-      border-radius: 999px;
-      background: #f2c14e;
-      color: #17231d;
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: .6px;
+
+      position:
+        absolute;
+
+      left:
+        16px;
+
+      top:
+        16px;
+
+      padding:
+        7px 10px;
+
+      border-radius:
+        999px;
+
+      background:
+        #f2c14e;
+
+      color:
+        #17231d;
+
+      font-size:
+        9px;
+
+      font-weight:
+        700;
+
+      letter-spacing:
+        .7px;
+
     }
+
+
+
+    /* CONTEÚDO */
 
     .restaurant-content {
-      padding: 22px;
+
+      padding:
+        22px;
+
     }
+
 
     .restaurant-area {
-      color: #ef6a3a;
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1.2px;
+
+      color:
+        #ef6a3a;
+
+      font-size:
+        11px;
+
+      font-weight:
+        700;
+
+      text-transform:
+        uppercase;
+
+      letter-spacing:
+        1.2px;
+
     }
+
 
     .restaurant h2 {
-      margin: 7px 0 6px;
-      font-size: 24px;
-      letter-spacing: -1px;
+
+      margin:
+        7px 0 6px;
+
+      font-size:
+        23px;
+
+      line-height:
+        1.1;
+
+      letter-spacing:
+        -1px;
+
     }
+
 
     .category {
-      min-height: 24px;
-      color: #6d746f;
+
+      min-height:
+        24px;
+
+      color:
+        #6d746f;
+
+      line-height:
+        1.4;
+
     }
 
-    .restaurant-info {
-      margin-top: 20px;
-      padding-top: 17px;
-      border-top: 1px solid rgba(23,35,29,.1);
-      display: flex;
-      justify-content: space-between;
-      gap: 15px;
-      font-size: 13px;
-    }
 
     .address {
-      margin-top: 14px;
-      color: #6d746f;
-      font-size: 13px;
+
+      margin-top:
+        14px;
+
+      color:
+        #6d746f;
+
+      font-size:
+        13px;
+
+      line-height:
+        1.4;
+
     }
+
+
+    .restaurant-info {
+
+      margin-top:
+        20px;
+
+      padding-top:
+        17px;
+
+      border-top:
+        1px solid
+        rgba(23,35,29,.1);
+
+      display:
+        flex;
+
+      justify-content:
+        space-between;
+
+      gap:
+        15px;
+
+      font-size:
+        13px;
+
+      font-weight:
+        600;
+
+    }
+
+
+
+    /* =========================
+       MAPA
+    ========================= */
+
+    .map-column {
+
+      position:
+        sticky;
+
+      top:
+        20px;
+
+    }
+
+
+    .map-wrapper {
+
+      position:
+        relative;
+
+    }
+
+
+    #map {
+
+      width:
+        100%;
+
+      height:
+        calc(100vh - 40px);
+
+      min-height:
+        620px;
+
+      border-radius:
+        28px;
+
+      overflow:
+        hidden;
+
+      border:
+        1px solid
+        rgba(23,35,29,.12);
+
+      box-shadow:
+        0 18px 50px
+        rgba(25,39,32,.08);
+
+      background:
+        #e8e7df;
+
+    }
+
+
+    .map-badge {
+
+      position:
+        absolute;
+
+      z-index:
+        500;
+
+      top:
+        16px;
+
+      left:
+        50%;
+
+      transform:
+        translateX(-50%);
+
+      padding:
+        9px 15px;
+
+      border-radius:
+        999px;
+
+      background:
+        rgba(255,253,248,.94);
+
+      border:
+        1px solid
+        rgba(23,35,29,.12);
+
+      box-shadow:
+        0 8px 25px
+        rgba(25,39,32,.10);
+
+      color:
+        #173f32;
+
+      font-size:
+        11px;
+
+      font-weight:
+        700;
+
+      letter-spacing:
+        .7px;
+
+      white-space:
+        nowrap;
+
+    }
+
+
+    .leaflet-container {
+
+      font-family:
+        "DM Sans",
+        sans-serif;
+
+    }
+
+
+    .leaflet-control-attribution {
+
+      font-size:
+        10px;
+
+    }
+
+
+
+    /* =========================
+       VAZIO / ERRO
+    ========================= */
 
     .empty {
-      grid-column: 1 / -1;
-      padding: 70px 20px;
-      text-align: center;
-      color: #6d746f;
+
+      grid-column:
+        1 / -1;
+
+      padding:
+        70px 20px;
+
+      text-align:
+        center;
+
+      color:
+        #6d746f;
+
+      background:
+        rgba(255,255,255,.35);
+
+      border-radius:
+        24px;
+
     }
 
-    @media(max-width: 900px) {
+
+
+    /* =========================
+       TABLET
+    ========================= */
+
+    @media (max-width: 1000px) {
+
+      .discovery-layout {
+
+        grid-template-columns:
+          1fr;
+
+      }
+
+
+      .map-column {
+
+        position:
+          relative;
+
+        top:
+          auto;
+
+        order:
+          -1;
+
+      }
+
+
+      #map {
+
+        height:
+          440px;
+
+        min-height:
+          0;
+
+      }
+
+
       .restaurants {
-        grid-template-columns: 1fr 1fr;
+
+        grid-template-columns:
+          repeat(2, minmax(0, 1fr));
+
       }
+
     }
 
-    @media(max-width: 560px) {
+
+
+    /* =========================
+       CELULAR
+    ========================= */
+
+    @media (max-width: 560px) {
+
       .food-page {
-        padding: 20px 18px 70px;
+
+        padding:
+          20px 18px 70px;
+
       }
+
 
       .back {
-        margin-bottom: 35px;
+
+        margin-bottom:
+          35px;
+
       }
+
 
       .food-header h1 {
-        letter-spacing: -2.5px;
+
+        letter-spacing:
+          -2.5px;
+
       }
 
-      .restaurants {
-        grid-template-columns: 1fr;
+
+      .food-header p {
+
+        font-size:
+          16px;
+
       }
+
 
       .filters {
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        padding-bottom: 5px;
+
+        flex-wrap:
+          nowrap;
+
+        overflow-x:
+          auto;
+
+        padding-bottom:
+          5px;
+
+        scrollbar-width:
+          none;
+
       }
 
-      .filter {
-        flex: 0 0 auto;
+
+      .filters::-webkit-scrollbar {
+
+        display:
+          none;
+
       }
+
+
+      .filter {
+
+        flex:
+          0 0 auto;
+
+      }
+
+
+      .restaurants {
+
+        grid-template-columns:
+          1fr;
+
+      }
+
+
+      #map {
+
+        height:
+          390px;
+
+        border-radius:
+          22px;
+
+      }
+
+
+      .map-label {
+
+        display:
+          none;
+
+      }
+
     }
+
   </style>
+
 </head>
+
+
 
 <body>
 
-<header class="topbar">
 
-  <a class="logo" href="index.html">
-    ora<span>vicino</span>
-  </a>
+  <!-- =========================
+       HEADER
+  ========================== -->
 
-  <div class="top-actions">
-    <button class="city-button">📍 Trento</button>
-    <button class="language-button">IT ▾</button>
-  </div>
+  <header class="topbar">
 
-</header>
+    <a
+      class="logo"
+      href="index.html"
+    >
+      ora<span>vicino</span>
+    </a>
 
 
-<main class="food-page">
+    <div class="top-actions">
 
-  <a class="back" href="index.html">← Torna alla home</a>
+      <button
+        class="city-button"
+        type="button"
+      >
+        📍 Trento
+      </button>
 
-  <section class="food-header">
 
-    <span class="mini-title">MANGIARE · TRENTO</span>
+      <button
+        class="language-button"
+        type="button"
+      >
+        IT ▾
+      </button>
 
-    <h1>Dove mangiamo?</h1>
+    </div>
+
+  </header>
+
+
+
+  <!-- =========================
+       CONTEÚDO
+  ========================== -->
+
+  <main class="food-page">
+
+
+    <a
+      class="back"
+      href="index.html"
+    >
+      ← Torna alla home
+    </a>
+
+
+
+    <!-- CABEÇALHO -->
+
+    <section class="food-header">
+
+      <span class="mini-title">
+        MANGIARE · TRENTO
+      </span>
+
+      <h1>
+        Dove mangiamo?
+      </h1>
+
+      <p>
+        Ristoranti, trattorie, osterie
+        e piccoli posti da scoprire.
+      </p>
+
+    </section>
+
+
+
+    <!-- BUSCA -->
+
+    <div class="food-search">
+
+      <span class="food-search-icon">
+        ⌕
+      </span>
+
+      <input
+        id="search"
+        type="text"
+        autocomplete="off"
+        placeholder="Cerca un posto, una cucina o un quartiere..."
+      >
+
+    </div>
+
+
+
+    <!-- FILTROS -->
+
+    <div class="filters">
+
+      <button
+        class="filter active"
+        data-filter="all"
+        type="button"
+      >
+        Tutti
+      </button>
+
+
+      <button
+        class="filter"
+        data-filter="trentino"
+        type="button"
+      >
+        🥘 Tipico
+      </button>
+
+
+      <button
+        class="filter"
+        data-filter="pizza"
+        type="button"
+      >
+        🍕 Pizza
+      </button>
+
+
+      <button
+        class="filter"
+        data-filter="osteria"
+        type="button"
+      >
+        🍷 Osteria
+      </button>
+
+
+      <button
+        class="filter"
+        data-filter="fuori-percorso"
+        type="button"
+      >
+        🧭 Fuori dal percorso
+      </button>
+
+
+      <button
+        class="filter"
+        data-filter="€€"
+        type="button"
+      >
+        €€
+      </button>
+
+
+      <button
+        class="filter"
+        data-filter="€€€"
+        type="button"
+      >
+        €€€
+      </button>
+
+    </div>
+
+
+
+    <!-- CONTAGEM -->
+
+    <div class="results-header">
+
+      <strong id="resultCount">
+        Caricamento...
+      </strong>
+
+      <span class="map-label">
+        MAPPA DI TRENTO
+      </span>
+
+    </div>
+
+
+
+    <!-- LISTA + MAPA -->
+
+    <div class="discovery-layout">
+
+
+      <!-- RESTAURANTES -->
+
+      <section
+        class="restaurants"
+        id="restaurants"
+        aria-live="polite"
+      >
+      </section>
+
+
+
+      <!-- MAPA -->
+
+      <aside class="map-column">
+
+        <div class="map-wrapper">
+
+          <div class="map-badge">
+            📍 TRENTO
+          </div>
+
+          <div
+            id="map"
+            aria-label="Mappa di Trento"
+          ></div>
+
+        </div>
+
+      </aside>
+
+
+    </div>
+
+  </main>
+
+
+
+  <!-- =========================
+       FOOTER
+  ========================== -->
+
+  <footer>
+
+    <a
+      class="logo"
+      href="index.html"
+    >
+      ora<span>vicino</span>
+    </a>
 
     <p>
-      Ristoranti, trattorie e piccoli posti da scoprire.
+      Trento · Italia
     </p>
 
-  </section>
+    <p class="footer-small">
+      Progetto pilota
+    </p>
 
+  </footer>
 
-  <div class="food-search">
 
-    <span>⌕</span>
 
-    <input
-      id="search"
-      type="text"
-      placeholder="Cerca un posto, una cucina o un quartiere..."
-    >
+  <!-- =========================
+       JAVASCRIPT
+  ========================== -->
 
-  </div>
+  <script>
 
+    /* -------------------------
+       ESTADO
+    ------------------------- */
 
-  <div class="filters">
+    let restaurants = [];
 
-    <button class="filter active" data-filter="all">
-      Tutti
-    </button>
+    let currentFilter = "all";
 
-    <button class="filter" data-filter="trentino">
-      🥘 Tipico
-    </button>
 
-    <button class="filter" data-filter="pizza">
-      🍕 Pizza
-    </button>
+    const container =
+      document.getElementById(
+        "restaurants"
+      );
 
-    <button class="filter" data-filter="osteria">
-      🍷 Osteria
-    </button>
 
-    <button class="filter" data-filter="fuori-percorso">
-      🧭 Fuori dal percorso
-    </button>
+    const search =
+      document.getElementById(
+        "search"
+      );
 
-    <button class="filter" data-filter="€€">
-      €€
-    </button>
 
-    <button class="filter" data-filter="€€€">
-      €€€
-    </button>
+    const count =
+      document.getElementById(
+        "resultCount"
+      );
 
-  </div>
 
 
-  <div class="results-header">
+    /* -------------------------
+       MAPA DE TRENTO
+    ------------------------- */
 
-    <strong id="resultCount">
-      Caricamento...
-    </strong>
+    const map = L.map(
+      "map",
+      {
+        zoomControl: true,
+        scrollWheelZoom: true
+      }
+    ).setView(
+      [
+        46.0679,
+        11.1211
+      ],
+      14
+    );
 
-  </div>
 
+    L.tileLayer(
+      "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+      {
 
-  <section
-    class="restaurants"
-    id="restaurants"
-  ></section>
+        maxZoom:
+          19,
 
-</main>
+        attribution:
+          '&copy; OpenStreetMap contributors'
 
+      }
+    ).addTo(map);
 
-<footer>
 
-  <div class="logo">
-    ora<span>vicino</span>
-  </div>
 
-  <p>Trento · Italia</p>
+    /* -------------------------
+       CARREGAR JSON
+    ------------------------- */
 
-  <p class="footer-small">
-    Progetto pilota
-  </p>
+    async function loadRestaurants() {
 
-</footer>
+      try {
 
+        const response =
+          await fetch(
+            "data/restaurants.json"
+          );
 
-<script>
 
-let restaurants = [];
-let currentFilter = "all";
+        if (!response.ok) {
 
-const container =
-  document.getElementById("restaurants");
+          throw new Error(
+            "Errore HTTP " +
+            response.status
+          );
 
-const search =
-  document.getElementById("search");
+        }
 
-const count =
-  document.getElementById("resultCount");
 
+        restaurants =
+          await response.json();
 
-async function loadRestaurants() {
 
-  try {
-
-    const response =
-      await fetch("data/restaurants.json");
-
-    restaurants =
-      await response.json();
-
-    renderRestaurants(restaurants);
-
-  }
-
-  catch (error) {
-
-    container.innerHTML =
-      '<div class="empty">Impossibile caricare i ristoranti.</div>';
-
-    count.textContent =
-      "Errore nel caricamento";
-
-    console.error(error);
-
-  }
-
-}
-
-
-function restaurantEmoji(item) {
-
-  const text =
-    (
-      item.category +
-      " " +
-      item.tags.join(" ")
-    ).toLowerCase();
-
-  if (text.includes("pizza"))
-    return "🍕";
-
-  if (text.includes("osteria"))
-    return "🍷";
-
-  if (
-    text.includes("trentino") ||
-    text.includes("territorio")
-  )
-    return "🥘";
-
-  if (text.includes("birra"))
-    return "🍺";
-
-  return "🍽️";
-
-}
-
-
-function renderRestaurants(items) {
-
-  count.textContent =
-    items.length +
-    (items.length === 1
-      ? " posto trovato"
-      : " posti trovati");
-
-
-  if (!items.length) {
-
-    container.innerHTML = `
-      <div class="empty">
-        Nessun posto trovato.<br>
-        Prova un'altra ricerca.
-      </div>
-    `;
-
-    return;
-  }
-
-
-  container.innerHTML =
-    items.map(item => {
-
-      const fuori =
-        item.tags.includes(
-          "fuori-percorso"
+        renderRestaurants(
+          restaurants
         );
 
-      return `
 
-        <article class="restaurant">
+        /*
+          Quando adicionarmos
+          lat/lng ao JSON,
+          esta mesma página
+          passará a criar
+          os marcadores.
+        */
 
-          <div class="restaurant-cover">
-
-            ${
-              fuori
-                ? '<span class="route-badge">FUORI DAL PERCORSO</span>'
-                : ''
-            }
-
-            <span>
-              ${restaurantEmoji(item)}
-            </span>
-
-          </div>
-
-
-          <div class="restaurant-content">
-
-            <span class="restaurant-area">
-              ${item.area}
-            </span>
-
-            <h2>
-              ${item.name}
-            </h2>
-
-            <div class="category">
-              ${item.category}
-            </div>
-
-
-            <div class="address">
-              📍 ${item.address}
-            </div>
-
-
-            <div class="restaurant-info">
-
-              <span>
-                ${item.price}
-              </span>
-
-              <span>
-                Trento →
-              </span>
-
-            </div>
-
-          </div>
-
-        </article>
-
-      `;
-
-    }).join("");
-
-}
-
-
-function applyFilters() {
-
-  const query =
-    search.value
-      .toLowerCase()
-      .trim();
-
-
-  const filtered =
-    restaurants.filter(item => {
-
-      const searchable =
-        [
-          item.name,
-          item.category,
-          item.area,
-          item.address,
-          ...item.tags
-        ]
-        .join(" ")
-        .toLowerCase();
-
-
-      const matchesSearch =
-        searchable.includes(query);
-
-
-      let matchesFilter = true;
-
-
-      if (
-        currentFilter !== "all"
-      ) {
-
-        if (
-          currentFilter === "€€" ||
-          currentFilter === "€€€"
-        ) {
-
-          matchesFilter =
-            item.price === currentFilter;
-
-        }
-
-        else {
-
-          matchesFilter =
-            item.tags.includes(
-              currentFilter
-            );
-
-        }
+        updateMarkers(
+          restaurants
+        );
 
       }
 
 
-      return (
-        matchesSearch &&
-        matchesFilter
-      );
+      catch (error) {
 
-    });
+        container.innerHTML = `
 
+          <div class="empty">
 
-  renderRestaurants(filtered);
+            Impossibile caricare
+            i ristoranti.
 
-}
+          </div>
 
-
-search.addEventListener(
-  "input",
-  applyFilters
-);
+        `;
 
 
-document
-  .querySelectorAll(".filter")
-  .forEach(button => {
-
-    button.addEventListener(
-      "click",
-      () => {
-
-        document
-          .querySelectorAll(".filter")
-          .forEach(b =>
-            b.classList.remove("active")
-          );
+        count.textContent =
+          "Errore nel caricamento";
 
 
-        button.classList.add(
-          "active"
+        console.error(
+          error
+        );
+
+      }
+
+    }
+
+
+
+    /* -------------------------
+       EMOJI TEMPORÁRIO
+    ------------------------- */
+
+    function restaurantEmoji(item) {
+
+      const tags =
+        Array.isArray(item.tags)
+          ? item.tags
+          : [];
+
+
+      const text =
+        (
+          (item.category || "") +
+          " " +
+          tags.join(" ")
+        )
+        .toLowerCase();
+
+
+      if (
+        text.includes("pizza")
+      ) {
+
+        return "🍕";
+
+      }
+
+
+      if (
+        text.includes("osteria")
+      ) {
+
+        return "🍷";
+
+      }
+
+
+      if (
+        text.includes("trentino") ||
+        text.includes("territorio")
+      ) {
+
+        return "🥘";
+
+      }
+
+
+      if (
+        text.includes("birra")
+      ) {
+
+        return "🍺";
+
+      }
+
+
+      return "🍽️";
+
+    }
+
+
+
+    /* -------------------------
+       RENDER DOS CARDS
+    ------------------------- */
+
+    function renderRestaurants(items) {
+
+      count.textContent =
+        items.length +
+        (
+          items.length === 1
+            ? " posto trovato"
+            : " posti trovati"
         );
 
 
-        currentFilter =
-          button.dataset.filter;
+      if (!items.length) {
+
+        container.innerHTML = `
+
+          <div class="empty">
+
+            Nessun posto trovato.
+            <br><br>
+
+            Prova un'altra ricerca
+            o cambia filtro.
+
+          </div>
+
+        `;
+
+        return;
+
+      }
 
 
-        applyFilters();
+      container.innerHTML =
+        items.map(
+          item => {
+
+
+            const tags =
+              Array.isArray(item.tags)
+                ? item.tags
+                : [];
+
+
+            const fuori =
+              tags.includes(
+                "fuori-percorso"
+              );
+
+
+            return `
+
+              <article
+                class="restaurant"
+                data-id="${item.id}"
+              >
+
+
+                <div
+                  class="restaurant-cover"
+                >
+
+
+                  ${
+                    fuori
+
+                    ? `
+
+                      <span
+                        class="route-badge"
+                      >
+                        FUORI DAL PERCORSO
+                      </span>
+
+                    `
+
+                    : ""
+
+                  }
+
+
+                  <span>
+
+                    ${restaurantEmoji(item)}
+
+                  </span>
+
+
+                </div>
+
+
+
+                <div
+                  class="restaurant-content"
+                >
+
+
+                  <span
+                    class="restaurant-area"
+                  >
+
+                    ${item.area || "Trento"}
+
+                  </span>
+
+
+                  <h2>
+
+                    ${item.name}
+
+                  </h2>
+
+
+                  <div
+                    class="category"
+                  >
+
+                    ${item.category || "Ristorante"}
+
+                  </div>
+
+
+                  <div
+                    class="address"
+                  >
+
+                    📍
+                    ${item.address}
+
+                  </div>
+
+
+                  <div
+                    class="restaurant-info"
+                  >
+
+
+                    <span>
+
+                      ${item.price || ""}
+
+                    </span>
+
+
+                    <span>
+
+                      Trento →
+
+                    </span>
+
+
+                  </div>
+
+
+                </div>
+
+
+              </article>
+
+            `;
+
+          }
+        ).join("");
+
+    }
+
+
+
+    /* -------------------------
+       MARCADORES
+    ------------------------- */
+
+    let markers = [];
+
+
+    function clearMarkers() {
+
+      markers.forEach(
+        marker => {
+
+          map.removeLayer(
+            marker
+          );
+
+        }
+      );
+
+
+      markers = [];
+
+    }
+
+
+
+    function updateMarkers(items) {
+
+      clearMarkers();
+
+
+      const placesWithCoordinates =
+        items.filter(
+          item =>
+
+            Number.isFinite(
+              Number(item.lat)
+            )
+
+            &&
+
+            Number.isFinite(
+              Number(item.lng)
+            )
+
+        );
+
+
+      placesWithCoordinates.forEach(
+        item => {
+
+
+          const marker =
+            L.marker(
+              [
+                Number(item.lat),
+                Number(item.lng)
+              ]
+            )
+            .addTo(map);
+
+
+          marker.bindPopup(`
+
+            <strong>
+              ${item.name}
+            </strong>
+
+            <br>
+
+            ${item.category || ""}
+
+            <br>
+
+            <small>
+              ${item.address || ""}
+            </small>
+
+          `);
+
+
+          markers.push(
+            marker
+          );
+
+        }
+      );
+
+
+      /*
+        Se o JSON ainda não
+        tiver coordenadas,
+        o mapa simplesmente
+        permanece centralizado
+        em Trento.
+      */
+
+
+      if (
+        placesWithCoordinates.length > 1
+      ) {
+
+        const group =
+          L.featureGroup(
+            markers
+          );
+
+
+        map.fitBounds(
+          group.getBounds(),
+          {
+            padding:
+              [35, 35],
+
+            maxZoom:
+              15
+          }
+        );
+
+      }
+
+
+      else if (
+        placesWithCoordinates.length === 1
+      ) {
+
+        map.setView(
+          [
+            Number(
+              placesWithCoordinates[0].lat
+            ),
+
+            Number(
+              placesWithCoordinates[0].lng
+            )
+          ],
+          15
+        );
+
+      }
+
+    }
+
+
+
+    /* -------------------------
+       FILTROS
+    ------------------------- */
+
+    function applyFilters() {
+
+      const query =
+        search.value
+          .toLowerCase()
+          .trim();
+
+
+      const filtered =
+        restaurants.filter(
+          item => {
+
+
+            const tags =
+              Array.isArray(item.tags)
+                ? item.tags
+                : [];
+
+
+            const searchable =
+              [
+
+                item.name || "",
+
+                item.category || "",
+
+                item.area || "",
+
+                item.address || "",
+
+                ...tags
+
+              ]
+              .join(" ")
+              .toLowerCase();
+
+
+            const matchesSearch =
+              searchable.includes(
+                query
+              );
+
+
+            let matchesFilter =
+              true;
+
+
+            if (
+              currentFilter !==
+              "all"
+            ) {
+
+
+              if (
+                currentFilter === "€€"
+                ||
+                currentFilter === "€€€"
+              ) {
+
+                matchesFilter =
+                  item.price ===
+                  currentFilter;
+
+              }
+
+
+              else {
+
+                matchesFilter =
+                  tags.includes(
+                    currentFilter
+                  );
+
+              }
+
+            }
+
+
+            return (
+              matchesSearch
+              &&
+              matchesFilter
+            );
+
+          }
+        );
+
+
+      renderRestaurants(
+        filtered
+      );
+
+
+      updateMarkers(
+        filtered
+      );
+
+    }
+
+
+
+    /* -------------------------
+       BUSCA
+    ------------------------- */
+
+    search.addEventListener(
+      "input",
+      applyFilters
+    );
+
+
+
+    /* -------------------------
+       BOTÕES DOS FILTROS
+    ------------------------- */
+
+    document
+      .querySelectorAll(
+        ".filter"
+      )
+      .forEach(
+        button => {
+
+
+          button.addEventListener(
+            "click",
+            () => {
+
+
+              document
+                .querySelectorAll(
+                  ".filter"
+                )
+                .forEach(
+                  b =>
+
+                    b.classList.remove(
+                      "active"
+                    )
+
+                );
+
+
+              button.classList.add(
+                "active"
+              );
+
+
+              currentFilter =
+                button.dataset.filter;
+
+
+              applyFilters();
+
+            }
+          );
+
+        }
+      );
+
+
+
+    /* -------------------------
+       INICIAR
+    ------------------------- */
+
+    loadRestaurants();
+
+
+    /*
+      Corrige renderização do
+      Leaflet após o layout
+      terminar de carregar.
+    */
+
+    window.addEventListener(
+      "load",
+      () => {
+
+        setTimeout(
+          () => {
+
+            map.invalidateSize();
+
+          },
+          150
+        );
 
       }
     );
 
-  });
+  </script>
 
-
-loadRestaurants();
-
-</script>
 
 </body>
+
 </html>
