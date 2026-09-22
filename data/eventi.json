@@ -1,0 +1,24 @@
+{
+  "id": "exemplo-evento",
+  "title": "Nome dell'evento",
+  "category": "Musica",
+  "description": "Breve descrizione dell'evento.",
+  "venue": "Nome del locale",
+  "address": "Indirizzo",
+  "city": "Trento",
+  "area": "Centro storico",
+  "dateStart": "2026-09-25",
+  "dateEnd": "2026-09-25",
+  "timeStart": "21:00",
+  "timeEnd": "23:30",
+  "price": "Gratis",
+  "lat": 46.0679,
+  "lng": 11.1211,
+  "tags": [
+    "musica",
+    "stasera"
+  ],
+  "image": null,
+  "url": null,
+  "source": null
+}
