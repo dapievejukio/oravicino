@@ -1,0 +1,3128 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Bere a Trento — OraVicino</title>
+
+  <meta
+    name="description"
+    content="Scopri enoteche, birrerie, cocktail bar e aperitivi a Trento."
+  >
+
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
+
+  <!-- LEAFLET -->
+
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  >
+
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  ></script>
+
+
+  <style>
+
+    /* =====================================================
+       BASE
+    ===================================================== */
+
+    :root {
+
+      --wine: #6f2938;
+      --wine-dark: #4f1c29;
+      --wine-soft: #8d4352;
+      --cream: #f7f3e9;
+      --paper: #fffdf8;
+      --ink: #17231d;
+      --muted: #6d746f;
+      --orange: #ef6a3a;
+      --yellow: #f2c14e;
+      --green: #173f32;
+
+    }
+
+
+    body {
+
+      background:
+
+        radial-gradient(
+          circle at 83% 7%,
+          rgba(111,41,56,.11),
+          transparent 25%
+        ),
+
+        radial-gradient(
+          circle at 2% 45%,
+          rgba(23,63,50,.06),
+          transparent 20%
+        ),
+
+        linear-gradient(
+          180deg,
+          #f7f3e9 0%,
+          #f4efe4 52%,
+          #f8f5ed 100%
+        );
+
+      color: var(--ink);
+
+    }
+
+
+    body::before {
+
+      content: "";
+
+      position: fixed;
+
+      inset: 0;
+
+      z-index: -1;
+
+      pointer-events: none;
+
+      opacity: .22;
+
+      background-image:
+
+        linear-gradient(
+          rgba(23,63,50,.018) 1px,
+          transparent 1px
+        ),
+
+        linear-gradient(
+          90deg,
+          rgba(23,63,50,.018) 1px,
+          transparent 1px
+        );
+
+      background-size: 42px 42px;
+
+    }
+
+
+
+    /* =====================================================
+       CONTAINER
+    ===================================================== */
+
+    .drink-page {
+
+      max-width: 1240px;
+
+      margin: auto;
+
+      padding:
+        35px 30px 110px;
+
+    }
+
+
+
+    /* =====================================================
+       VOLTAR
+    ===================================================== */
+
+    .back {
+
+      display: inline-flex;
+
+      align-items: center;
+
+      gap: 7px;
+
+      margin:
+        15px 0 32px;
+
+      color: #667068;
+
+      font-size: 14px;
+
+      font-weight: 650;
+
+      text-decoration: none;
+
+      transition:
+        color .2s ease;
+
+    }
+
+
+    .back:hover {
+
+      color: var(--wine);
+
+    }
+
+
+
+    /* =====================================================
+       HERO
+    ===================================================== */
+
+    .drink-hero {
+
+      position: relative;
+
+      min-height: 390px;
+
+      overflow: hidden;
+
+      margin-bottom: 25px;
+
+      padding:
+        42px 42px 28px;
+
+      border-radius: 38px;
+
+      isolation: isolate;
+
+      background:
+
+        linear-gradient(
+          105deg,
+          rgba(247,243,233,.99) 0%,
+          rgba(247,243,233,.97) 37%,
+          rgba(247,243,233,.78) 55%,
+          rgba(247,243,233,.16) 100%
+        );
+
+      box-shadow:
+        0 22px 60px
+        rgba(25,39,32,.055);
+
+    }
+
+
+
+    /* FOTO TRENTO */
+
+    .trento-hero-photo {
+
+      position: absolute;
+
+      z-index: -3;
+
+      top: 0;
+
+      right: 0;
+
+      width: 61%;
+
+      height: 100%;
+
+      object-fit: cover;
+
+      object-position: center;
+
+      opacity: .86;
+
+    }
+
+
+
+    /* FUNDO / DEGRADÊ */
+
+    .drink-hero::before {
+
+      content: "";
+
+      position: absolute;
+
+      z-index: -2;
+
+      inset: 0;
+
+      pointer-events: none;
+
+      background:
+
+        linear-gradient(
+          90deg,
+          #f7f3e9 0%,
+          rgba(247,243,233,.98) 32%,
+          rgba(247,243,233,.89) 45%,
+          rgba(247,243,233,.47) 64%,
+          rgba(247,243,233,.08) 100%
+        ),
+
+        linear-gradient(
+          0deg,
+          rgba(247,243,233,.44) 0%,
+          transparent 34%
+        );
+
+    }
+
+
+
+    /* DETALHE VINHO */
+
+    .drink-hero::after {
+
+      content: "";
+
+      position: absolute;
+
+      z-index: -1;
+
+      width: 420px;
+
+      height: 420px;
+
+      right: -110px;
+
+      top: -210px;
+
+      border-radius: 50%;
+
+      background:
+        rgba(111,41,56,.16);
+
+      pointer-events: none;
+
+    }
+
+
+
+    /* =====================================================
+       CABEÇALHO HERO
+    ===================================================== */
+
+    .drink-header {
+
+      position: relative;
+
+      z-index: 3;
+
+      max-width: 660px;
+
+      margin-bottom: 29px;
+
+    }
+
+
+    .mini-title {
+
+      display: inline-flex;
+
+      align-items: center;
+
+      gap: 8px;
+
+      color: var(--wine);
+
+      font-size: 12px;
+
+      font-weight: 800;
+
+      letter-spacing: 1.4px;
+
+    }
+
+
+    .mini-title::before {
+
+      content: "";
+
+      width: 28px;
+
+      height: 2px;
+
+      border-radius: 999px;
+
+      background: var(--wine);
+
+    }
+
+
+    .drink-header h1 {
+
+      margin:
+        10px 0 12px;
+
+      max-width: 720px;
+
+      color: var(--wine-dark);
+
+      font-size:
+        clamp(52px, 6vw, 82px);
+
+      line-height: .93;
+
+      letter-spacing: -4px;
+
+    }
+
+
+    .drink-header p {
+
+      max-width: 535px;
+
+      margin: 0;
+
+      color: #667068;
+
+      font-size: 18px;
+
+      line-height: 1.55;
+
+    }
+
+
+
+    /* =====================================================
+       NOTA TRENTO
+    ===================================================== */
+
+    .trento-note {
+
+      position: absolute;
+
+      right: 5%;
+
+      top: 48px;
+
+      z-index: 4;
+
+      width: 255px;
+
+      padding:
+        17px 20px;
+
+      text-align: center;
+
+      color: var(--wine-dark);
+
+      border-radius: 20px;
+
+      background:
+        rgba(255,253,248,.64);
+
+      border:
+        1px solid
+        rgba(255,255,255,.45);
+
+      box-shadow:
+        0 12px 35px
+        rgba(25,39,32,.08);
+
+      backdrop-filter:
+        blur(7px);
+
+      -webkit-backdrop-filter:
+        blur(7px);
+
+    }
+
+
+    .trento-note strong {
+
+      display: block;
+
+      font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+      font-size: 36px;
+
+      font-style: italic;
+
+      font-weight: 500;
+
+      line-height: 1;
+
+    }
+
+
+    .trento-note span {
+
+      display: block;
+
+      margin-top: 10px;
+
+      font-size: 9px;
+
+      font-weight: 800;
+
+      letter-spacing: 2.7px;
+
+      text-transform: uppercase;
+
+    }
+
+
+
+    /* =====================================================
+       BUSCA
+    ===================================================== */
+
+    .drink-search {
+
+      position: relative;
+
+      z-index: 5;
+
+      max-width: 700px;
+
+      min-height: 62px;
+
+      padding:
+        0 20px;
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 12px;
+
+      border-radius: 20px;
+
+      background:
+        rgba(255,253,248,.94);
+
+      border:
+        1px solid
+        rgba(23,35,29,.08);
+
+      box-shadow:
+        0 16px 45px
+        rgba(25,39,32,.10);
+
+      backdrop-filter:
+        blur(10px);
+
+    }
+
+
+    .drink-search-icon {
+
+      color: var(--wine);
+
+      font-size: 21px;
+
+    }
+
+
+    .drink-search input {
+
+      flex: 1;
+
+      min-width: 0;
+
+      padding:
+        16px 4px;
+
+      border: 0;
+
+      outline: none;
+
+      background: transparent;
+
+      color: var(--ink);
+
+      font-size: 16px;
+
+    }
+
+
+    .drink-search input::placeholder {
+
+      color: #9b9f9b;
+
+    }
+
+
+
+    /* =====================================================
+       FILTROS
+    ===================================================== */
+
+    .filters {
+
+      position: relative;
+
+      z-index: 5;
+
+      display: flex;
+
+      flex-wrap: wrap;
+
+      gap: 9px;
+
+      margin:
+        17px 0 0;
+
+    }
+
+
+    .filter {
+
+      min-height: 40px;
+
+      padding:
+        0 16px;
+
+      border-radius: 999px;
+
+      border:
+        1px solid
+        rgba(23,35,29,.14);
+
+      background:
+        rgba(255,253,248,.84);
+
+      color: var(--ink);
+
+      cursor: pointer;
+
+      font-size: 13px;
+
+      backdrop-filter:
+        blur(7px);
+
+      transition:
+        background .2s ease,
+        color .2s ease,
+        border-color .2s ease,
+        transform .2s ease;
+
+    }
+
+
+    .filter:hover {
+
+      transform:
+        translateY(-1px);
+
+      border-color:
+        var(--wine);
+
+      background:
+        rgba(255,253,248,.98);
+
+    }
+
+
+    .filter.active {
+
+      color: #fffdf8;
+
+      border-color:
+        var(--wine);
+
+      background:
+        var(--wine);
+
+    }
+
+
+
+    /* =====================================================
+       CRÉDITO FOTO
+    ===================================================== */
+
+    .hero-photo-credit {
+
+      position: absolute;
+
+      z-index: 4;
+
+      right: 20px;
+
+      bottom: 11px;
+
+      padding:
+        4px 8px;
+
+      border-radius: 999px;
+
+      color:
+        rgba(255,255,255,.92);
+
+      background:
+        rgba(23,35,29,.56);
+
+      font-size: 8px;
+
+      text-decoration: none;
+
+      backdrop-filter:
+        blur(4px);
+
+    }
+
+
+
+    /* =====================================================
+       RESULTADOS
+    ===================================================== */
+
+    .results-header {
+
+      display: flex;
+
+      justify-content:
+        space-between;
+
+      align-items: center;
+
+      margin:
+        42px 0 18px;
+
+    }
+
+
+    .results-header strong {
+
+      color: var(--ink);
+
+      font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+      font-size: 16px;
+
+    }
+
+
+    .map-label {
+
+      color: #69736d;
+
+      font-size: 10px;
+
+      font-weight: 800;
+
+      letter-spacing: .8px;
+
+      text-transform: uppercase;
+
+    }
+
+
+
+    /* =====================================================
+       LAYOUT
+    ===================================================== */
+
+    .discovery-layout {
+
+      display: grid;
+
+      grid-template-columns:
+        minmax(0, 1.15fr)
+        minmax(360px, .85fr);
+
+      gap: 24px;
+
+      align-items: start;
+
+    }
+
+
+    .places {
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+      gap: 18px;
+
+    }
+
+
+
+    /* =====================================================
+       CARD
+    ===================================================== */
+
+    .place {
+
+      position: relative;
+
+      overflow: hidden;
+
+      cursor: pointer;
+
+      border-radius: 25px;
+
+      border:
+        1px solid
+        rgba(23,35,29,.11);
+
+      background:
+        rgba(255,253,248,.88);
+
+      box-shadow:
+        0 10px 30px
+        rgba(25,39,32,.035);
+
+      transition:
+        transform .25s ease,
+        box-shadow .25s ease,
+        border-color .25s ease;
+
+    }
+
+
+    .place:hover {
+
+      transform:
+        translateY(-4px);
+
+      border-color:
+        rgba(111,41,56,.34);
+
+      box-shadow:
+        0 18px 50px
+        rgba(25,39,32,.10);
+
+    }
+
+
+    .place.selected {
+
+      border-color:
+        var(--wine);
+
+      box-shadow:
+        0 18px 55px
+        rgba(111,41,56,.17);
+
+    }
+
+
+    .place.selected::after {
+
+      content: "";
+
+      position: absolute;
+
+      inset: 0;
+
+      pointer-events: none;
+
+      border:
+        2px solid
+        var(--wine);
+
+      border-radius: 24px;
+
+    }
+
+
+
+    /* =====================================================
+       CAPA
+    ===================================================== */
+
+    .place-cover {
+
+      position: relative;
+
+      height: 175px;
+
+      overflow: hidden;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      background:
+
+        radial-gradient(
+          circle at 77% 18%,
+          rgba(242,193,78,.45),
+          transparent 25%
+        ),
+
+        linear-gradient(
+          145deg,
+          #81384a,
+          #4f1c29
+        );
+
+      font-size: 55px;
+
+    }
+
+
+    .place-cover::before {
+
+      content: "";
+
+      position: absolute;
+
+      z-index: 1;
+
+      width: 190px;
+
+      height: 190px;
+
+      left: -80px;
+
+      bottom: -115px;
+
+      border-radius: 50%;
+
+      border:
+        1px solid
+        rgba(255,255,255,.10);
+
+    }
+
+
+
+    /* FOTO AUTOMÁTICA DO JSON */
+
+    .place-photo {
+
+      position: absolute;
+
+      z-index: 0;
+
+      inset: 0;
+
+      width: 100%;
+
+      height: 100%;
+
+      object-fit: cover;
+
+      display: block;
+
+      transition:
+        transform .45s ease;
+
+    }
+
+
+    .place:hover
+    .place-photo {
+
+      transform:
+        scale(1.045);
+
+    }
+
+
+    .place-cover.has-photo::after {
+
+      content: "";
+
+      position: absolute;
+
+      z-index: 1;
+
+      inset: 0;
+
+      pointer-events: none;
+
+      background:
+
+        linear-gradient(
+          180deg,
+          rgba(0,0,0,.15) 0%,
+          rgba(0,0,0,0) 42%,
+          rgba(0,0,0,.12) 100%
+        );
+
+    }
+
+
+    .place-emoji {
+
+      position: relative;
+
+      z-index: 2;
+
+      filter:
+        drop-shadow(
+          0 7px 12px
+          rgba(0,0,0,.20)
+        );
+
+    }
+
+
+
+    /* =====================================================
+       NÚMERO
+    ===================================================== */
+
+    .place-number {
+
+      position: absolute;
+
+      z-index: 5;
+
+      right: 15px;
+
+      top: 15px;
+
+      width: 36px;
+
+      height: 36px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      border-radius: 50%;
+
+      color: var(--wine-dark);
+
+      background: #fffdf8;
+
+      border:
+        2px solid
+        rgba(111,41,56,.13);
+
+      font-size: 12px;
+
+      font-weight: 800;
+
+      box-shadow:
+        0 5px 18px
+        rgba(0,0,0,.13);
+
+    }
+
+
+
+    /* =====================================================
+       BADGE
+    ===================================================== */
+
+    .route-badge {
+
+      position: absolute;
+
+      z-index: 5;
+
+      left: 16px;
+
+      top: 16px;
+
+      padding:
+        7px 11px;
+
+      border-radius: 999px;
+
+      color: var(--ink);
+
+      background: var(--yellow);
+
+      font-size: 9px;
+
+      font-weight: 800;
+
+      letter-spacing: .7px;
+
+      box-shadow:
+        0 5px 15px
+        rgba(0,0,0,.10);
+
+    }
+
+
+
+    /* =====================================================
+       CONTEÚDO CARD
+    ===================================================== */
+
+    .place-content {
+
+      padding: 22px;
+
+    }
+
+
+    .place-area {
+
+      color: var(--wine);
+
+      font-size: 10px;
+
+      font-weight: 800;
+
+      text-transform: uppercase;
+
+      letter-spacing: 1.25px;
+
+    }
+
+
+    .place h2 {
+
+      margin:
+        7px 0 6px;
+
+      color: var(--ink);
+
+      font-size: 23px;
+
+      line-height: 1.1;
+
+      letter-spacing: -1px;
+
+    }
+
+
+    .category {
+
+      min-height: 24px;
+
+      color: #687069;
+
+      line-height: 1.4;
+
+    }
+
+
+    .address {
+
+      margin-top: 14px;
+
+      color: #687069;
+
+      font-size: 13px;
+
+      line-height: 1.4;
+
+    }
+
+
+    .place-info {
+
+      margin-top: 20px;
+
+      padding-top: 17px;
+
+      display: flex;
+
+      justify-content:
+        space-between;
+
+      gap: 15px;
+
+      border-top:
+        1px solid
+        rgba(23,35,29,.09);
+
+      color: var(--ink);
+
+      font-size: 13px;
+
+      font-weight: 650;
+
+    }
+
+
+
+    /* =====================================================
+       MAPA
+    ===================================================== */
+
+    .map-column {
+
+      position: sticky;
+
+      top: 20px;
+
+    }
+
+
+    .map-wrapper {
+
+      position: relative;
+
+      padding: 7px;
+
+      border-radius: 30px;
+
+      background:
+        rgba(255,253,248,.72);
+
+      border:
+        1px solid
+        rgba(23,35,29,.08);
+
+      box-shadow:
+        0 18px 50px
+        rgba(25,39,32,.07);
+
+    }
+
+
+    #map {
+
+      width: 100%;
+
+      height:
+        calc(100vh - 55px);
+
+      min-height: 620px;
+
+      overflow: hidden;
+
+      border-radius: 24px;
+
+      background: #e8e7df;
+
+    }
+
+
+    .map-badge {
+
+      position: absolute;
+
+      z-index: 500;
+
+      top: 24px;
+
+      left: 50%;
+
+      transform:
+        translateX(-50%);
+
+      padding:
+        9px 15px;
+
+      border-radius: 999px;
+
+      color: var(--wine-dark);
+
+      background:
+        rgba(255,253,248,.94);
+
+      border:
+        1px solid
+        rgba(23,35,29,.12);
+
+      box-shadow:
+        0 8px 25px
+        rgba(25,39,32,.10);
+
+      font-size: 11px;
+
+      font-weight: 800;
+
+      letter-spacing: .7px;
+
+      white-space: nowrap;
+
+    }
+
+
+    .leaflet-container {
+
+      font-family:
+        "DM Sans",
+        sans-serif;
+
+    }
+
+
+    .leaflet-control-attribution {
+
+      font-size: 10px;
+
+    }
+
+
+
+    /* =====================================================
+       PIN
+    ===================================================== */
+
+    .oravicino-marker {
+
+      background: transparent;
+
+      border: 0;
+
+    }
+
+
+    .marker-pin {
+
+      position: relative;
+
+      width: 34px;
+
+      height: 34px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      border-radius:
+        50% 50% 50% 4px;
+
+      transform:
+        rotate(-45deg);
+
+      background:
+        var(--wine);
+
+      border:
+        3px solid
+        #fffdf8;
+
+      box-shadow:
+        0 5px 15px
+        rgba(0,0,0,.28);
+
+      transition:
+        transform .18s ease,
+        background .18s ease;
+
+    }
+
+
+    .marker-pin span {
+
+      transform:
+        rotate(45deg);
+
+      color: white;
+
+      font-size: 11px;
+
+      font-weight: 800;
+
+    }
+
+
+    .marker-pin.active {
+
+      background:
+        var(--orange);
+
+      transform:
+        rotate(-45deg)
+        scale(1.28);
+
+      z-index: 999;
+
+    }
+
+
+
+    /* =====================================================
+       POPUP
+    ===================================================== */
+
+    .popup-content {
+
+      min-width: 175px;
+
+      padding: 3px;
+
+    }
+
+
+    .popup-number {
+
+      display: inline-flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      width: 24px;
+
+      height: 24px;
+
+      margin-bottom: 7px;
+
+      border-radius: 50%;
+
+      color: white;
+
+      background:
+        var(--wine);
+
+      font-size: 10px;
+
+      font-weight: 800;
+
+    }
+
+
+    .popup-content strong {
+
+      display: block;
+
+      margin-bottom: 4px;
+
+      color: var(--ink);
+
+      font-size: 14px;
+
+    }
+
+
+    .popup-category {
+
+      color: #6d746f;
+
+      font-size: 12px;
+
+    }
+
+
+    .popup-address {
+
+      margin-top: 7px;
+
+      color: #6d746f;
+
+      font-size: 11px;
+
+    }
+
+
+
+    /* =====================================================
+       VAZIO
+    ===================================================== */
+
+    .empty {
+
+      grid-column:
+        1 / -1;
+
+      padding:
+        70px 20px;
+
+      text-align: center;
+
+      color: #6d746f;
+
+      border-radius: 24px;
+
+      background:
+        rgba(255,253,248,.55);
+
+      border:
+        1px solid
+        rgba(23,35,29,.08);
+
+    }
+
+
+
+    /* =====================================================
+       TABLET
+    ===================================================== */
+
+    @media (max-width: 1000px) {
+
+      .drink-hero {
+
+        min-height: 410px;
+
+      }
+
+
+      .trento-note {
+
+        right: 30px;
+
+        top: 35px;
+
+      }
+
+
+      .trento-hero-photo {
+
+        width: 70%;
+
+      }
+
+
+      .discovery-layout {
+
+        grid-template-columns: 1fr;
+
+      }
+
+
+      .map-column {
+
+        position: relative;
+
+        top: auto;
+
+        order: -1;
+
+      }
+
+
+      #map {
+
+        height: 440px;
+
+        min-height: 0;
+
+      }
+
+
+      .places {
+
+        grid-template-columns:
+          repeat(2, minmax(0, 1fr));
+
+      }
+
+    }
+
+
+
+    /* =====================================================
+       CELULAR
+    ===================================================== */
+
+    @media (max-width: 700px) {
+
+      .drink-page {
+
+        padding:
+          20px 18px 70px;
+
+      }
+
+
+      .back {
+
+        margin-bottom: 25px;
+
+      }
+
+
+      .drink-hero {
+
+        min-height: 0;
+
+        padding:
+          215px 20px 24px;
+
+        border-radius: 27px;
+
+      }
+
+
+      .trento-hero-photo {
+
+        width: 100%;
+
+        height: 245px;
+
+        opacity: .9;
+
+        object-position: center;
+
+      }
+
+
+      .drink-hero::before {
+
+        background:
+
+          linear-gradient(
+            0deg,
+            #f7f3e9 0%,
+            #f7f3e9 51%,
+            rgba(247,243,233,.70) 66%,
+            rgba(247,243,233,.05) 100%
+          );
+
+      }
+
+
+      .trento-note {
+
+        top: 28px;
+
+        right: 22px;
+
+        width: auto;
+
+        max-width: 210px;
+
+      }
+
+
+      .trento-note strong {
+
+        font-size: 28px;
+
+      }
+
+
+      .drink-header h1 {
+
+        font-size:
+          clamp(46px, 14vw, 62px);
+
+        letter-spacing:
+          -2.5px;
+
+      }
+
+
+      .drink-header p {
+
+        font-size: 16px;
+
+      }
+
+
+      .drink-search {
+
+        min-height: 57px;
+
+      }
+
+
+      .filters {
+
+        flex-wrap: nowrap;
+
+        overflow-x: auto;
+
+        padding-bottom: 5px;
+
+        scrollbar-width: none;
+
+      }
+
+
+      .filters::-webkit-scrollbar {
+
+        display: none;
+
+      }
+
+
+      .filter {
+
+        flex:
+          0 0 auto;
+
+      }
+
+
+      .places {
+
+        grid-template-columns: 1fr;
+
+      }
+
+
+      #map {
+
+        height: 390px;
+
+        border-radius: 20px;
+
+      }
+
+
+      .map-label {
+
+        display: none;
+
+      }
+
+
+      .hero-photo-credit {
+
+        top: 190px;
+
+        bottom: auto;
+
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+
+<body>
+
+
+  <!-- =====================================================
+       HEADER
+  ===================================================== -->
+
+  <header class="topbar">
+
+    <a
+      class="logo"
+      href="index.html"
+    >
+      ora<span>vicino</span>
+    </a>
+
+
+    <div class="top-actions">
+
+      <button
+        class="city-button"
+        type="button"
+      >
+        📍 Trento
+      </button>
+
+
+      <button
+        class="language-button"
+        type="button"
+      >
+        IT ▾
+      </button>
+
+    </div>
+
+  </header>
+
+
+
+  <!-- =====================================================
+       CONTEÚDO
+  ===================================================== -->
+
+  <main class="drink-page">
+
+
+    <a
+      class="back"
+      href="index.html"
+    >
+      ← Torna alla home
+    </a>
+
+
+
+    <!-- =================================================
+         HERO
+    ================================================== -->
+
+    <section class="drink-hero">
+
+
+      <img
+        class="trento-hero-photo"
+        src="images/trento-panorama.jpg"
+        alt="Panorama di Trento"
+      >
+
+
+      <div class="drink-header">
+
+        <span class="mini-title">
+          BERE · TRENTO
+        </span>
+
+
+        <h1>
+          Cosa beviamo?
+        </h1>
+
+
+        <p>
+
+          Un aperitivo, una birra,
+          un bicchiere di vino
+          o qualcosa fatto bene.
+
+        </p>
+
+      </div>
+
+
+
+      <div class="trento-note">
+
+        <strong>
+          Trento
+        </strong>
+
+        <span>
+          un bicchiere alla volta
+        </span>
+
+      </div>
+
+
+
+      <!-- BUSCA -->
+
+      <div class="drink-search">
+
+        <span class="drink-search-icon">
+          ⌕
+        </span>
+
+        <input
+          id="search"
+          type="text"
+          autocomplete="off"
+          placeholder="Cerca un locale, una bevanda o un quartiere..."
+        >
+
+      </div>
+
+
+
+      <!-- FILTROS -->
+
+      <div class="filters">
+
+        <button
+          class="filter active"
+          data-filter="all"
+          type="button"
+        >
+          Tutti
+        </button>
+
+
+        <button
+          class="filter"
+          data-filter="vino"
+          type="button"
+        >
+          🍷 Vino
+        </button>
+
+
+        <button
+          class="filter"
+          data-filter="birra"
+          type="button"
+        >
+          🍺 Birra
+        </button>
+
+
+        <button
+          class="filter"
+          data-filter="cocktail"
+          type="button"
+        >
+          🍸 Cocktail
+        </button>
+
+
+        <button
+          class="filter"
+          data-filter="aperitivo"
+          type="button"
+        >
+          🥂 Aperitivo
+        </button>
+
+
+        <button
+          class="filter"
+          data-filter="dopo-cena"
+          type="button"
+        >
+          🌙 Dopo cena
+        </button>
+
+
+        <button
+          class="filter"
+          data-filter="fuori-percorso"
+          type="button"
+        >
+          🧭 Fuori dal percorso
+        </button>
+
+
+        <button
+          class="filter"
+          data-filter="€€"
+          type="button"
+        >
+          €€
+        </button>
+
+
+        <button
+          class="filter"
+          data-filter="€€€"
+          type="button"
+        >
+          €€€
+        </button>
+
+      </div>
+
+
+
+      <a
+        class="hero-photo-credit"
+        href="https://commons.wikimedia.org/wiki/File:Trento-panorama_from_Bindesi_2.jpg"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Foto: Matteo Ianeselli · Wikimedia Commons
+      </a>
+
+
+    </section>
+
+
+
+    <!-- =================================================
+         RESULTADOS
+    ================================================== -->
+
+    <div class="results-header">
+
+      <strong id="resultCount">
+        Caricamento...
+      </strong>
+
+
+      <span class="map-label">
+        📍 Clicca un locale per trovarlo sulla mappa
+      </span>
+
+    </div>
+
+
+
+    <div class="discovery-layout">
+
+
+      <section
+        class="places"
+        id="places"
+        aria-live="polite"
+      >
+      </section>
+
+
+
+      <aside class="map-column">
+
+        <div class="map-wrapper">
+
+
+          <div class="map-badge">
+            🍷 BERE A TRENTO
+          </div>
+
+
+          <div
+            id="map"
+            aria-label="Mappa dei locali di Trento"
+          ></div>
+
+
+        </div>
+
+      </aside>
+
+
+    </div>
+
+
+  </main>
+
+
+
+  <!-- =====================================================
+       FOOTER
+  ===================================================== -->
+
+  <footer>
+
+    <a
+      class="logo"
+      href="index.html"
+    >
+      ora<span>vicino</span>
+    </a>
+
+    <p>
+      Trento · Italia
+    </p>
+
+    <p class="footer-small">
+      Progetto pilota
+    </p>
+
+  </footer>
+
+
+
+  <!-- =====================================================
+       JAVASCRIPT
+  ===================================================== -->
+
+  <script>
+
+    let places = [];
+
+    let currentFilter = "all";
+
+    let selectedPlaceId = null;
+
+    let markers = {};
+
+    let visiblePlaces = [];
+
+
+    const container =
+      document.getElementById(
+        "places"
+      );
+
+
+    const search =
+      document.getElementById(
+        "search"
+      );
+
+
+    const count =
+      document.getElementById(
+        "resultCount"
+      );
+
+
+
+    /* =====================================================
+       MAPA
+    ===================================================== */
+
+    const map = L.map(
+      "map",
+      {
+        zoomControl: true,
+        scrollWheelZoom: true
+      }
+    ).setView(
+      [46.0679, 11.1211],
+      14
+    );
+
+
+    L.tileLayer(
+      "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+      {
+
+        maxZoom: 19,
+
+        attribution:
+          '&copy; OpenStreetMap contributors'
+
+      }
+    ).addTo(map);
+
+
+
+    /* =====================================================
+       CARREGAR BERE.JSON
+    ===================================================== */
+
+    async function loadPlaces() {
+
+      try {
+
+        const response =
+          await fetch(
+            "data/bere.json"
+          );
+
+
+        if (!response.ok) {
+
+          throw new Error(
+            "Errore HTTP "
+            +
+            response.status
+          );
+
+        }
+
+
+        places =
+          await response.json();
+
+
+        places =
+          places.map(
+            (item, index) => ({
+              ...item,
+              number: index + 1
+            })
+          );
+
+
+        visiblePlaces =
+          [...places];
+
+
+        readSearchFromUrl();
+
+
+        renderPlaces(
+          visiblePlaces
+        );
+
+
+        updateMarkers(
+          visiblePlaces
+        );
+
+      }
+
+
+      catch (error) {
+
+        container.innerHTML = `
+
+          <div class="empty">
+
+            Impossibile caricare
+            i locali.
+
+          </div>
+
+        `;
+
+
+        count.textContent =
+          "Errore nel caricamento";
+
+
+        console.error(error);
+
+      }
+
+    }
+
+
+
+    /* =====================================================
+       BUSCA RECEBIDA PELA URL
+       Exemplo:
+       bere.html?search=birra
+    ===================================================== */
+
+    function readSearchFromUrl() {
+
+      const params =
+        new URLSearchParams(
+          window.location.search
+        );
+
+
+      const query =
+        params.get("search");
+
+
+      if (query) {
+
+        search.value =
+          query;
+
+        applyFilters();
+
+      }
+
+    }
+
+
+
+    /* =====================================================
+       EMOJI
+    ===================================================== */
+
+    function placeEmoji(item) {
+
+      const tags =
+        Array.isArray(item.tags)
+          ? item.tags
+          : [];
+
+
+      const text =
+        (
+          (item.category || "")
+          +
+          " "
+          +
+          tags.join(" ")
+        )
+        .toLowerCase();
+
+
+      if (
+        text.includes("cocktail")
+        ||
+        text.includes("gin")
+      ) {
+
+        return "🍸";
+
+      }
+
+
+      if (
+        text.includes("vino")
+        ||
+        text.includes("enoteca")
+      ) {
+
+        return "🍷";
+
+      }
+
+
+      if (
+        text.includes("birra")
+        ||
+        text.includes("birreria")
+        ||
+        text.includes("pub")
+      ) {
+
+        return "🍺";
+
+      }
+
+
+      if (
+        text.includes("aperitivo")
+      ) {
+
+        return "🥂";
+
+      }
+
+
+      return "🍹";
+
+    }
+
+
+
+    /* =====================================================
+       CARDS
+    ===================================================== */
+
+    function renderPlaces(items) {
+
+      count.textContent =
+        items.length
+        +
+        (
+          items.length === 1
+            ? " locale trovato"
+            : " locali trovati"
+        );
+
+
+      if (!items.length) {
+
+        container.innerHTML = `
+
+          <div class="empty">
+
+            Nessun locale trovato.
+
+            <br><br>
+
+            Prova un'altra ricerca
+            o cambia filtro.
+
+          </div>
+
+        `;
+
+        return;
+
+      }
+
+
+      container.innerHTML =
+        items.map(
+          item => {
+
+
+            const tags =
+              Array.isArray(item.tags)
+                ? item.tags
+                : [];
+
+
+            const fuori =
+              tags.includes(
+                "fuori-percorso"
+              );
+
+
+            const selected =
+              item.id ===
+              selectedPlaceId;
+
+
+            const image =
+              item.image || null;
+
+
+            return `
+
+              <article
+                class="place
+                ${selected ? "selected" : ""}"
+                data-id="${item.id}"
+                tabindex="0"
+                role="button"
+                aria-label="Mostra ${item.name} sulla mappa"
+              >
+
+
+                <div
+                  class="place-cover
+                  ${image ? "has-photo" : ""}"
+                >
+
+
+                  ${
+                    image
+
+                    ? `
+
+                      <img
+                        class="place-photo"
+                        src="${image}"
+                        alt=""
+                        loading="lazy"
+                      >
+
+                    `
+
+                    : ""
+                  }
+
+
+                  ${
+                    fuori
+
+                    ? `
+
+                      <span
+                        class="route-badge"
+                      >
+                        FUORI DAL PERCORSO
+                      </span>
+
+                    `
+
+                    : ""
+                  }
+
+
+                  <span
+                    class="place-number"
+                  >
+                    ${item.number}
+                  </span>
+
+
+                  ${
+                    !image
+
+                    ? `
+
+                      <span
+                        class="place-emoji"
+                      >
+                        ${placeEmoji(item)}
+                      </span>
+
+                    `
+
+                    : ""
+                  }
+
+
+                </div>
+
+
+
+                <div
+                  class="place-content"
+                >
+
+
+                  <span
+                    class="place-area"
+                  >
+                    ${item.area || "Trento"}
+                  </span>
+
+
+                  <h2>
+                    ${item.name}
+                  </h2>
+
+
+                  <div
+                    class="category"
+                  >
+                    ${item.category || "Locale"}
+                  </div>
+
+
+                  <div
+                    class="address"
+                  >
+                    📍 ${item.address || "Trento"}
+                  </div>
+
+
+                  <div
+                    class="place-info"
+                  >
+
+                    <span>
+                      ${item.price || ""}
+                    </span>
+
+
+                    <span>
+                      Mappa →
+                    </span>
+
+                  </div>
+
+
+                </div>
+
+
+              </article>
+
+            `;
+
+          }
+        )
+        .join("");
+
+
+      addCardEvents();
+
+    }
+
+
+
+    /* =====================================================
+       EVENTOS CARDS
+    ===================================================== */
+
+    function addCardEvents() {
+
+      document
+        .querySelectorAll(
+          ".place"
+        )
+        .forEach(
+          card => {
+
+
+            card.addEventListener(
+              "click",
+              () => {
+
+                selectPlace(
+                  card.dataset.id,
+                  "card"
+                );
+
+              }
+            );
+
+
+            card.addEventListener(
+              "keydown",
+              event => {
+
+                if (
+                  event.key === "Enter"
+                  ||
+                  event.key === " "
+                ) {
+
+                  event.preventDefault();
+
+
+                  selectPlace(
+                    card.dataset.id,
+                    "card"
+                  );
+
+                }
+
+              }
+            );
+
+          }
+        );
+
+    }
+
+
+
+    /* =====================================================
+       ÍCONE MAPA
+    ===================================================== */
+
+    function createMarkerIcon(
+      item,
+      active = false
+    ) {
+
+      return L.divIcon({
+
+        className:
+          "oravicino-marker",
+
+        html: `
+
+          <div
+            class="marker-pin
+            ${active ? "active" : ""}"
+          >
+
+            <span>
+              ${item.number}
+            </span>
+
+          </div>
+
+        `,
+
+        iconSize:
+          [40, 40],
+
+        iconAnchor:
+          [20, 38],
+
+        popupAnchor:
+          [0, -36]
+
+      });
+
+    }
+
+
+
+    /* =====================================================
+       LIMPAR PINS
+    ===================================================== */
+
+    function clearMarkers() {
+
+      Object
+        .values(markers)
+        .forEach(
+          marker => {
+
+            map.removeLayer(
+              marker
+            );
+
+          }
+        );
+
+
+      markers = {};
+
+    }
+
+
+
+    /* =====================================================
+       PINS
+    ===================================================== */
+
+    function updateMarkers(items) {
+
+      clearMarkers();
+
+
+      const placesWithCoordinates =
+        items.filter(
+          item =>
+
+            Number.isFinite(
+              Number(item.lat)
+            )
+
+            &&
+
+            Number.isFinite(
+              Number(item.lng)
+            )
+
+        );
+
+
+      placesWithCoordinates
+        .forEach(
+          item => {
+
+
+            const active =
+              item.id ===
+              selectedPlaceId;
+
+
+            const marker =
+              L.marker(
+                [
+                  Number(item.lat),
+                  Number(item.lng)
+                ],
+                {
+
+                  icon:
+                    createMarkerIcon(
+                      item,
+                      active
+                    )
+
+                }
+              )
+              .addTo(map);
+
+
+            marker.bindPopup(`
+
+              <div
+                class="popup-content"
+              >
+
+                <span
+                  class="popup-number"
+                >
+                  ${item.number}
+                </span>
+
+                <strong>
+                  ${item.name}
+                </strong>
+
+                <div
+                  class="popup-category"
+                >
+                  ${item.category || ""}
+                </div>
+
+                <div
+                  class="popup-address"
+                >
+                  📍 ${item.address || ""}
+                </div>
+
+              </div>
+
+            `);
+
+
+            marker.on(
+              "click",
+              () => {
+
+                selectPlace(
+                  item.id,
+                  "marker"
+                );
+
+              }
+            );
+
+
+            markers[item.id] =
+              marker;
+
+          }
+        );
+
+
+
+      if (
+        placesWithCoordinates.length > 1
+        &&
+        !selectedPlaceId
+      ) {
+
+        const markerList =
+          Object.values(
+            markers
+          );
+
+
+        const group =
+          L.featureGroup(
+            markerList
+          );
+
+
+        map.fitBounds(
+          group.getBounds(),
+          {
+
+            padding:
+              [40, 40],
+
+            maxZoom:
+              15
+
+          }
+        );
+
+      }
+
+
+      else if (
+        placesWithCoordinates.length === 1
+        &&
+        !selectedPlaceId
+      ) {
+
+        map.setView(
+          [
+            Number(
+              placesWithCoordinates[0].lat
+            ),
+
+            Number(
+              placesWithCoordinates[0].lng
+            )
+          ],
+          16
+        );
+
+      }
+
+    }
+
+
+
+    /* =====================================================
+       SELEÇÃO
+    ===================================================== */
+
+    function selectPlace(
+      id,
+      source
+    ) {
+
+      const item =
+        places.find(
+          place =>
+            place.id === id
+        );
+
+
+      if (!item) {
+
+        return;
+
+      }
+
+
+      selectedPlaceId =
+        id;
+
+
+
+      document
+        .querySelectorAll(
+          ".place"
+        )
+        .forEach(
+          card => {
+
+            card.classList.toggle(
+              "selected",
+              card.dataset.id === id
+            );
+
+          }
+        );
+
+
+
+      Object
+        .keys(markers)
+        .forEach(
+          markerId => {
+
+
+            const place =
+              places.find(
+                p =>
+                  p.id === markerId
+              );
+
+
+            if (!place) {
+
+              return;
+
+            }
+
+
+            markers[
+              markerId
+            ].setIcon(
+
+              createMarkerIcon(
+                place,
+                markerId === id
+              )
+
+            );
+
+          }
+        );
+
+
+
+      if (
+        Number.isFinite(
+          Number(item.lat)
+        )
+
+        &&
+
+        Number.isFinite(
+          Number(item.lng)
+        )
+      ) {
+
+        map.flyTo(
+          [
+            Number(item.lat),
+            Number(item.lng)
+          ],
+          17,
+          {
+
+            animate: true,
+
+            duration: .8
+
+          }
+        );
+
+
+        const marker =
+          markers[id];
+
+
+        if (marker) {
+
+          setTimeout(
+            () => {
+
+              marker.openPopup();
+
+            },
+            500
+          );
+
+        }
+
+      }
+
+
+
+      if (
+        source === "marker"
+      ) {
+
+        const card =
+          document.querySelector(
+            `.place[data-id="${id}"]`
+          );
+
+
+        if (card) {
+
+          card.scrollIntoView(
+            {
+
+              behavior: "smooth",
+
+              block: "center"
+
+            }
+          );
+
+        }
+
+      }
+
+    }
+
+
+
+    /* =====================================================
+       FILTROS
+    ===================================================== */
+
+    function applyFilters() {
+
+      const query =
+        search.value
+          .toLowerCase()
+          .trim();
+
+
+      visiblePlaces =
+        places.filter(
+          item => {
+
+
+            const tags =
+              Array.isArray(item.tags)
+                ? item.tags
+                : [];
+
+
+            const searchable =
+              [
+
+                item.name || "",
+
+                item.category || "",
+
+                item.area || "",
+
+                item.address || "",
+
+                ...tags
+
+              ]
+              .join(" ")
+              .toLowerCase();
+
+
+            const matchesSearch =
+              searchable.includes(
+                query
+              );
+
+
+            let matchesFilter =
+              true;
+
+
+            if (
+              currentFilter !== "all"
+            ) {
+
+
+              if (
+                currentFilter === "€€"
+                ||
+                currentFilter === "€€€"
+              ) {
+
+                matchesFilter =
+                  item.price ===
+                  currentFilter;
+
+              }
+
+
+              else {
+
+                matchesFilter =
+                  tags.includes(
+                    currentFilter
+                  );
+
+              }
+
+            }
+
+
+            return (
+              matchesSearch
+              &&
+              matchesFilter
+            );
+
+          }
+        );
+
+
+
+      if (
+        selectedPlaceId
+        &&
+        !visiblePlaces.some(
+          item =>
+            item.id ===
+            selectedPlaceId
+        )
+      ) {
+
+        selectedPlaceId =
+          null;
+
+      }
+
+
+      renderPlaces(
+        visiblePlaces
+      );
+
+
+      updateMarkers(
+        visiblePlaces
+      );
+
+    }
+
+
+
+    /* =====================================================
+       BUSCA
+    ===================================================== */
+
+    search.addEventListener(
+      "input",
+      applyFilters
+    );
+
+
+
+    /* =====================================================
+       FILTROS
+    ===================================================== */
+
+    document
+      .querySelectorAll(
+        ".filter"
+      )
+      .forEach(
+        button => {
+
+
+          button.addEventListener(
+            "click",
+            () => {
+
+
+              document
+                .querySelectorAll(
+                  ".filter"
+                )
+                .forEach(
+                  b => {
+
+                    b.classList.remove(
+                      "active"
+                    );
+
+                  }
+                );
+
+
+              button.classList.add(
+                "active"
+              );
+
+
+              currentFilter =
+                button.dataset.filter;
+
+
+              selectedPlaceId =
+                null;
+
+
+              applyFilters();
+
+            }
+          );
+
+        }
+      );
+
+
+
+    /* =====================================================
+       INICIAR
+    ===================================================== */
+
+    loadPlaces();
+
+
+
+    window.addEventListener(
+      "load",
+      () => {
+
+        setTimeout(
+          () => {
+
+            map.invalidateSize();
+
+          },
+          150
+        );
+
+      }
+    );
+
+  </script>
+
+
+</body>
+
+</html>
