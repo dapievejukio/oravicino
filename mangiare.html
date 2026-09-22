@@ -37,7 +37,7 @@
   <style>
 
     /* ========================================
-       BASE DA PÁGINA
+       BASE
     ======================================== */
 
     body {
@@ -124,7 +124,7 @@
 
       gap: 7px;
 
-      margin: 15px 0 52px;
+      margin: 15px 0 32px;
 
       color: #667068;
 
@@ -155,14 +155,98 @@
 
       position: relative;
 
+      min-height: 390px;
+
       overflow: hidden;
 
-      margin-bottom: 32px;
+      margin-bottom: 25px;
 
-      padding: 8px 0 18px;
+      padding:
+        42px 42px 28px;
+
+      border-radius: 38px;
+
+      isolation: isolate;
+
+      background:
+        linear-gradient(
+          105deg,
+          rgba(247,243,233,.99) 0%,
+          rgba(247,243,233,.97) 37%,
+          rgba(247,243,233,.78) 55%,
+          rgba(247,243,233,.16) 100%
+        );
+
+      box-shadow:
+        0 22px 60px
+        rgba(25,39,32,.055);
 
     }
 
+
+
+    /* FOTO REAL DE TRENTO */
+
+    .trento-hero-photo {
+
+      position: absolute;
+
+      z-index: -3;
+
+      top: 0;
+
+      right: 0;
+
+      width: 61%;
+
+      height: 100%;
+
+      object-fit: cover;
+
+      object-position: center;
+
+      opacity: .88;
+
+    }
+
+
+
+    /* DEGRADÊ PARA FOTO DESAPARECER À ESQUERDA */
+
+    .food-hero::before {
+
+      content: "";
+
+      position: absolute;
+
+      z-index: -2;
+
+      inset: 0;
+
+      pointer-events: none;
+
+      background:
+
+        linear-gradient(
+          90deg,
+          #f7f3e9 0%,
+          rgba(247,243,233,.98) 32%,
+          rgba(247,243,233,.88) 45%,
+          rgba(247,243,233,.44) 64%,
+          rgba(247,243,233,.06) 100%
+        ),
+
+        linear-gradient(
+          0deg,
+          rgba(247,243,233,.42) 0%,
+          transparent 34%
+        );
+
+    }
+
+
+
+    /* BRILHO QUENTE */
 
     .food-hero::after {
 
@@ -170,30 +254,40 @@
 
       position: absolute;
 
-      width: 380px;
+      z-index: -1;
 
-      height: 380px;
+      width: 390px;
 
-      right: 2%;
+      height: 390px;
 
-      top: -185px;
+      right: -90px;
+
+      top: -190px;
 
       border-radius: 50%;
 
-      background: rgba(242,193,78,.13);
+      background:
+        rgba(242,193,78,.14);
 
       pointer-events: none;
 
     }
 
 
+
+    /* ========================================
+       TEXTO HERO
+    ======================================== */
+
     .food-header {
 
       position: relative;
 
-      z-index: 1;
+      z-index: 3;
 
-      margin-bottom: 34px;
+      max-width: 660px;
+
+      margin-bottom: 29px;
 
     }
 
@@ -238,7 +332,8 @@
 
       max-width: 720px;
 
-      font-size: clamp(52px, 6vw, 82px);
+      font-size:
+        clamp(52px, 6vw, 82px);
 
       line-height: .93;
 
@@ -251,7 +346,7 @@
 
     .food-header p {
 
-      max-width: 600px;
+      max-width: 530px;
 
       margin: 0;
 
@@ -266,26 +361,45 @@
 
 
     /* ========================================
-       FRASE DECORATIVA
+       ASSINATURA TRENTO
     ======================================== */
 
     .trento-note {
 
       position: absolute;
 
-      right: 3%;
+      right: 5%;
 
-      top: 42px;
+      top: 48px;
 
-      z-index: 2;
+      z-index: 4;
 
-      max-width: 250px;
+      width: 255px;
+
+      padding: 17px 20px;
 
       text-align: center;
 
       color: #173f32;
 
-      opacity: .76;
+      border-radius: 20px;
+
+      background:
+        rgba(255,253,248,.62);
+
+      border:
+        1px solid
+        rgba(255,255,255,.45);
+
+      box-shadow:
+        0 12px 35px
+        rgba(25,39,32,.08);
+
+      backdrop-filter:
+        blur(7px);
+
+      -webkit-backdrop-filter:
+        blur(7px);
 
     }
 
@@ -299,7 +413,7 @@
         Georgia,
         serif;
 
-      font-size: 35px;
+      font-size: 36px;
 
       font-style: italic;
 
@@ -318,9 +432,9 @@
 
       font-size: 9px;
 
-      font-weight: 700;
+      font-weight: 800;
 
-      letter-spacing: 3px;
+      letter-spacing: 2.7px;
 
       text-transform: uppercase;
 
@@ -336,15 +450,18 @@
 
       position: relative;
 
-      z-index: 3;
+      z-index: 5;
 
-      max-width: 735px;
+      max-width: 700px;
 
       min-height: 62px;
 
-      background: rgba(255,253,248,.88);
+      background:
+        rgba(255,253,248,.93);
 
-      border: 1px solid rgba(23,35,29,.08);
+      border:
+        1px solid
+        rgba(23,35,29,.08);
 
       border-radius: 20px;
 
@@ -358,9 +475,13 @@
 
       box-shadow:
         0 16px 45px
-        rgba(25,39,32,.07);
+        rgba(25,39,32,.10);
 
-      backdrop-filter: blur(10px);
+      backdrop-filter:
+        blur(10px);
+
+      -webkit-backdrop-filter:
+        blur(10px);
 
     }
 
@@ -409,13 +530,17 @@
 
     .filters {
 
+      position: relative;
+
+      z-index: 5;
+
       display: flex;
 
       flex-wrap: wrap;
 
       gap: 9px;
 
-      margin: 18px 0 48px;
+      margin: 17px 0 0;
 
     }
 
@@ -428,15 +553,21 @@
 
       border-radius: 999px;
 
-      border: 1px solid rgba(23,35,29,.14);
+      border:
+        1px solid
+        rgba(23,35,29,.14);
 
-      background: rgba(255,253,248,.42);
+      background:
+        rgba(255,253,248,.82);
 
       color: #17231d;
 
       cursor: pointer;
 
       font-size: 13px;
+
+      backdrop-filter:
+        blur(7px);
 
       transition:
         background .2s ease,
@@ -449,11 +580,14 @@
 
     .filter:hover {
 
-      transform: translateY(-1px);
+      transform:
+        translateY(-1px);
 
-      border-color: #173f32;
+      border-color:
+        #173f32;
 
-      background: rgba(255,253,248,.85);
+      background:
+        rgba(255,253,248,.98);
 
     }
 
@@ -471,6 +605,52 @@
 
 
     /* ========================================
+       CRÉDITO FOTO
+    ======================================== */
+
+    .hero-photo-credit {
+
+      position: absolute;
+
+      z-index: 4;
+
+      right: 20px;
+
+      bottom: 11px;
+
+      padding:
+        4px 8px;
+
+      border-radius: 999px;
+
+      background:
+        rgba(23,35,29,.56);
+
+      color:
+        rgba(255,255,255,.92);
+
+      font-size: 8px;
+
+      letter-spacing: .2px;
+
+      text-decoration: none;
+
+      backdrop-filter:
+        blur(4px);
+
+    }
+
+
+    .hero-photo-credit:hover {
+
+      background:
+        rgba(23,35,29,.75);
+
+    }
+
+
+
+    /* ========================================
        RESULTADOS
     ======================================== */
 
@@ -478,11 +658,14 @@
 
       display: flex;
 
-      justify-content: space-between;
+      justify-content:
+        space-between;
 
-      align-items: center;
+      align-items:
+        center;
 
-      margin-bottom: 18px;
+      margin:
+        42px 0 18px;
 
     }
 
@@ -559,9 +742,12 @@
 
       overflow: hidden;
 
-      background: rgba(255,253,248,.88);
+      background:
+        rgba(255,253,248,.88);
 
-      border: 1px solid rgba(23,35,29,.11);
+      border:
+        1px solid
+        rgba(23,35,29,.11);
 
       border-radius: 25px;
 
@@ -581,9 +767,11 @@
 
     .restaurant:hover {
 
-      transform: translateY(-4px);
+      transform:
+        translateY(-4px);
 
-      border-color: rgba(23,63,50,.32);
+      border-color:
+        rgba(23,63,50,.32);
 
       box-shadow:
         0 18px 50px
@@ -611,7 +799,9 @@
 
       inset: 0;
 
-      border: 2px solid #173f32;
+      border:
+        2px solid
+        #173f32;
 
       border-radius: 24px;
 
@@ -640,11 +830,13 @@
       overflow: hidden;
 
       background:
+
         radial-gradient(
           circle at 75% 20%,
           rgba(242,193,78,.58),
           transparent 25%
         ),
+
         linear-gradient(
           145deg,
           #28604b,
@@ -682,9 +874,7 @@
 
 
 
-    /* ========================================
-       FOTO DO RESTAURANTE
-    ======================================== */
+    /* FOTO CARD */
 
     .restaurant-photo {
 
@@ -711,12 +901,11 @@
     .restaurant:hover
     .restaurant-photo {
 
-      transform: scale(1.045);
+      transform:
+        scale(1.045);
 
     }
 
-
-    /* pequena sombra para número e badge */
 
     .restaurant-cover.has-photo::after {
 
@@ -763,9 +952,11 @@
 
     .restaurant-number {
 
-      position: absolute !important;
+      position:
+        absolute !important;
 
-      z-index: 5 !important;
+      z-index:
+        5 !important;
 
       right: 15px;
 
@@ -809,15 +1000,18 @@
 
     .route-badge {
 
-      position: absolute !important;
+      position:
+        absolute !important;
 
-      z-index: 5 !important;
+      z-index:
+        5 !important;
 
       left: 16px;
 
       top: 16px;
 
-      padding: 7px 11px;
+      padding:
+        7px 11px;
 
       border-radius: 999px;
 
@@ -916,7 +1110,8 @@
 
       display: flex;
 
-      justify-content: space-between;
+      justify-content:
+        space-between;
 
       gap: 15px;
 
@@ -951,7 +1146,8 @@
 
       border-radius: 30px;
 
-      background: rgba(255,253,248,.72);
+      background:
+        rgba(255,253,248,.72);
 
       border:
         1px solid
@@ -968,7 +1164,8 @@
 
       width: 100%;
 
-      height: calc(100vh - 55px);
+      height:
+        calc(100vh - 55px);
 
       min-height: 620px;
 
@@ -991,13 +1188,16 @@
 
       left: 50%;
 
-      transform: translateX(-50%);
+      transform:
+        translateX(-50%);
 
-      padding: 9px 15px;
+      padding:
+        9px 15px;
 
       border-radius: 999px;
 
-      background: rgba(255,253,248,.94);
+      background:
+        rgba(255,253,248,.94);
 
       border:
         1px solid
@@ -1067,11 +1267,14 @@
       border-radius:
         50% 50% 50% 4px;
 
-      transform: rotate(-45deg);
+      transform:
+        rotate(-45deg);
 
       background: #173f32;
 
-      border: 3px solid #fffdf8;
+      border:
+        3px solid
+        #fffdf8;
 
       box-shadow:
         0 5px 15px
@@ -1086,7 +1289,8 @@
 
     .marker-pin span {
 
-      transform: rotate(45deg);
+      transform:
+        rotate(45deg);
 
       color: white;
 
@@ -1191,9 +1395,11 @@
 
     .empty {
 
-      grid-column: 1 / -1;
+      grid-column:
+        1 / -1;
 
-      padding: 70px 20px;
+      padding:
+        70px 20px;
 
       text-align: center;
 
@@ -1218,9 +1424,25 @@
 
     @media (max-width: 1000px) {
 
+      .food-hero {
+
+        min-height: 410px;
+
+      }
+
+
       .trento-note {
 
-        display: none;
+        right: 30px;
+
+        top: 35px;
+
+      }
+
+
+      .trento-hero-photo {
+
+        width: 70%;
 
       }
 
@@ -1267,25 +1489,89 @@
        CELULAR
     ======================================== */
 
-    @media (max-width: 560px) {
+    @media (max-width: 700px) {
 
       .food-page {
 
-        padding: 20px 18px 70px;
+        padding:
+          20px 18px 70px;
 
       }
 
 
       .back {
 
-        margin-bottom: 35px;
+        margin-bottom: 25px;
+
+      }
+
+
+      .food-hero {
+
+        min-height: 0;
+
+        padding:
+          215px 20px 24px;
+
+        border-radius: 27px;
+
+      }
+
+
+      .trento-hero-photo {
+
+        width: 100%;
+
+        height: 245px;
+
+        opacity: .9;
+
+        object-position: center;
+
+      }
+
+
+      .food-hero::before {
+
+        background:
+          linear-gradient(
+            0deg,
+            #f7f3e9 0%,
+            #f7f3e9 51%,
+            rgba(247,243,233,.70) 66%,
+            rgba(247,243,233,.05) 100%
+          );
+
+      }
+
+
+      .trento-note {
+
+        top: 28px;
+
+        right: 22px;
+
+        width: auto;
+
+        max-width: 210px;
+
+      }
+
+
+      .trento-note strong {
+
+        font-size: 28px;
 
       }
 
 
       .food-header h1 {
 
-        letter-spacing: -2.5px;
+        font-size:
+          clamp(46px, 14vw, 62px);
+
+        letter-spacing:
+          -2.5px;
 
       }
 
@@ -1293,6 +1579,13 @@
       .food-header p {
 
         font-size: 16px;
+
+      }
+
+
+      .food-search {
+
+        min-height: 57px;
 
       }
 
@@ -1346,6 +1639,15 @@
 
       }
 
+
+      .hero-photo-credit {
+
+        top: 190px;
+
+        bottom: auto;
+
+      }
+
     }
 
   </style>
@@ -1356,6 +1658,10 @@
 
 <body>
 
+
+  <!-- ========================================
+       HEADER
+  ======================================== -->
 
   <header class="topbar">
 
@@ -1390,6 +1696,10 @@
 
 
 
+  <!-- ========================================
+       CONTEÚDO
+  ======================================== -->
+
   <main class="food-page">
 
 
@@ -1402,7 +1712,18 @@
 
 
 
+    <!-- ========================================
+         HERO COM FOTO DE TRENTO
+    ======================================== -->
+
     <section class="food-hero">
+
+
+      <img
+        class="trento-hero-photo"
+        src="images/trento-panorama.jpg"
+        alt="Panorama di Trento"
+      >
 
 
       <div class="food-header">
@@ -1441,6 +1762,8 @@
 
 
 
+      <!-- BUSCA -->
+
       <div class="food-search">
 
         <span class="food-search-icon">
@@ -1457,6 +1780,8 @@
       </div>
 
 
+
+      <!-- FILTROS -->
 
       <div class="filters">
 
@@ -1525,9 +1850,26 @@
       </div>
 
 
+
+      <!-- CRÉDITO -->
+
+      <a
+        class="hero-photo-credit"
+        href="https://commons.wikimedia.org/wiki/File:Trento-panorama_from_Bindesi_2.jpg"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Foto: Matteo Ianeselli · Wikimedia Commons
+      </a>
+
+
     </section>
 
 
+
+    <!-- ========================================
+         RESULTADOS
+    ======================================== -->
 
     <div class="results-header">
 
@@ -1584,6 +1926,10 @@
 
 
 
+  <!-- ========================================
+       FOOTER
+  ======================================== -->
+
   <footer>
 
     <a
@@ -1604,6 +1950,10 @@
   </footer>
 
 
+
+  <!-- ========================================
+       JAVASCRIPT
+  ======================================== -->
 
   <script>
 
@@ -1747,9 +2097,12 @@
 
 
     /* ========================================
-       FOTO
-       Neste primeiro teste somente Chistè
-       usa a imagem pizza.jpg
+       FOTO DOS CARDS
+
+       Por enquanto:
+       Chistè → pizza.jpg
+
+       Depois vamos levar isso para o JSON.
     ======================================== */
 
     function restaurantImage(item) {
@@ -2013,7 +2366,6 @@
                     class="restaurant-info"
                   >
 
-
                     <span>
                       ${item.price || ""}
                     </span>
@@ -2022,7 +2374,6 @@
                     <span>
                       Mappa →
                     </span>
-
 
                   </div>
 
@@ -2103,7 +2454,7 @@
 
 
     /* ========================================
-       ÍCONE DO MAPA
+       ÍCONE MAPA
     ======================================== */
 
     function createMarkerIcon(
@@ -2632,7 +2983,7 @@
 
 
     /* ========================================
-       FILTROS
+       BOTÕES
     ======================================== */
 
     document
