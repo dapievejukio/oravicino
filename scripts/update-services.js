@@ -1,23 +1,25 @@
 /**
  * OraVicino
- * -------------------------------------------------------
- * Aggiornamento automatico dei servizi di Trento
+ * ============================================================
+ * Database automatico dei servizi di Trento
  *
  * Fonte:
  * OpenStreetMap / Overpass API
  *
  * Output:
  * data/servizi.json
- * -------------------------------------------------------
+ *
+ * Versione 2
+ * ============================================================
  */
 
 const fs = require("fs");
 const path = require("path");
 
 
-/* ======================================================
+/* ============================================================
    CONFIGURAZIONE
-====================================================== */
+============================================================ */
 
 const OVERPASS_URL =
   "https://overpass-api.de/api/interpreter";
@@ -32,28 +34,26 @@ const OUTPUT_FILE =
 
 
 /*
- * Bounding box ampia per Trento e dintorni immediati.
+ * Trento e dintorni immediati.
  *
- * Formato Overpass:
+ * Overpass bbox:
  * south, west, north, east
- *
- * La utilizziamo invece di dipendere dal nome
- * dell'area amministrativa, rendendo la query
- * più semplice e robusta per il progetto pilota.
  */
 
 const BBOX =
   "45.990,11.030,46.150,11.220";
 
 
-/* ======================================================
+/* ============================================================
    CATEGORIE ORAVICINO
-====================================================== */
+============================================================ */
 
 const CATEGORY_RULES = [
 
   {
     category: "farmacia",
+    group: "servizio",
+    label: "Farmacie",
     icon: "💊",
     key: "amenity",
     value: "pharmacy"
@@ -61,6 +61,8 @@ const CATEGORY_RULES = [
 
   {
     category: "supermercato",
+    group: "servizio",
+    label: "Supermercati",
     icon: "🛒",
     key: "shop",
     value: "supermarket"
@@ -68,6 +70,8 @@ const CATEGORY_RULES = [
 
   {
     category: "parcheggio",
+    group: "utilita",
+    label: "Parcheggi",
     icon: "🅿️",
     key: "amenity",
     value: "parking"
@@ -75,6 +79,8 @@ const CATEGORY_RULES = [
 
   {
     category: "bancomat",
+    group: "utilita",
+    label: "Bancomat",
     icon: "🏧",
     key: "amenity",
     value: "atm"
@@ -82,6 +88,8 @@ const CATEGORY_RULES = [
 
   {
     category: "benzina",
+    group: "servizio",
+    label: "Benzina",
     icon: "⛽",
     key: "amenity",
     value: "fuel"
@@ -89,6 +97,8 @@ const CATEGORY_RULES = [
 
   {
     category: "lavanderia",
+    group: "servizio",
+    label: "Lavanderie",
     icon: "🧺",
     key: "shop",
     value: "laundry"
@@ -96,6 +106,8 @@ const CATEGORY_RULES = [
 
   {
     category: "veterinario",
+    group: "servizio",
+    label: "Veterinari",
     icon: "🐾",
     key: "amenity",
     value: "veterinary"
@@ -103,6 +115,8 @@ const CATEGORY_RULES = [
 
   {
     category: "ospedale",
+    group: "servizio",
+    label: "Ospedali",
     icon: "🏥",
     key: "amenity",
     value: "hospital"
@@ -110,6 +124,8 @@ const CATEGORY_RULES = [
 
   {
     category: "clinica",
+    group: "servizio",
+    label: "Cliniche",
     icon: "🩺",
     key: "amenity",
     value: "clinic"
@@ -117,6 +133,8 @@ const CATEGORY_RULES = [
 
   {
     category: "bagni",
+    group: "utilita",
+    label: "Bagni pubblici",
     icon: "🚻",
     key: "amenity",
     value: "toilets"
@@ -124,6 +142,8 @@ const CATEGORY_RULES = [
 
   {
     category: "acqua",
+    group: "utilita",
+    label: "Acqua potabile",
     icon: "💧",
     key: "amenity",
     value: "drinking_water"
@@ -131,6 +151,8 @@ const CATEGORY_RULES = [
 
   {
     category: "poste",
+    group: "servizio",
+    label: "Poste",
     icon: "📮",
     key: "amenity",
     value: "post_office"
@@ -138,6 +160,8 @@ const CATEGORY_RULES = [
 
   {
     category: "noleggio-bici",
+    group: "utilita",
+    label: "Noleggio bici",
     icon: "🚲",
     key: "amenity",
     value: "bicycle_rental"
@@ -145,6 +169,8 @@ const CATEGORY_RULES = [
 
   {
     category: "noleggio-auto",
+    group: "servizio",
+    label: "Noleggio auto",
     icon: "🚗",
     key: "amenity",
     value: "car_rental"
@@ -153,9 +179,9 @@ const CATEGORY_RULES = [
 ];
 
 
-/* ======================================================
+/* ============================================================
    QUERY OVERPASS
-====================================================== */
+============================================================ */
 
 function buildQuery() {
 
@@ -198,16 +224,13 @@ function buildQuery() {
 }
 
 
-/* ======================================================
-   IDENTIFICARE CATEGORIA
-====================================================== */
+/* ============================================================
+   CATEGORIA
+============================================================ */
 
-function getCategory(tags = {}) {
+function getCategoryRule(tags = {}) {
 
-  for (
-    const rule
-    of CATEGORY_RULES
-  ) {
+  for (const rule of CATEGORY_RULES) {
 
     if (
       tags[rule.key] ===
@@ -226,9 +249,9 @@ function getCategory(tags = {}) {
 }
 
 
-/* ======================================================
+/* ============================================================
    COORDINATE
-====================================================== */
+============================================================ */
 
 function getCoordinates(element) {
 
@@ -279,26 +302,36 @@ function getCoordinates(element) {
 }
 
 
-/* ======================================================
+/* ============================================================
    INDIRIZZO
-====================================================== */
+============================================================ */
 
 function buildAddress(tags = {}) {
 
   const street =
-    tags["addr:street"] || "";
+    tags["addr:street"]
+    ||
+    tags["addr:place"]
+    ||
+    "";
 
 
   const number =
-    tags["addr:housenumber"] || "";
+    tags["addr:housenumber"]
+    ||
+    "";
 
 
   const postcode =
-    tags["addr:postcode"] || "";
+    tags["addr:postcode"]
+    ||
+    "";
 
 
   const city =
-    tags["addr:city"] || "";
+    tags["addr:city"]
+    ||
+    "";
 
 
   const firstLine =
@@ -331,9 +364,9 @@ function buildAddress(tags = {}) {
 }
 
 
-/* ======================================================
+/* ============================================================
    NOME
-====================================================== */
+============================================================ */
 
 function getName(
   tags,
@@ -347,12 +380,23 @@ function getName(
   }
 
 
+  if (tags.brand) {
+
+    return tags.brand;
+
+  }
+
+
+  if (tags.operator) {
+
+    return tags.operator;
+
+  }
+
+
   /*
-   * Alcuni servizi pubblici non hanno necessariamente
-   * un nome in OpenStreetMap.
-   *
-   * Non li eliminiamo perché possono essere utilissimi
-   * per OraVicino.
+   * Alcune infrastrutture urbane sono utili
+   * anche senza un nome proprio.
    */
 
   const fallbackNames = {
@@ -386,9 +430,9 @@ function getName(
 }
 
 
-/* ======================================================
-   TELEFONO
-====================================================== */
+/* ============================================================
+   CONTATTI
+============================================================ */
 
 function getPhone(tags = {}) {
 
@@ -403,10 +447,6 @@ function getPhone(tags = {}) {
 }
 
 
-/* ======================================================
-   WEBSITE
-====================================================== */
-
 function getWebsite(tags = {}) {
 
   return (
@@ -419,10 +459,6 @@ function getWebsite(tags = {}) {
 
 }
 
-
-/* ======================================================
-   EMAIL
-====================================================== */
 
 function getEmail(tags = {}) {
 
@@ -437,9 +473,9 @@ function getEmail(tags = {}) {
 }
 
 
-/* ======================================================
+/* ============================================================
    ACCESSIBILITÀ
-====================================================== */
+============================================================ */
 
 function getWheelchair(tags = {}) {
 
@@ -466,9 +502,252 @@ function getWheelchair(tags = {}) {
 }
 
 
-/* ======================================================
+/* ============================================================
+   ACCESSO PUBBLICO
+============================================================ */
+
+function isClearlyRestricted(tags = {}) {
+
+  const access =
+    String(
+      tags.access || ""
+    )
+      .toLowerCase()
+      .trim();
+
+
+  const restrictedValues = new Set([
+    "private",
+    "no"
+  ]);
+
+
+  return restrictedValues.has(
+    access
+  );
+
+}
+
+
+function isPublicAccess(tags = {}) {
+
+  const access =
+    String(
+      tags.access || ""
+    )
+      .toLowerCase()
+      .trim();
+
+
+  if (
+    access === "private"
+    ||
+    access === "no"
+  ) {
+
+    return false;
+
+  }
+
+
+  if (
+    access === "yes"
+    ||
+    access === "public"
+    ||
+    access === "customers"
+    ||
+    access === "permissive"
+    ||
+    access === "destination"
+  ) {
+
+    return true;
+
+  }
+
+
+  /*
+   * null = OSM non specifica esplicitamente
+   * il tipo di accesso.
+   */
+
+  return null;
+
+}
+
+
+/* ============================================================
+   PARCHEGGI
+============================================================ */
+
+function shouldKeepParking(tags = {}) {
+
+  /*
+   * Eliminiamo i parcheggi esplicitamente
+   * privati o vietati.
+   */
+
+  if (
+    isClearlyRestricted(tags)
+  ) {
+
+    return false;
+
+  }
+
+
+  /*
+   * Parcheggi privati residenziali.
+   */
+
+  const parking =
+    String(
+      tags.parking || ""
+    )
+      .toLowerCase();
+
+
+  const access =
+    String(
+      tags.access || ""
+    )
+      .toLowerCase();
+
+
+  if (
+    parking === "private"
+  ) {
+
+    return false;
+
+  }
+
+
+  if (
+    access === "residents"
+  ) {
+
+    return false;
+
+  }
+
+
+  return true;
+
+}
+
+
+/* ============================================================
+   FILTRO GENERALE
+============================================================ */
+
+function shouldKeepElement(
+  tags,
+  categoryRule
+) {
+
+  if (!categoryRule) {
+
+    return false;
+
+  }
+
+
+  if (
+    categoryRule.category ===
+    "parcheggio"
+  ) {
+
+    return shouldKeepParking(
+      tags
+    );
+
+  }
+
+
+  /*
+   * Per le altre categorie escludiamo
+   * elementi esplicitamente non accessibili.
+   */
+
+  if (
+    isClearlyRestricted(tags)
+  ) {
+
+    return false;
+
+  }
+
+
+  return true;
+
+}
+
+
+/* ============================================================
+   ORARI
+============================================================ */
+
+function normalizeOpeningHours(tags = {}) {
+
+  return (
+    tags.opening_hours
+    ||
+    ""
+  );
+
+}
+
+
+function isOpen24Hours(
+  openingHours
+) {
+
+  if (!openingHours) {
+
+    return false;
+
+  }
+
+
+  const normalized =
+    String(openingHours)
+      .replace(/\s/g, "")
+      .toLowerCase();
+
+
+  return (
+    normalized === "24/7"
+  );
+
+}
+
+
+/* ============================================================
+   CAMPI DERIVATI
+============================================================ */
+
+function hasContactData(
+  phone,
+  website,
+  email
+) {
+
+  return Boolean(
+    phone
+    ||
+    website
+    ||
+    email
+  );
+
+}
+
+
+/* ============================================================
    NORMALIZZAZIONE
-====================================================== */
+============================================================ */
 
 function normalizeElement(element) {
 
@@ -477,10 +756,22 @@ function normalizeElement(element) {
 
 
   const categoryRule =
-    getCategory(tags);
+    getCategoryRule(tags);
 
 
   if (!categoryRule) {
+
+    return null;
+
+  }
+
+
+  if (
+    !shouldKeepElement(
+      tags,
+      categoryRule
+    )
+  ) {
 
     return null;
 
@@ -506,11 +797,11 @@ function normalizeElement(element) {
 
 
   /*
-   * Per attività commerciali vogliamo normalmente
-   * un nome.
+   * Attività commerciali senza nome
+   * non sono abbastanza utili.
    *
-   * Per parcheggi, ATM, bagni e acqua possiamo
-   * utilizzare un nome generico.
+   * Infrastrutture urbane possono invece
+   * utilizzare nomi generici.
    */
 
   if (!name) {
@@ -518,6 +809,26 @@ function normalizeElement(element) {
     return null;
 
   }
+
+
+  const phone =
+    getPhone(tags);
+
+
+  const website =
+    getWebsite(tags);
+
+
+  const email =
+    getEmail(tags);
+
+
+  const openingHours =
+    normalizeOpeningHours(tags);
+
+
+  const address =
+    buildAddress(tags);
 
 
   return {
@@ -531,16 +842,21 @@ function normalizeElement(element) {
     source:
       "OpenStreetMap",
 
-    name,
-
     category:
       categoryRule.category,
+
+    group:
+      categoryRule.group,
+
+    label:
+      categoryRule.label,
 
     icon:
       categoryRule.icon,
 
-    address:
-      buildAddress(tags),
+    name,
+
+    address,
 
     city:
       tags["addr:city"]
@@ -554,6 +870,8 @@ function normalizeElement(element) {
       ||
       tags["addr:quarter"]
       ||
+      tags["addr:neighbourhood"]
+      ||
       "",
 
     lat:
@@ -566,19 +884,33 @@ function normalizeElement(element) {
         coordinates.lng
       ),
 
-    phone:
-      getPhone(tags),
+    phone,
 
-    website:
-      getWebsite(tags),
+    website,
 
-    email:
-      getEmail(tags),
+    email,
 
-    openingHours:
-      tags.opening_hours
-      ||
-      "",
+    openingHours,
+
+    open24h:
+      isOpen24Hours(
+        openingHours
+      ),
+
+    hasOpeningHours:
+      Boolean(
+        openingHours
+      ),
+
+    hasContact:
+      hasContactData(
+        phone,
+        website,
+        email
+      ),
+
+    publicAccess:
+      isPublicAccess(tags),
 
     wheelchair:
       getWheelchair(tags),
@@ -608,6 +940,31 @@ function normalizeElement(element) {
       ||
       "",
 
+    parkingType:
+      tags.parking
+      ||
+      "",
+
+    covered:
+      tags.covered
+      ||
+      "",
+
+    supervised:
+      tags.supervised
+      ||
+      "",
+
+    toiletsWheelchair:
+      tags["toilets:wheelchair"]
+      ||
+      "",
+
+    drinkingWater:
+      tags.drinking_water
+      ||
+      "",
+
     osmType:
       element.type,
 
@@ -619,9 +976,9 @@ function normalizeElement(element) {
 }
 
 
-/* ======================================================
-   REMOZIONE DUPLICATI
-====================================================== */
+/* ============================================================
+   DUPLICATI
+============================================================ */
 
 function removeDuplicates(items) {
 
@@ -633,10 +990,6 @@ function removeDuplicates(items) {
     const item
     of items
   ) {
-
-    /*
-     * sourceId è univoco nel dataset OSM.
-     */
 
     if (
       !unique.has(
@@ -661,14 +1014,30 @@ function removeDuplicates(items) {
 }
 
 
-/* ======================================================
+/* ============================================================
    ORDINAMENTO
-====================================================== */
+============================================================ */
 
 function sortServices(items) {
 
   return items.sort(
     (a, b) => {
+
+      const groupCompare =
+        a.group.localeCompare(
+          b.group,
+          "it"
+        );
+
+
+      if (
+        groupCompare !== 0
+      ) {
+
+        return groupCompare;
+
+      }
+
 
       const categoryCompare =
         a.category.localeCompare(
@@ -699,13 +1068,15 @@ function sortServices(items) {
 }
 
 
-/* ======================================================
+/* ============================================================
    STATISTICHE
-====================================================== */
+============================================================ */
 
-function printStatistics(items) {
+function getStatistics(items) {
 
-  const statistics = {};
+  const categories = {};
+
+  const groups = {};
 
 
   for (
@@ -713,12 +1084,26 @@ function printStatistics(items) {
     of items
   ) {
 
-    statistics[
+    categories[
       item.category
     ] =
       (
-        statistics[
+        categories[
           item.category
+        ]
+        ||
+        0
+      )
+      +
+      1;
+
+
+    groups[
+      item.group
+    ] =
+      (
+        groups[
+          item.group
         ]
         ||
         0
@@ -729,8 +1114,80 @@ function printStatistics(items) {
   }
 
 
+  return {
+
+    categories,
+
+    groups,
+
+    withAddress:
+      items.filter(
+        item =>
+          Boolean(
+            item.address
+          )
+      ).length,
+
+    withOpeningHours:
+      items.filter(
+        item =>
+          item.hasOpeningHours
+      ).length,
+
+    open24h:
+      items.filter(
+        item =>
+          item.open24h
+      ).length,
+
+    withPhone:
+      items.filter(
+        item =>
+          Boolean(
+            item.phone
+          )
+      ).length,
+
+    withWebsite:
+      items.filter(
+        item =>
+          Boolean(
+            item.website
+          )
+      ).length,
+
+    withContact:
+      items.filter(
+        item =>
+          item.hasContact
+      ).length,
+
+    wheelchairYes:
+      items.filter(
+        item =>
+          item.wheelchair === true
+      ).length
+
+  };
+
+}
+
+
+/* ============================================================
+   LOG STATISTICHE
+============================================================ */
+
+function printStatistics(
+  items,
+  rawCount
+) {
+
+  const stats =
+    getStatistics(items);
+
+
   console.log(
-    "\n=============================="
+    "\n======================================"
   );
 
   console.log(
@@ -738,22 +1195,58 @@ function printStatistics(items) {
   );
 
   console.log(
-    "=============================="
+    "======================================"
   );
 
 
   console.log(
-    `Totale servizi: ${items.length}`
+    `Elementi OSM ricevuti: ${rawCount}`
   );
 
 
   console.log(
-    "\nCategorie:"
+    `Servizi dopo pulizia: ${items.length}`
+  );
+
+
+  console.log(
+    `Elementi esclusi: ${rawCount - items.length}`
+  );
+
+
+  console.log(
+    "\nGRUPPI:"
   );
 
 
   Object
-    .entries(statistics)
+    .entries(
+      stats.groups
+    )
+    .sort(
+      (a, b) =>
+        b[1] - a[1]
+    )
+    .forEach(
+      ([group, total]) => {
+
+        console.log(
+          `- ${group}: ${total}`
+        );
+
+      }
+    );
+
+
+  console.log(
+    "\nCATEGORIE:"
+  );
+
+
+  Object
+    .entries(
+      stats.categories
+    )
     .sort(
       (a, b) =>
         b[1] - a[1]
@@ -769,69 +1262,56 @@ function printStatistics(items) {
     );
 
 
-  const withAddress =
-    items.filter(
-      item =>
-        item.address
-    ).length;
-
-
-  const withOpeningHours =
-    items.filter(
-      item =>
-        item.openingHours
-    ).length;
-
-
-  const withPhone =
-    items.filter(
-      item =>
-        item.phone
-    ).length;
-
-
-  const withWebsite =
-    items.filter(
-      item =>
-        item.website
-    ).length;
-
-
   console.log(
-    "\nQualità dati:"
+    "\nQUALITÀ DATI:"
   );
 
 
   console.log(
-    `- con indirizzo: ${withAddress}`
+    `- con indirizzo: ${stats.withAddress}`
   );
 
 
   console.log(
-    `- con orari: ${withOpeningHours}`
+    `- con orari: ${stats.withOpeningHours}`
   );
 
 
   console.log(
-    `- con telefono: ${withPhone}`
+    `- aperti 24h: ${stats.open24h}`
   );
 
 
   console.log(
-    `- con sito web: ${withWebsite}`
+    `- con telefono: ${stats.withPhone}`
   );
 
 
   console.log(
-    "==============================\n"
+    `- con sito web: ${stats.withWebsite}`
+  );
+
+
+  console.log(
+    `- con almeno un contatto: ${stats.withContact}`
+  );
+
+
+  console.log(
+    `- accessibili in sedia a rotelle: ${stats.wheelchairYes}`
+  );
+
+
+  console.log(
+    "======================================\n"
   );
 
 }
 
 
-/* ======================================================
+/* ============================================================
    MAIN
-====================================================== */
+============================================================ */
 
 async function main() {
 
@@ -863,7 +1343,7 @@ async function main() {
             "application/x-www-form-urlencoded",
 
           "User-Agent":
-            "OraVicino/1.0"
+            "OraVicino/2.0"
 
         },
 
@@ -905,8 +1385,12 @@ async function main() {
   }
 
 
+  const rawCount =
+    data.elements.length;
+
+
   console.log(
-    `Elementi ricevuti: ${data.elements.length}`
+    `Elementi ricevuti: ${rawCount}`
   );
 
 
@@ -931,9 +1415,8 @@ async function main() {
 
 
   /*
-   * Protezione:
-   * non sovrascriviamo il database
-   * se la query restituisce zero risultati.
+   * Protezione contro una risposta vuota
+   * o un problema temporaneo dell'API.
    */
 
   if (
@@ -941,7 +1424,27 @@ async function main() {
   ) {
 
     throw new Error(
-      "Nessun servizio trovato. Il file esistente non verrà sovrascritto."
+      "Nessun servizio trovato. Il database esistente non verrà sovrascritto."
+    );
+
+  }
+
+
+  /*
+   * Protezione aggiuntiva.
+   *
+   * Abbiamo già verificato che Trento restituisce
+   * migliaia di elementi. Se improvvisamente
+   * ne arrivassero pochissimi, è preferibile
+   * non sostituire il database esistente.
+   */
+
+  if (
+    services.length < 100
+  ) {
+
+    throw new Error(
+      `Solo ${services.length} servizi trovati. Aggiornamento annullato per sicurezza.`
     );
 
   }
@@ -969,6 +1472,12 @@ async function main() {
   }
 
 
+  const statistics =
+    getStatistics(
+      services
+    );
+
+
   const payload = {
 
     metadata: {
@@ -992,8 +1501,20 @@ async function main() {
         new Date()
           .toISOString(),
 
+      bbox:
+        BBOX,
+
+      rawTotal:
+        rawCount,
+
       total:
-        services.length
+        services.length,
+
+      groups:
+        statistics.groups,
+
+      categories:
+        statistics.categories
 
     },
 
@@ -1020,7 +1541,8 @@ async function main() {
 
 
   printStatistics(
-    services
+    services,
+    rawCount
   );
 
 
@@ -1031,9 +1553,9 @@ async function main() {
 }
 
 
-/* ======================================================
+/* ============================================================
    AVVIO
-====================================================== */
+============================================================ */
 
 main()
   .catch(
