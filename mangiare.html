@@ -22,6 +22,13 @@
     href="style.css"
   >
 
+  <!-- METEO -->
+
+  <link
+    rel="stylesheet"
+    href="meteo.css"
+  >
+
   <!-- LEAFLET -->
 
   <link
@@ -185,8 +192,6 @@
 
 
 
-    /* FOTO REAL DE TRENTO */
-
     .trento-hero-photo {
 
       position: absolute;
@@ -210,8 +215,6 @@
     }
 
 
-
-    /* DEGRADÊ PARA FOTO DESAPARECER À ESQUERDA */
 
     .food-hero::before {
 
@@ -245,8 +248,6 @@
     }
 
 
-
-    /* BRILHO QUENTE */
 
     .food-hero::after {
 
@@ -605,6 +606,129 @@
 
 
     /* ========================================
+       VICINO A ME
+    ======================================== */
+
+    .nearby-tools {
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      gap: 16px;
+
+      flex-wrap: wrap;
+
+      margin:
+        27px 0 0;
+
+      padding:
+        13px 15px;
+
+      border-radius: 18px;
+
+      border:
+        1px solid
+        rgba(23,35,29,.09);
+
+      background:
+        rgba(255,253,248,.68);
+
+    }
+
+
+    .nearby-text {
+
+      min-width: 0;
+
+      color: #687069;
+
+      font-size: 12px;
+
+      line-height: 1.4;
+
+    }
+
+
+    .nearby-text strong {
+
+      display: block;
+
+      margin-bottom: 2px;
+
+      color: #173f32;
+
+      font-size: 12px;
+
+    }
+
+
+    .nearby-button {
+
+      flex: 0 0 auto;
+
+      min-height: 38px;
+
+      padding:
+        0 15px;
+
+      border: 0;
+
+      border-radius: 999px;
+
+      background: #173f32;
+
+      color: #fffdf8;
+
+      cursor: pointer;
+
+      font-family: inherit;
+
+      font-size: 11px;
+
+      font-weight: 800;
+
+      letter-spacing: .3px;
+
+      transition:
+        transform .2s ease,
+        background .2s ease;
+
+    }
+
+
+    .nearby-button:hover {
+
+      transform:
+        translateY(-1px);
+
+      background: #245b48;
+
+    }
+
+
+    .nearby-button:disabled {
+
+      cursor: wait;
+
+      opacity: .65;
+
+      transform: none;
+
+    }
+
+
+    .nearby-button.active {
+
+      background: #ef6a3a;
+
+    }
+
+
+
+    /* ========================================
        CRÉDITO FOTO
     ======================================== */
 
@@ -874,8 +998,6 @@
 
 
 
-    /* FOTO CARD */
-
     .restaurant-photo {
 
       position: absolute;
@@ -1098,6 +1220,33 @@
     }
 
 
+    .distance {
+
+      display: inline-flex;
+
+      align-items: center;
+
+      gap: 5px;
+
+      margin-top: 10px;
+
+      padding:
+        6px 9px;
+
+      border-radius: 999px;
+
+      background:
+        rgba(23,63,50,.08);
+
+      color: #173f32;
+
+      font-size: 11px;
+
+      font-weight: 800;
+
+    }
+
+
     .restaurant-info {
 
       margin-top: 20px;
@@ -1316,6 +1465,42 @@
 
 
     /* ========================================
+       POSIÇÃO DO USUÁRIO
+    ======================================== */
+
+    .user-location-marker {
+
+      background: transparent;
+
+      border: 0;
+
+    }
+
+
+    .user-location-dot {
+
+      width: 17px;
+
+      height: 17px;
+
+      border-radius: 50%;
+
+      background: #2476d3;
+
+      border:
+        4px solid #fff;
+
+      box-shadow:
+        0 0 0 5px
+        rgba(36,118,211,.20),
+        0 4px 12px
+        rgba(0,0,0,.25);
+
+    }
+
+
+
+    /* ========================================
        POPUP
     ======================================== */
 
@@ -1384,6 +1569,19 @@
       color: #6d746f;
 
       font-size: 11px;
+
+    }
+
+
+    .popup-distance {
+
+      margin-top: 7px;
+
+      color: #173f32;
+
+      font-size: 11px;
+
+      font-weight: 800;
 
     }
 
@@ -1613,6 +1811,20 @@
       .filter {
 
         flex: 0 0 auto;
+
+      }
+
+
+      .nearby-tools {
+
+        align-items: stretch;
+
+      }
+
+
+      .nearby-button {
+
+        width: 100%;
 
       }
 
@@ -1851,6 +2063,38 @@
 
 
 
+      <!-- VICINO A ME -->
+
+      <div class="nearby-tools">
+
+        <div
+          class="nearby-text"
+          id="nearbyStatus"
+          aria-live="polite"
+        >
+
+          <strong>
+            📍 Vicino a me
+          </strong>
+
+          Attiva la posizione per vedere
+          i posti più vicini.
+
+        </div>
+
+
+        <button
+          class="nearby-button"
+          id="nearbyButton"
+          type="button"
+        >
+          USA LA MIA POSIZIONE
+        </button>
+
+      </div>
+
+
+
       <!-- CRÉDITO -->
 
       <a
@@ -1903,7 +2147,10 @@
         <div class="map-wrapper">
 
 
-          <div class="map-badge">
+          <div
+            class="map-badge"
+            id="mapBadge"
+          >
             📍 TRENTO
           </div>
 
@@ -1967,6 +2214,10 @@
 
     let visibleRestaurants = [];
 
+    let userLocation = null;
+
+    let userMarker = null;
+
 
     const container =
       document.getElementById(
@@ -1983,6 +2234,24 @@
     const count =
       document.getElementById(
         "resultCount"
+      );
+
+
+    const nearbyButton =
+      document.getElementById(
+        "nearbyButton"
+      );
+
+
+    const nearbyStatus =
+      document.getElementById(
+        "nearbyStatus"
+      );
+
+
+    const mapBadge =
+      document.getElementById(
+        "mapBadge"
       );
 
 
@@ -2018,6 +2287,470 @@
 
 
     /* ========================================
+       DISTÂNCIA
+    ======================================== */
+
+    function distanceInMeters(
+      lat1,
+      lng1,
+      lat2,
+      lng2
+    ) {
+
+      const earthRadius =
+        6371000;
+
+
+      const toRadians =
+        value =>
+          value *
+          Math.PI /
+          180;
+
+
+      const deltaLat =
+        toRadians(
+          lat2 - lat1
+        );
+
+
+      const deltaLng =
+        toRadians(
+          lng2 - lng1
+        );
+
+
+      const a =
+        Math.sin(
+          deltaLat / 2
+        ) ** 2
+        +
+        Math.cos(
+          toRadians(lat1)
+        )
+        *
+        Math.cos(
+          toRadians(lat2)
+        )
+        *
+        Math.sin(
+          deltaLng / 2
+        ) ** 2;
+
+
+      const c =
+        2 *
+        Math.atan2(
+          Math.sqrt(a),
+          Math.sqrt(1 - a)
+        );
+
+
+      return (
+        earthRadius * c
+      );
+
+    }
+
+
+
+    function distanceLabel(
+      meters
+    ) {
+
+      if (
+        !Number.isFinite(
+          meters
+        )
+      ) {
+
+        return "";
+
+      }
+
+
+      if (
+        meters < 1000
+      ) {
+
+        return (
+          Math.round(
+            meters / 10
+          ) * 10
+        ) + " m";
+
+      }
+
+
+      return (
+        meters / 1000
+      )
+      .toFixed(1)
+      .replace(".", ",")
+      + " km";
+
+    }
+
+
+
+    function addDistances() {
+
+      if (
+        !userLocation
+      ) {
+
+        return;
+
+      }
+
+
+      restaurants =
+        restaurants.map(
+          item => {
+
+
+            const lat =
+              Number(item.lat);
+
+
+            const lng =
+              Number(item.lng);
+
+
+            if (
+              !Number.isFinite(lat)
+              ||
+              !Number.isFinite(lng)
+            ) {
+
+              return {
+                ...item,
+                distance: null
+              };
+
+            }
+
+
+            return {
+
+              ...item,
+
+              distance:
+                distanceInMeters(
+                  userLocation.lat,
+                  userLocation.lng,
+                  lat,
+                  lng
+                )
+
+            };
+
+          }
+        );
+
+    }
+
+
+
+    /* ========================================
+       LOCALIZAÇÃO
+    ======================================== */
+
+    function createUserMarker() {
+
+      if (
+        !userLocation
+      ) {
+
+        return;
+
+      }
+
+
+      if (
+        userMarker
+      ) {
+
+        map.removeLayer(
+          userMarker
+        );
+
+      }
+
+
+      const icon =
+        L.divIcon({
+
+          className:
+            "user-location-marker",
+
+          html:
+            '<div class="user-location-dot"></div>',
+
+          iconSize:
+            [25, 25],
+
+          iconAnchor:
+            [12, 12]
+
+        });
+
+
+      userMarker =
+        L.marker(
+          [
+            userLocation.lat,
+            userLocation.lng
+          ],
+          {
+            icon
+          }
+        )
+        .addTo(map)
+        .bindPopup(
+          "<strong>La tua posizione</strong>"
+        );
+
+    }
+
+
+
+    function activateNearby() {
+
+      if (
+        !navigator.geolocation
+      ) {
+
+        nearbyStatus.innerHTML = `
+
+          <strong>
+            📍 Posizione non disponibile
+          </strong>
+
+          Il browser non supporta
+          la geolocalizzazione.
+
+        `;
+
+        return;
+
+      }
+
+
+      nearbyButton.disabled =
+        true;
+
+
+      nearbyButton.textContent =
+        "LOCALIZZAZIONE…";
+
+
+      nearbyStatus.innerHTML = `
+
+        <strong>
+          📍 Sto cercando la tua posizione…
+        </strong>
+
+        Potrebbe essere richiesta
+        l'autorizzazione del browser.
+
+      `;
+
+
+      navigator.geolocation.getCurrentPosition(
+
+        position => {
+
+
+          userLocation = {
+
+            lat:
+              position.coords.latitude,
+
+            lng:
+              position.coords.longitude
+
+          };
+
+
+          addDistances();
+
+
+          nearbyButton.disabled =
+            false;
+
+
+          nearbyButton.classList.add(
+            "active"
+          );
+
+
+          nearbyButton.textContent =
+            "POSIZIONE ATTIVA ✓";
+
+
+          nearbyStatus.innerHTML = `
+
+            <strong>
+              📍 Vicino a me attivo
+            </strong>
+
+            I risultati sono ordinati
+            dal più vicino.
+
+          `;
+
+
+          mapBadge.textContent =
+            "📍 VICINO A ME";
+
+
+          createUserMarker();
+
+
+          selectedRestaurantId =
+            null;
+
+
+          applyFilters();
+
+
+          const visibleCoordinates =
+            visibleRestaurants
+              .filter(
+                item =>
+                  Number.isFinite(
+                    Number(item.lat)
+                  )
+                  &&
+                  Number.isFinite(
+                    Number(item.lng)
+                  )
+              );
+
+
+          const boundsPoints =
+            [
+              [
+                userLocation.lat,
+                userLocation.lng
+              ],
+              ...visibleCoordinates
+                .slice(0, 5)
+                .map(
+                  item => [
+                    Number(item.lat),
+                    Number(item.lng)
+                  ]
+                )
+            ];
+
+
+          if (
+            boundsPoints.length > 1
+          ) {
+
+            map.fitBounds(
+              boundsPoints,
+              {
+                padding:
+                  [45, 45],
+
+                maxZoom:
+                  15
+              }
+            );
+
+          }
+
+        },
+
+
+        error => {
+
+
+          nearbyButton.disabled =
+            false;
+
+
+          nearbyButton.textContent =
+            "RIPROVA";
+
+
+          let message =
+            "Non è stato possibile ottenere la posizione.";
+
+
+          if (
+            error.code === 1
+          ) {
+
+            message =
+              "Permesso di localizzazione non concesso.";
+
+          }
+
+
+          else if (
+            error.code === 2
+          ) {
+
+            message =
+              "Posizione momentaneamente non disponibile.";
+
+          }
+
+
+          else if (
+            error.code === 3
+          ) {
+
+            message =
+              "La richiesta della posizione è scaduta.";
+
+          }
+
+
+          nearbyStatus.innerHTML = `
+
+            <strong>
+              📍 Posizione non disponibile
+            </strong>
+
+            ${message}
+
+          `;
+
+        },
+
+
+        {
+
+          enableHighAccuracy:
+            true,
+
+          timeout:
+            10000,
+
+          maximumAge:
+            300000
+
+        }
+
+      );
+
+    }
+
+
+
+    nearbyButton.addEventListener(
+      "click",
+      activateNearby
+    );
+
+
+
+    /* ========================================
        CARREGAR JSON
     ======================================== */
 
@@ -2027,7 +2760,10 @@
 
         const response =
           await fetch(
-            "data/restaurants.json"
+            "data/restaurants.json",
+            {
+              cache: "no-store"
+            }
           );
 
 
@@ -2054,18 +2790,16 @@
           );
 
 
-        visibleRestaurants =
-          [...restaurants];
+        if (
+          userLocation
+        ) {
+
+          addDistances();
+
+        }
 
 
-        renderRestaurants(
-          visibleRestaurants
-        );
-
-
-        updateMarkers(
-          visibleRestaurants
-        );
+        applyFilters();
 
       }
 
@@ -2098,11 +2832,6 @@
 
     /* ========================================
        FOTO DOS CARDS
-
-       Por enquanto:
-       Chistè → pizza.jpg
-
-       Depois vamos levar isso para o JSON.
     ======================================== */
 
     function restaurantImage(item) {
@@ -2199,6 +2928,13 @@
           items.length === 1
             ? " posto trovato"
             : " posti trovati"
+        )
+        +
+        (
+          userLocation &&
+          items.length
+            ? " · ordinati per distanza"
+            : ""
         );
 
 
@@ -2248,6 +2984,16 @@
 
             const image =
               restaurantImage(item);
+
+
+            const distance =
+              Number.isFinite(
+                item.distance
+              )
+                ? distanceLabel(
+                    item.distance
+                  )
+                : "";
 
 
             return `
@@ -2360,6 +3106,19 @@
                   >
                     📍 ${item.address}
                   </div>
+
+
+                  ${
+                    distance
+                      ? `
+
+                        <div class="distance">
+                          ◎ ${distance} da te
+                        </div>
+
+                      `
+                      : ""
+                  }
 
 
                   <div
@@ -2577,6 +3336,16 @@
               .addTo(map);
 
 
+            const distance =
+              Number.isFinite(
+                item.distance
+              )
+                ? distanceLabel(
+                    item.distance
+                  )
+                : "";
+
+
             marker.bindPopup(`
 
               <div
@@ -2605,6 +3374,20 @@
                   📍 ${item.address || ""}
                 </div>
 
+                ${
+                  distance
+                    ? `
+
+                      <div
+                        class="popup-distance"
+                      >
+                        ◎ ${distance} da te
+                      </div>
+
+                    `
+                    : ""
+                }
+
               </div>
 
             `);
@@ -2629,6 +3412,15 @@
           }
         );
 
+
+
+      if (
+        userLocation
+      ) {
+
+        return;
+
+      }
 
 
       if (
@@ -2943,6 +3735,41 @@
 
 
       if (
+        userLocation
+      ) {
+
+        visibleRestaurants.sort(
+          (a, b) => {
+
+            const distanceA =
+              Number.isFinite(
+                a.distance
+              )
+                ? a.distance
+                : Infinity;
+
+
+            const distanceB =
+              Number.isFinite(
+                b.distance
+              )
+                ? b.distance
+                : Infinity;
+
+
+            return (
+              distanceA -
+              distanceB
+            );
+
+          }
+        );
+
+      }
+
+
+
+      if (
         selectedRestaurantId
         &&
         !visibleRestaurants.some(
@@ -2966,6 +3793,37 @@
       updateMarkers(
         visibleRestaurants
       );
+
+    }
+
+
+
+    /* ========================================
+       BUSCA DA URL
+    ======================================== */
+
+    function readSearchFromUrl() {
+
+      const params =
+        new URLSearchParams(
+          window.location.search
+        );
+
+
+      const query =
+        params.get(
+          "search"
+        );
+
+
+      if (
+        query
+      ) {
+
+        search.value =
+          query.trim();
+
+      }
 
     }
 
@@ -3041,6 +3899,8 @@
        INICIAR
     ======================================== */
 
+    readSearchFromUrl();
+
     loadRestaurants();
 
 
@@ -3062,6 +3922,13 @@
     );
 
   </script>
+
+
+  <!-- ========================================
+       METEO
+  ======================================== -->
+
+  <script src="meteo.js"></script>
 
 
 </body>
