@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Mangiare a Trento — OraVicino</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .food-page {
+      max-width: 1240px;
+      margin: auto;
+      padding: 35px 30px 100px;
+    }
+
+    .back {
+      display: inline-block;
+      margin: 15px 0 50px;
+      color: #6d746f;
+      font-weight: 600;
+    }
+
+    .food-header {
+      margin-bottom: 35px;
+    }
+
+    .food-header h1 {
+      margin: 8px 0 12px;
+      font-size: clamp(48px, 6vw, 78px);
+      letter-spacing: -4px;
+      line-height: .95;
+    }
+
+    .food-header p {
+      color: #6d746f;
+      font-size: 18px;
+    }
+
+    .food-search {
+      max-width: 700px;
+      background: white;
+      border-radius: 18px;
+      padding: 8px 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 15px 45px rgba(25,39,32,.08);
+    }
+
+    .food-search input {
+      flex: 1;
+      padding: 13px 5px;
+      border: 0;
+      outline: none;
+      background: transparent;
+      font-size: 16px;
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin: 20px 0 45px;
+    }
+
+    .filter {
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(23,35,29,.15);
+      background: transparent;
+      color: #17231d;
+    }
+
+    .filter.active {
+      background: #173f32;
+      color: white;
+      border-color: #173f32;
+    }
+
+    .results-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .results-header strong {
+      font-size: 14px;
+    }
+
+    .restaurants {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .restaurant {
+      overflow: hidden;
+      background: #fffdf8;
+      border: 1px solid rgba(23,35,29,.12);
+      border-radius: 24px;
+      transition: .25s ease;
+    }
+
+    .restaurant:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 50px rgba(25,39,32,.10);
+    }
+
+    .restaurant-cover {
+      height: 175px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(circle at 75% 20%, rgba(242,193,78,.55), transparent 25%),
+        linear-gradient(145deg, #285d49, #173f32);
+      font-size: 55px;
+    }
+
+    .route-badge {
+      position: absolute;
+      left: 16px;
+      top: 16px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: #f2c14e;
+      color: #17231d;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .6px;
+    }
+
+    .restaurant-content {
+      padding: 22px;
+    }
+
+    .restaurant-area {
+      color: #ef6a3a;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+    }
+
+    .restaurant h2 {
+      margin: 7px 0 6px;
+      font-size: 24px;
+      letter-spacing: -1px;
+    }
+
+    .category {
+      min-height: 24px;
+      color: #6d746f;
+    }
+
+    .restaurant-info {
+      margin-top: 20px;
+      padding-top: 17px;
+      border-top: 1px solid rgba(23,35,29,.1);
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      font-size: 13px;
+    }
+
+    .address {
+      margin-top: 14px;
+      color: #6d746f;
+      font-size: 13px;
+    }
+
+    .empty {
+      grid-column: 1 / -1;
+      padding: 70px 20px;
+      text-align: center;
+      color: #6d746f;
+    }
+
+    @media(max-width: 900px) {
+      .restaurants {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media(max-width: 560px) {
+      .food-page {
+        padding: 20px 18px 70px;
+      }
+
+      .back {
+        margin-bottom: 35px;
+      }
+
+      .food-header h1 {
+        letter-spacing: -2.5px;
+      }
+
+      .restaurants {
+        grid-template-columns: 1fr;
+      }
+
+      .filters {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding-bottom: 5px;
+      }
+
+      .filter {
+        flex: 0 0 auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="topbar">
+
+  <a class="logo" href="index.html">
+    ora<span>vicino</span>
+  </a>
+
+  <div class="top-actions">
+    <button class="city-button">📍 Trento</button>
+    <button class="language-button">IT ▾</button>
+  </div>
+
+</header>
+
+
+<main class="food-page">
+
+  <a class="back" href="index.html">← Torna alla home</a>
+
+  <section class="food-header">
+
+    <span class="mini-title">MANGIARE · TRENTO</span>
+
+    <h1>Dove mangiamo?</h1>
+
+    <p>
+      Ristoranti, trattorie e piccoli posti da scoprire.
+    </p>
+
+  </section>
+
+
+  <div class="food-search">
+
+    <span>⌕</span>
+
+    <input
+      id="search"
+      type="text"
+      placeholder="Cerca un posto, una cucina o un quartiere..."
+    >
+
+  </div>
+
+
+  <div class="filters">
+
+    <button class="filter active" data-filter="all">
+      Tutti
+    </button>
+
+    <button class="filter" data-filter="trentino">
+      🥘 Tipico
+    </button>
+
+    <button class="filter" data-filter="pizza">
+      🍕 Pizza
+    </button>
+
+    <button class="filter" data-filter="osteria">
+      🍷 Osteria
+    </button>
+
+    <button class="filter" data-filter="fuori-percorso">
+      🧭 Fuori dal percorso
+    </button>
+
+    <button class="filter" data-filter="€€">
+      €€
+    </button>
+
+    <button class="filter" data-filter="€€€">
+      €€€
+    </button>
+
+  </div>
+
+
+  <div class="results-header">
+
+    <strong id="resultCount">
+      Caricamento...
+    </strong>
+
+  </div>
+
+
+  <section
+    class="restaurants"
+    id="restaurants"
+  ></section>
+
+</main>
+
+
+<footer>
+
+  <div class="logo">
+    ora<span>vicino</span>
+  </div>
+
+  <p>Trento · Italia</p>
+
+  <p class="footer-small">
+    Progetto pilota
+  </p>
+
+</footer>
+
+
+<script>
+
+let restaurants = [];
+let currentFilter = "all";
+
+const container =
+  document.getElementById("restaurants");
+
+const search =
+  document.getElementById("search");
+
+const count =
+  document.getElementById("resultCount");
+
+
+async function loadRestaurants() {
+
+  try {
+
+    const response =
+      await fetch("data/restaurants.json");
+
+    restaurants =
+      await response.json();
+
+    renderRestaurants(restaurants);
+
+  }
+
+  catch (error) {
+
+    container.innerHTML =
+      '<div class="empty">Impossibile caricare i ristoranti.</div>';
+
+    count.textContent =
+      "Errore nel caricamento";
+
+    console.error(error);
+
+  }
+
+}
+
+
+function restaurantEmoji(item) {
+
+  const text =
+    (
+      item.category +
+      " " +
+      item.tags.join(" ")
+    ).toLowerCase();
+
+  if (text.includes("pizza"))
+    return "🍕";
+
+  if (text.includes("osteria"))
+    return "🍷";
+
+  if (
+    text.includes("trentino") ||
+    text.includes("territorio")
+  )
+    return "🥘";
+
+  if (text.includes("birra"))
+    return "🍺";
+
+  return "🍽️";
+
+}
+
+
+function renderRestaurants(items) {
+
+  count.textContent =
+    items.length +
+    (items.length === 1
+      ? " posto trovato"
+      : " posti trovati");
+
+
+  if (!items.length) {
+
+    container.innerHTML = `
+      <div class="empty">
+        Nessun posto trovato.<br>
+        Prova un'altra ricerca.
+      </div>
+    `;
+
+    return;
+  }
+
+
+  container.innerHTML =
+    items.map(item => {
+
+      const fuori =
+        item.tags.includes(
+          "fuori-percorso"
+        );
+
+      return `
+
+        <article class="restaurant">
+
+          <div class="restaurant-cover">
+
+            ${
+              fuori
+                ? '<span class="route-badge">FUORI DAL PERCORSO</span>'
+                : ''
+            }
+
+            <span>
+              ${restaurantEmoji(item)}
+            </span>
+
+          </div>
+
+
+          <div class="restaurant-content">
+
+            <span class="restaurant-area">
+              ${item.area}
+            </span>
+
+            <h2>
+              ${item.name}
+            </h2>
+
+            <div class="category">
+              ${item.category}
+            </div>
+
+
+            <div class="address">
+              📍 ${item.address}
+            </div>
+
+
+            <div class="restaurant-info">
+
+              <span>
+                ${item.price}
+              </span>
+
+              <span>
+                Trento →
+              </span>
+
+            </div>
+
+          </div>
+
+        </article>
+
+      `;
+
+    }).join("");
+
+}
+
+
+function applyFilters() {
+
+  const query =
+    search.value
+      .toLowerCase()
+      .trim();
+
+
+  const filtered =
+    restaurants.filter(item => {
+
+      const searchable =
+        [
+          item.name,
+          item.category,
+          item.area,
+          item.address,
+          ...item.tags
+        ]
+        .join(" ")
+        .toLowerCase();
+
+
+      const matchesSearch =
+        searchable.includes(query);
+
+
+      let matchesFilter = true;
+
+
+      if (
+        currentFilter !== "all"
+      ) {
+
+        if (
+          currentFilter === "€€" ||
+          currentFilter === "€€€"
+        ) {
+
+          matchesFilter =
+            item.price === currentFilter;
+
+        }
+
+        else {
+
+          matchesFilter =
+            item.tags.includes(
+              currentFilter
+            );
+
+        }
+
+      }
+
+
+      return (
+        matchesSearch &&
+        matchesFilter
+      );
+
+    });
+
+
+  renderRestaurants(filtered);
+
+}
+
+
+search.addEventListener(
+  "input",
+  applyFilters
+);
+
+
+document
+  .querySelectorAll(".filter")
+  .forEach(button => {
+
+    button.addEventListener(
+      "click",
+      () => {
+
+        document
+          .querySelectorAll(".filter")
+          .forEach(b =>
+            b.classList.remove("active")
+          );
+
+
+        button.classList.add(
+          "active"
+        );
+
+
+        currentFilter =
+          button.dataset.filter;
+
+
+        applyFilters();
+
+      }
+    );
+
+  });
+
+
+loadRestaurants();
+
+</script>
+
+</body>
+</html>
