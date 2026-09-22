@@ -1,0 +1,183 @@
+[
+  {
+    "id": "uva-e-menta",
+    "name": "Uva e Menta",
+    "category": "Birra artigianale · Enoteca",
+    "address": "Via Dietro le Mura A, 35",
+    "city": "Trento",
+    "price": "€€",
+    "area": "Centro storico",
+    "lat": 46.06784,
+    "lng": 11.12655,
+    "tags": [
+      "birra",
+      "vino",
+      "aperitivo",
+      "artigianale"
+    ],
+    "image": null
+  },
+  {
+    "id": "pedavena",
+    "name": "Antica Birreria Pedavena",
+    "category": "Birreria · Cucina trentina",
+    "address": "Piazza di Fiera, 13",
+    "city": "Trento",
+    "price": "€€",
+    "area": "Centro storico",
+    "lat": 46.06496,
+    "lng": 11.12482,
+    "tags": [
+      "birra",
+      "birreria",
+      "trentino",
+      "con-amici"
+    ],
+    "image": null
+  },
+  {
+    "id": "ruf",
+    "name": "RUF Drink On Tap",
+    "category": "Cocktail bar · Gin",
+    "address": "Trento",
+    "city": "Trento",
+    "price": "€€",
+    "area": "Centro storico",
+    "lat": 46.0683,
+    "lng": 11.1219,
+    "tags": [
+      "cocktail",
+      "gin",
+      "aperitivo",
+      "dopo-cena"
+    ],
+    "image": null
+  },
+  {
+    "id": "bar-pasi",
+    "name": "Bar Pasi",
+    "category": "Cocktail · Aperitivo",
+    "address": "Piazza Mario Pasi, 1",
+    "city": "Trento",
+    "price": "€€",
+    "area": "Centro storico",
+    "lat": 46.06827,
+    "lng": 11.12168,
+    "tags": [
+      "cocktail",
+      "aperitivo",
+      "vino",
+      "centro"
+    ],
+    "image": null
+  },
+  {
+    "id": "angolo-33",
+    "name": "Angolo dei 33",
+    "category": "Birreria · Craft beer",
+    "address": "Via Calepina, 10",
+    "city": "Trento",
+    "price": "€€",
+    "area": "Centro storico",
+    "lat": 46.06742,
+    "lng": 11.12367,
+    "tags": [
+      "birra",
+      "birreria",
+      "artigianale",
+      "dopo-cena"
+    ],
+    "image": null
+  },
+  {
+    "id": "el-barrio",
+    "name": "El Barrio",
+    "category": "Bar · Cocktail · Aperitivo",
+    "address": "Via San Martino, 86",
+    "city": "Trento",
+    "price": "€€",
+    "area": "San Martino",
+    "lat": 46.07202,
+    "lng": 11.12539,
+    "tags": [
+      "cocktail",
+      "birra",
+      "aperitivo",
+      "con-amici",
+      "fuori-percorso"
+    ],
+    "image": null
+  },
+  {
+    "id": "caffe-tridente",
+    "name": "Caffè Tridente",
+    "category": "Caffè · Cocktail · Aperitivo",
+    "address": "Via del Duomo, 31",
+    "city": "Trento",
+    "price": "€€",
+    "area": "Centro storico",
+    "lat": 46.06712,
+    "lng": 11.12103,
+    "tags": [
+      "cocktail",
+      "aperitivo",
+      "centro"
+    ],
+    "image": null
+  },
+  {
+    "id": "ai-vicoli",
+    "name": "Ai Vicoli",
+    "category": "Wine bar · Enoteca",
+    "address": "Piazza Santa Teresa Verzeri, 1",
+    "city": "Trento",
+    "price": "€€€",
+    "area": "Centro storico",
+    "lat": 46.06635,
+    "lng": 11.1229,
+    "tags": [
+      "vino",
+      "enoteca",
+      "aperitivo",
+      "tranquillo"
+    ],
+    "image": null
+  },
+  {
+    "id": "movida-kafe",
+    "name": "Movida Kafè",
+    "category": "Cocktail bar · Aperitivo",
+    "address": "Via Malpaga, 2",
+    "city": "Trento",
+    "price": "€€",
+    "area": "Centro storico",
+    "lat": 46.06775,
+    "lng": 11.12289,
+    "tags": [
+      "cocktail",
+      "aperitivo",
+      "dopo-cena",
+      "centro"
+    ],
+    "image": null
+  },
+  {
+    "id": "tetleys",
+    "name": "Tetley's Pub",
+    "category": "Pub · Birreria",
+    "address": "Via degli Orti, 1",
+    "city": "Trento",
+    "price": "€€",
+    "area": "Centro storico",
+    "lat": 46.06559,
+    "lng": 11.12162,
+    "tags": [
+      "birra",
+      "birreria",
+      "pub",
+      "con-amici",
+      "dopo-cena"
+    ],
+    "image": null
+  }
+]
