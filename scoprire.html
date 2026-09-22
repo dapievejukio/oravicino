@@ -1,0 +1,3196 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Scoprire Trento — OraVicino</title>
+
+  <meta
+    name="description"
+    content="Musei, panorami, parchi, luoghi storici, natura e posti da scoprire vicino a te a Trento."
+  >
+
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="meteo.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  >
+
+  <style>
+
+    /* =====================================================
+       SCOPRIRE — ORAVICINO
+    ===================================================== */
+
+    body {
+      margin: 0;
+      color: #17231d;
+
+      background:
+        radial-gradient(
+          circle at 92% 10%,
+          rgba(242,193,78,.13),
+          transparent 24%
+        ),
+        radial-gradient(
+          circle at 4% 45%,
+          rgba(23,63,50,.08),
+          transparent 20%
+        ),
+        linear-gradient(
+          180deg,
+          #f7f3e9 0%,
+          #f4efe4 58%,
+          #f8f5ed 100%
+        );
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -10;
+      pointer-events: none;
+      opacity: .22;
+
+      background-image:
+        linear-gradient(
+          rgba(23,63,50,.018) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          90deg,
+          rgba(23,63,50,.018) 1px,
+          transparent 1px
+        );
+
+      background-size: 42px 42px;
+    }
+
+
+    /* =====================================================
+       CONTAINER
+    ===================================================== */
+
+    .discover-container {
+      width: min(calc(100% - 60px), 1240px);
+      margin: 0 auto;
+    }
+
+
+    /* =====================================================
+       HERO
+    ===================================================== */
+
+    .discover-hero {
+      position: relative;
+      min-height: 390px;
+      margin-top: 28px;
+      overflow: hidden;
+      border-radius: 38px;
+      background: #173f32;
+      isolation: isolate;
+    }
+
+    .discover-hero::before {
+      content: "";
+      position: absolute;
+      z-index: -2;
+      inset: 0;
+
+      background:
+        radial-gradient(
+          circle at 84% 20%,
+          rgba(242,193,78,.20),
+          transparent 25%
+        ),
+        radial-gradient(
+          circle at 74% 105%,
+          rgba(255,255,255,.08),
+          transparent 35%
+        ),
+        linear-gradient(
+          125deg,
+          #173f32 0%,
+          #245b48 100%
+        );
+    }
+
+    .discover-hero::after {
+      content: "🏔️";
+      position: absolute;
+      z-index: -1;
+      right: 7%;
+      bottom: -45px;
+      font-size: 230px;
+      line-height: 1;
+      opacity: .11;
+      transform: rotate(-4deg);
+    }
+
+    .discover-hero-content {
+      width: min(720px, 100%);
+      padding: 70px 68px 60px;
+      box-sizing: border-box;
+      color: #fffdf8;
+    }
+
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 17px;
+      color: #f2c14e;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .hero-kicker::before {
+      content: "";
+      width: 30px;
+      height: 2px;
+      border-radius: 999px;
+      background: #f2c14e;
+    }
+
+    .discover-hero h1 {
+      max-width: 690px;
+      margin: 0 0 18px;
+      color: #fffdf8;
+      font-size: clamp(55px, 7vw, 88px);
+      line-height: .91;
+      letter-spacing: -4px;
+    }
+
+    .discover-hero h1 em {
+      color: #f2c14e;
+      font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+      font-weight: 500;
+    }
+
+    .discover-hero p {
+      max-width: 570px;
+      margin: 0;
+      color: rgba(255,253,248,.79);
+      font-size: 17px;
+      line-height: 1.6;
+    }
+
+
+    /* =====================================================
+       BUSCA
+    ===================================================== */
+
+    .discover-search {
+      max-width: 610px;
+      min-height: 62px;
+      margin-top: 28px;
+      padding: 0 19px;
+
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      border-radius: 19px;
+      background: #fffdf8;
+
+      box-shadow:
+        0 17px 40px
+        rgba(0,0,0,.15);
+
+      box-sizing: border-box;
+    }
+
+    .discover-search span {
+      color: #173f32;
+      font-size: 21px;
+    }
+
+    .discover-search input {
+      flex: 1;
+      min-width: 0;
+      padding: 18px 0;
+      border: 0;
+      outline: 0;
+      color: #17231d;
+      background: transparent;
+      font-size: 14px;
+    }
+
+
+    /* =====================================================
+       VICINO A ME
+    ===================================================== */
+
+    .nearby-section {
+      margin-top: 32px;
+      overflow: hidden;
+      border-radius: 31px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #173f32 0%,
+          #214f40 100%
+        );
+
+      box-shadow:
+        0 18px 50px
+        rgba(23,63,50,.10);
+    }
+
+    .nearby-inner {
+      min-height: 190px;
+      padding: 34px 40px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+
+      box-sizing: border-box;
+    }
+
+    .nearby-copy {
+      display: flex;
+      align-items: center;
+      gap: 23px;
+    }
+
+    .nearby-icon {
+      flex: 0 0 68px;
+      width: 68px;
+      height: 68px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 21px;
+      background: rgba(255,255,255,.10);
+      color: #f2c14e;
+      font-size: 31px;
+    }
+
+    .nearby-eyebrow {
+      display: block;
+      margin-bottom: 7px;
+      color: #f2c14e;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+    }
+
+    .nearby-copy h2 {
+      margin: 0 0 7px;
+      color: #fffdf8;
+      font-size: clamp(27px, 4vw, 40px);
+      letter-spacing: -1.8px;
+    }
+
+    .nearby-copy p {
+      margin: 0;
+      color: rgba(255,253,248,.68);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .nearby-button {
+      flex: 0 0 auto;
+      min-height: 52px;
+      padding: 0 22px;
+      border: 0;
+      border-radius: 16px;
+      cursor: pointer;
+      background: #f2c14e;
+      color: #17231d;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .5px;
+
+      transition:
+        transform .2s ease,
+        background .2s ease;
+    }
+
+    .nearby-button:hover {
+      transform: translateY(-2px);
+    }
+
+    .nearby-button.active {
+      background: #fffdf8;
+    }
+
+    .nearby-status {
+      padding: 0 40px 25px;
+      color: rgba(255,253,248,.72);
+      font-size: 11px;
+    }
+
+
+    /* =====================================================
+       CATEGORIAS
+    ===================================================== */
+
+    .discover-tools {
+      padding: 80px 0 32px;
+    }
+
+    .tools-heading {
+      margin-bottom: 27px;
+    }
+
+    .tools-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 10px;
+      color: #ef6a3a;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1.7px;
+      text-transform: uppercase;
+    }
+
+    .tools-kicker::before {
+      content: "";
+      width: 27px;
+      height: 2px;
+      background: #ef6a3a;
+    }
+
+    .tools-heading h2 {
+      margin: 0;
+      color: #173f32;
+      font-size: clamp(40px, 5vw, 62px);
+      line-height: 1;
+      letter-spacing: -3px;
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+    }
+
+    .category-button {
+      min-height: 125px;
+      padding: 18px 12px;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 11px;
+
+      border-radius: 22px;
+      border: 1px solid rgba(23,35,29,.09);
+
+      background:
+        rgba(255,253,248,.79);
+
+      color: #173f32;
+      cursor: pointer;
+
+      box-shadow:
+        0 8px 25px
+        rgba(25,39,32,.035);
+
+      transition:
+        transform .2s ease,
+        background .2s ease,
+        color .2s ease;
+    }
+
+    .category-button:hover {
+      transform: translateY(-2px);
+    }
+
+    .category-button.active {
+      background: #173f32;
+      color: #fffdf8;
+    }
+
+    .category-button .icon {
+      font-size: 27px;
+      line-height: 1;
+    }
+
+    .category-button strong {
+      font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+      font-size: 14px;
+    }
+
+
+    /* =====================================================
+       FILTROS SECUNDÁRIOS
+    ===================================================== */
+
+    .filter-row {
+      margin-top: 25px;
+      padding-bottom: 22px;
+
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      flex-wrap: wrap;
+
+      border-bottom:
+        1px solid
+        rgba(23,35,29,.11);
+    }
+
+    .filter-button {
+      min-height: 41px;
+      padding: 0 16px;
+
+      border-radius: 999px;
+      border:
+        1px solid
+        rgba(23,35,29,.11);
+
+      background: transparent;
+      color: #69716c;
+
+      cursor: pointer;
+
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .filter-button.active {
+      background: #173f32;
+      color: white;
+      border-color: #173f32;
+    }
+
+    .results-count {
+      margin-left: auto;
+      color: #6d746f;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+
+    /* =====================================================
+       RESULTADOS + MAPA
+    ===================================================== */
+
+    .discover-layout {
+      display: grid;
+      grid-template-columns:
+        minmax(0, .92fr)
+        minmax(430px, 1.08fr);
+
+      gap: 25px;
+      align-items: start;
+
+      padding:
+        0 0 105px;
+    }
+
+
+    /* =====================================================
+       CARDS
+    ===================================================== */
+
+    .places-list {
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+    }
+
+    .place-card {
+      position: relative;
+      padding: 22px;
+
+      display: grid;
+      grid-template-columns: 58px 1fr;
+      gap: 18px;
+
+      border-radius: 24px;
+
+      border:
+        1px solid
+        rgba(23,35,29,.09);
+
+      background:
+        rgba(255,253,248,.85);
+
+      box-shadow:
+        0 9px 30px
+        rgba(25,39,32,.035);
+
+      cursor: pointer;
+
+      transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        border-color .2s ease;
+
+      box-sizing: border-box;
+    }
+
+    .place-card:hover {
+      transform: translateY(-2px);
+
+      box-shadow:
+        0 15px 40px
+        rgba(25,39,32,.07);
+    }
+
+    .place-card.selected {
+      border-color:
+        rgba(239,106,58,.60);
+
+      box-shadow:
+        0 16px 45px
+        rgba(239,106,58,.10);
+    }
+
+    .place-icon {
+      width: 58px;
+      height: 58px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 18px;
+
+      background:
+        rgba(23,63,50,.07);
+
+      font-size: 25px;
+    }
+
+    .place-category {
+      display: block;
+      margin-bottom: 4px;
+      color: #ef6a3a;
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: 1.3px;
+      text-transform: uppercase;
+    }
+
+    .place-card h3 {
+      margin: 0 0 5px;
+      color: #173f32;
+      font-size: 21px;
+      line-height: 1.1;
+      letter-spacing: -.7px;
+    }
+
+    .place-address {
+      margin: 0;
+      color: #737a75;
+      font-size: 11px;
+      line-height: 1.45;
+    }
+
+    .place-description {
+      margin: 9px 0 0;
+      color: #68706b;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .place-chips {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .place-chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 25px;
+      padding: 0 9px;
+      border-radius: 999px;
+
+      background:
+        rgba(23,63,50,.07);
+
+      color: #24483b;
+      font-size: 9px;
+      font-weight: 700;
+    }
+
+    .place-chip.distance {
+      background:
+        rgba(242,193,78,.25);
+    }
+
+    .place-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 11px;
+    }
+
+    .place-link {
+      color: #173f32;
+      font-size: 10px;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .place-link:hover {
+      text-decoration: underline;
+    }
+
+
+    /* =====================================================
+       MAPA
+    ===================================================== */
+
+    .map-column {
+      position: sticky;
+      top: 20px;
+    }
+
+    .map-shell {
+      overflow: hidden;
+      border-radius: 28px;
+
+      border:
+        1px solid
+        rgba(23,35,29,.10);
+
+      background: #e6eadf;
+
+      box-shadow:
+        0 15px 45px
+        rgba(25,39,32,.07);
+    }
+
+    #discoverMap {
+      width: 100%;
+      height: 650px;
+    }
+
+    .map-note {
+      padding: 12px 17px;
+      background: #fffdf8;
+      color: #737a75;
+      font-size: 9px;
+      line-height: 1.5;
+    }
+
+
+    /* =====================================================
+       CARREGAR MAIS / ESTADOS
+    ===================================================== */
+
+    .load-more {
+      width: 100%;
+      min-height: 49px;
+      margin-top: 5px;
+
+      border-radius: 16px;
+
+      border:
+        1px solid
+        rgba(23,63,50,.16);
+
+      background: transparent;
+      color: #173f32;
+
+      cursor: pointer;
+
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .load-more:hover {
+      background:
+        rgba(23,63,50,.05);
+    }
+
+    .empty-state {
+      padding: 45px 25px;
+      border-radius: 24px;
+      text-align: center;
+
+      background:
+        rgba(255,253,248,.70);
+
+      border:
+        1px solid
+        rgba(23,35,29,.09);
+    }
+
+    .empty-state strong {
+      display: block;
+      margin-bottom: 7px;
+      color: #173f32;
+      font-size: 18px;
+    }
+
+    .empty-state span {
+      color: #747b76;
+      font-size: 12px;
+    }
+
+
+    /* =====================================================
+       FOOTER
+    ===================================================== */
+
+    .discover-footer {
+      width: min(calc(100% - 60px), 1240px);
+      margin: 0 auto 30px;
+      padding: 30px 0;
+
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+      align-items: center;
+
+      border-top:
+        1px solid
+        rgba(23,35,29,.11);
+
+      color: #6d746f;
+      font-size: 11px;
+    }
+
+    .discover-footer .footer-logo {
+      color: #173f32;
+      font-size: 23px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      text-decoration: none;
+    }
+
+    .discover-footer .footer-logo span {
+      color: #ef6a3a;
+    }
+
+
+    /* =====================================================
+       LEAFLET
+    ===================================================== */
+
+    .discover-marker {
+      width: 34px;
+      height: 34px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 50%;
+
+      background: #173f32;
+      border: 3px solid #fffdf8;
+
+      box-shadow:
+        0 4px 13px
+        rgba(0,0,0,.23);
+
+      font-size: 15px;
+    }
+
+    .discover-marker.selected {
+      background: #ef6a3a;
+    }
+
+    .user-marker {
+      width: 19px;
+      height: 19px;
+      border-radius: 50%;
+      background: #f2c14e;
+      border: 4px solid #173f32;
+
+      box-shadow:
+        0 0 0 4px
+        rgba(242,193,78,.27);
+    }
+
+    .leaflet-popup-content-wrapper {
+      border-radius: 15px;
+    }
+
+    .leaflet-popup-content {
+      margin: 13px 15px;
+      font-family: "DM Sans", Arial, sans-serif;
+    }
+
+    .popup-category {
+      color: #ef6a3a;
+      font-size: 9px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .popup-name {
+      margin-top: 3px;
+      color: #173f32;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .popup-address {
+      margin-top: 4px;
+      color: #6d746f;
+      font-size: 10px;
+    }
+
+    .popup-distance {
+      margin-top: 6px;
+      color: #173f32;
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+
+    /* =====================================================
+       TABLET
+    ===================================================== */
+
+    @media (max-width: 950px) {
+
+      .discover-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .map-column {
+        position: static;
+        order: -1;
+      }
+
+      #discoverMap {
+        height: 470px;
+      }
+
+      .category-grid {
+        grid-template-columns:
+          repeat(3, 1fr);
+      }
+
+    }
+
+
+    /* =====================================================
+       MOBILE
+    ===================================================== */
+
+    @media (max-width: 650px) {
+
+      .discover-container {
+        width: calc(100% - 30px);
+      }
+
+      .discover-hero {
+        min-height: 500px;
+        margin-top: 15px;
+        border-radius: 28px;
+      }
+
+      .discover-hero::after {
+        right: -45px;
+        font-size: 180px;
+      }
+
+      .discover-hero-content {
+        padding: 55px 24px 40px;
+      }
+
+      .discover-hero h1 {
+        font-size: clamp(53px, 16vw, 70px);
+        letter-spacing: -3px;
+      }
+
+      .nearby-inner {
+        padding: 28px 23px;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .nearby-copy {
+        align-items: flex-start;
+      }
+
+      .nearby-icon {
+        flex-basis: 55px;
+        width: 55px;
+        height: 55px;
+      }
+
+      .nearby-button {
+        width: 100%;
+      }
+
+      .nearby-status {
+        padding:
+          0 23px 22px;
+      }
+
+      .discover-tools {
+        padding-top: 65px;
+      }
+
+      .category-grid {
+        grid-template-columns:
+          repeat(2, 1fr);
+      }
+
+      .category-button {
+        min-height: 105px;
+      }
+
+      .results-count {
+        width: 100%;
+        margin: 8px 0 0;
+      }
+
+      #discoverMap {
+        height: 390px;
+      }
+
+      .place-card {
+        grid-template-columns: 49px 1fr;
+        padding: 18px;
+      }
+
+      .place-icon {
+        width: 49px;
+        height: 49px;
+      }
+
+      .discover-footer {
+        width: calc(100% - 30px);
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+  <!-- =====================================================
+       HEADER
+  ===================================================== -->
+
+  <header class="topbar">
+
+    <a
+      class="logo"
+      href="index.html"
+    >
+      ora<span>vicino</span>
+    </a>
+
+
+    <div class="top-actions">
+
+      <button
+        class="city-button"
+        type="button"
+      >
+        📍 Trento
+      </button>
+
+
+      <button
+        class="language-button"
+        type="button"
+      >
+        IT ▾
+      </button>
+
+    </div>
+
+  </header>
+
+
+  <main>
+
+    <div class="discover-container">
+
+
+      <!-- =================================================
+           HERO
+      ================================================== -->
+
+      <section class="discover-hero">
+
+        <div class="discover-hero-content">
+
+          <span class="hero-kicker">
+            ORAVICINO · SCOPRIRE
+          </span>
+
+
+          <h1>
+            Scopri qualcosa
+            <em>qui vicino.</em>
+          </h1>
+
+
+          <p>
+            Musei, panorami, parchi,
+            luoghi storici e piccole cose
+            che vale la pena incontrare
+            mentre vivi Trento.
+          </p>
+
+
+          <div class="discover-search">
+
+            <span>⌕</span>
+
+            <input
+              id="searchInput"
+              type="text"
+              placeholder="Cerca un luogo..."
+              autocomplete="off"
+            >
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- ORAVICINO METEO -->
+      <script src="meteo.js"></script>
+
+
+      <!-- =================================================
+           VICINO A ME
+      ================================================== -->
+
+      <section class="nearby-section">
+
+        <div class="nearby-inner">
+
+          <div class="nearby-copy">
+
+            <div class="nearby-icon">
+              ◎
+            </div>
+
+
+            <div>
+
+              <span class="nearby-eyebrow">
+                ORAVICINO · INTORNO A TE
+              </span>
+
+
+              <h2>
+                Cosa posso scoprire vicino a me?
+              </h2>
+
+
+              <p>
+                Usa la tua posizione per vedere
+                i luoghi più vicini prima degli altri.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <button
+            class="nearby-button"
+            id="nearbyButton"
+            type="button"
+          >
+            USA LA MIA POSIZIONE
+          </button>
+
+        </div>
+
+
+        <div
+          class="nearby-status"
+          id="nearbyStatus"
+        ></div>
+
+      </section>
+
+
+      <!-- =================================================
+           FILTRI
+      ================================================== -->
+
+      <section class="discover-tools">
+
+        <div class="tools-heading">
+
+          <span class="tools-kicker">
+            COSA VUOI SCOPRIRE?
+          </span>
+
+
+          <h2>
+            Trento intorno a te
+          </h2>
+
+        </div>
+
+
+        <div
+          class="category-grid"
+          id="categoryGrid"
+        >
+
+          <button
+            class="category-button active"
+            data-category="all"
+            type="button"
+          >
+            <span class="icon">◎</span>
+            <strong>Tutto</strong>
+          </button>
+
+
+          <button
+            class="category-button"
+            data-category="museo"
+            type="button"
+          >
+            <span class="icon">🏛️</span>
+            <strong>Musei</strong>
+          </button>
+
+
+          <button
+            class="category-button"
+            data-category="panorama"
+            type="button"
+          >
+            <span class="icon">👁️</span>
+            <strong>Panorami</strong>
+          </button>
+
+
+          <button
+            class="category-button"
+            data-category="storico"
+            type="button"
+          >
+            <span class="icon">🏰</span>
+            <strong>Storia</strong>
+          </button>
+
+
+          <button
+            class="category-button"
+            data-category="monumento"
+            type="button"
+          >
+            <span class="icon">🗿</span>
+            <strong>Monumenti</strong>
+          </button>
+
+
+          <button
+            class="category-button"
+            data-category="parco"
+            type="button"
+          >
+            <span class="icon">🌳</span>
+            <strong>Parchi</strong>
+          </button>
+
+
+          <button
+            class="category-button"
+            data-category="natura"
+            type="button"
+          >
+            <span class="icon">🏔️</span>
+            <strong>Natura</strong>
+          </button>
+
+
+          <button
+            class="category-button"
+            data-category="arte"
+            type="button"
+          >
+            <span class="icon">🎨</span>
+            <strong>Arte</strong>
+          </button>
+
+
+          <button
+            class="category-button"
+            data-category="attrazione"
+            type="button"
+          >
+            <span class="icon">✨</span>
+            <strong>Attrazioni</strong>
+          </button>
+
+        </div>
+
+
+        <div class="filter-row">
+
+          <button
+            class="filter-button active"
+            data-filter="all"
+            type="button"
+          >
+            Tutti
+          </button>
+
+
+          <button
+            class="filter-button"
+            data-filter="indoor"
+            type="button"
+          >
+            Al coperto
+          </button>
+
+
+          <button
+            class="filter-button"
+            data-filter="family"
+            type="button"
+          >
+            Con bambini
+          </button>
+
+
+          <button
+            class="filter-button"
+            data-filter="free"
+            type="button"
+          >
+            Gratis
+          </button>
+
+
+          <button
+            class="filter-button"
+            data-filter="hours"
+            type="button"
+          >
+            Con orari
+          </button>
+
+
+          <button
+            class="filter-button"
+            data-filter="accessible"
+            type="button"
+          >
+            Accessibile
+          </button>
+
+
+          <span
+            class="results-count"
+            id="resultsCount"
+          >
+            —
+          </span>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           RESULTADOS
+      ================================================== -->
+
+      <section class="discover-layout">
+
+        <div>
+
+          <div
+            class="places-list"
+            id="placesList"
+          ></div>
+
+
+          <button
+            class="load-more"
+            id="loadMoreButton"
+            type="button"
+            hidden
+          >
+            MOSTRA ALTRI LUOGHI
+          </button>
+
+        </div>
+
+
+        <div class="map-column">
+
+          <div class="map-shell">
+
+            <div id="discoverMap"></div>
+
+
+            <div class="map-note">
+              Dati geografici © OpenStreetMap contributors ·
+              Le informazioni possono cambiare:
+              verifica sempre orari, accesso e condizioni
+              direttamente con il luogo.
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </div>
+
+  </main>
+
+
+  <!-- =====================================================
+       FOOTER
+  ===================================================== -->
+
+  <footer class="discover-footer">
+
+    <a
+      class="footer-logo"
+      href="index.html"
+    >
+      ora<span>vicino</span>
+    </a>
+
+
+    <span>
+      Scoprire · Trento
+    </span>
+
+
+    <span>
+      © 2026 OraVicino
+    </span>
+
+  </footer>
+
+
+  <!-- =====================================================
+       LEAFLET
+  ===================================================== -->
+
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  ></script>
+
+
+  <!-- =====================================================
+       JAVASCRIPT
+  ===================================================== -->
+
+  <script>
+
+    /* =====================================================
+       CONFIG
+    ===================================================== */
+
+    const DEFAULT_CENTER =
+      [46.06787, 11.12108];
+
+
+    const INITIAL_LIMIT = 30;
+
+    const LOAD_MORE_STEP = 30;
+
+    const MAX_MAP_MARKERS = 120;
+
+    const FAR_FROM_TRENTO_KM = 80;
+
+
+    /* =====================================================
+       ESTADO
+    ===================================================== */
+
+    let allPlaces = [];
+
+    let filteredPlaces = [];
+
+    let activeCategory = "all";
+
+    let activeFilter = "all";
+
+    let visibleLimit =
+      INITIAL_LIMIT;
+
+    let selectedPlaceId =
+      null;
+
+    let userPosition =
+      null;
+
+    let nearbyActive =
+      false;
+
+    let userMarker =
+      null;
+
+
+    /* =====================================================
+       ELEMENTOS
+    ===================================================== */
+
+    const placesList =
+      document.getElementById(
+        "placesList"
+      );
+
+
+    const searchInput =
+      document.getElementById(
+        "searchInput"
+      );
+
+
+    const resultsCount =
+      document.getElementById(
+        "resultsCount"
+      );
+
+
+    const loadMoreButton =
+      document.getElementById(
+        "loadMoreButton"
+      );
+
+
+    const nearbyButton =
+      document.getElementById(
+        "nearbyButton"
+      );
+
+
+    const nearbyStatus =
+      document.getElementById(
+        "nearbyStatus"
+      );
+
+
+    /* =====================================================
+       MAPA
+    ===================================================== */
+
+    const map =
+      L.map(
+        "discoverMap",
+        {
+          zoomControl: true
+        }
+      ).setView(
+        DEFAULT_CENTER,
+        13
+      );
+
+
+    L.tileLayer(
+      "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+      {
+        maxZoom: 19,
+
+        attribution:
+          "&copy; OpenStreetMap contributors"
+      }
+    ).addTo(map);
+
+
+    const markersLayer =
+      L.layerGroup()
+        .addTo(map);
+
+
+    const markerById =
+      new Map();
+
+
+    /* =====================================================
+       DISTÂNCIA
+    ===================================================== */
+
+    function toRadians(value) {
+
+      return value *
+        Math.PI / 180;
+
+    }
+
+
+    function haversineDistance(
+      lat1,
+      lng1,
+      lat2,
+      lng2
+    ) {
+
+      const earthRadius =
+        6371;
+
+
+      const dLat =
+        toRadians(
+          lat2 - lat1
+        );
+
+
+      const dLng =
+        toRadians(
+          lng2 - lng1
+        );
+
+
+      const a =
+        Math.sin(dLat / 2) *
+        Math.sin(dLat / 2)
+        +
+        Math.cos(
+          toRadians(lat1)
+        )
+        *
+        Math.cos(
+          toRadians(lat2)
+        )
+        *
+        Math.sin(dLng / 2)
+        *
+        Math.sin(dLng / 2);
+
+
+      const c =
+        2 *
+        Math.atan2(
+          Math.sqrt(a),
+          Math.sqrt(1 - a)
+        );
+
+
+      return earthRadius * c;
+
+    }
+
+
+    function formatDistance(km) {
+
+      if (
+        km === null ||
+        km === undefined ||
+        Number.isNaN(km)
+      ) {
+
+        return "";
+
+      }
+
+
+      if (km < 1) {
+
+        return `${Math.round(km * 1000)} m`;
+
+      }
+
+
+      if (km < 10) {
+
+        return `${km.toFixed(1)} km`;
+
+      }
+
+
+      return `${Math.round(km)} km`;
+
+    }
+
+
+    /* =====================================================
+       SEGURANÇA HTML
+    ===================================================== */
+
+    function escapeHtml(value) {
+
+      return String(
+        value ?? ""
+      )
+        .replaceAll(
+          "&",
+          "&amp;"
+        )
+        .replaceAll(
+          "<",
+          "&lt;"
+        )
+        .replaceAll(
+          ">",
+          "&gt;"
+        )
+        .replaceAll(
+          '"',
+          "&quot;"
+        )
+        .replaceAll(
+          "'",
+          "&#039;"
+        );
+
+    }
+
+
+    /* =====================================================
+       URLS
+    ===================================================== */
+
+    function safeUrl(value) {
+
+      if (!value) {
+        return "";
+      }
+
+
+      try {
+
+        const url =
+          new URL(value);
+
+
+        if (
+          url.protocol === "http:" ||
+          url.protocol === "https:"
+        ) {
+
+          return url.href;
+
+        }
+
+      }
+      catch (error) {
+
+        return "";
+
+      }
+
+
+      return "";
+
+    }
+
+
+    function wikipediaUrl(value) {
+
+      if (!value) {
+        return "";
+      }
+
+
+      const parts =
+        String(value)
+          .split(":");
+
+
+      if (parts.length < 2) {
+        return "";
+      }
+
+
+      const language =
+        parts.shift();
+
+
+      const title =
+        parts.join(":");
+
+
+      return (
+        "https://"
+        +
+        encodeURIComponent(language)
+        +
+        ".wikipedia.org/wiki/"
+        +
+        encodeURIComponent(
+          title.replaceAll(" ", "_")
+        )
+      );
+
+    }
+
+
+    /* =====================================================
+       NORMALIZAÇÃO
+    ===================================================== */
+
+    function normalizePlace(place) {
+
+      return {
+
+        ...place,
+
+        id:
+          String(
+            place.id ??
+            place.sourceId ??
+            `${place.lat}-${place.lng}-${place.name}`
+          ),
+
+        name:
+          place.name ||
+          "Luogo senza nome",
+
+        category:
+          place.category ||
+          "attrazione",
+
+        label:
+          place.label ||
+          "Luogo",
+
+        icon:
+          place.icon ||
+          "📍",
+
+        lat:
+          Number(place.lat),
+
+        lng:
+          Number(place.lng),
+
+        distance:
+          null
+
+      };
+
+    }
+
+
+    /* =====================================================
+       FILTROS
+    ===================================================== */
+
+    function matchesSearch(place) {
+
+      const query =
+        searchInput
+          .value
+          .trim()
+          .toLowerCase();
+
+
+      if (!query) {
+
+        return true;
+
+      }
+
+
+      const haystack =
+        [
+          place.name,
+          place.label,
+          place.category,
+          place.address,
+          place.area,
+          place.description,
+          place.operator
+        ]
+          .filter(Boolean)
+          .join(" ")
+          .toLowerCase();
+
+
+      return haystack.includes(
+        query
+      );
+
+    }
+
+
+    function matchesCategory(place) {
+
+      if (
+        activeCategory === "all"
+      ) {
+
+        return true;
+
+      }
+
+
+      return (
+        place.category ===
+        activeCategory
+      );
+
+    }
+
+
+    function matchesSecondaryFilter(
+      place
+    ) {
+
+      switch (activeFilter) {
+
+        case "indoor":
+
+          return (
+            place.indoor === true
+          );
+
+
+        case "family":
+
+          return (
+            place.family === true
+          );
+
+
+        case "free":
+
+          return (
+            place.free === true
+          );
+
+
+        case "hours":
+
+          return Boolean(
+            place.openingHours
+          );
+
+
+        case "accessible":
+
+          return (
+            place.wheelchair === "yes" ||
+            place.wheelchair === "limited"
+          );
+
+
+        default:
+
+          return true;
+
+      }
+
+    }
+
+
+    function applyFilters() {
+
+      filteredPlaces =
+        allPlaces
+          .filter(
+            place =>
+              matchesSearch(place)
+              &&
+              matchesCategory(place)
+              &&
+              matchesSecondaryFilter(place)
+          );
+
+
+      if (
+        nearbyActive &&
+        userPosition
+      ) {
+
+        filteredPlaces.sort(
+          (a, b) => {
+
+            const distanceA =
+              a.distance ??
+              Infinity;
+
+            const distanceB =
+              b.distance ??
+              Infinity;
+
+
+            return (
+              distanceA -
+              distanceB
+            );
+
+          }
+        );
+
+      }
+      else {
+
+        filteredPlaces.sort(
+          (a, b) => {
+
+            const categoryCompare =
+              String(a.category)
+                .localeCompare(
+                  String(b.category),
+                  "it"
+                );
+
+
+            if (
+              categoryCompare !== 0
+            ) {
+
+              return categoryCompare;
+
+            }
+
+
+            return String(a.name)
+              .localeCompare(
+                String(b.name),
+                "it"
+              );
+
+          }
+        );
+
+      }
+
+
+      visibleLimit =
+        INITIAL_LIMIT;
+
+
+      selectedPlaceId =
+        null;
+
+
+      renderAll();
+
+    }
+
+
+    /* =====================================================
+       CHIPS
+    ===================================================== */
+
+    function buildChips(place) {
+
+      const chips = [];
+
+
+      if (
+        place.distance !== null &&
+        place.distance !== undefined
+      ) {
+
+        chips.push(
+          `<span class="place-chip distance">◎ ${escapeHtml(formatDistance(place.distance))}</span>`
+        );
+
+      }
+
+
+      if (
+        place.open24h
+      ) {
+
+        chips.push(
+          `<span class="place-chip">24h</span>`
+        );
+
+      }
+      else if (
+        place.openingHours
+      ) {
+
+        chips.push(
+          `<span class="place-chip">Orari disponibili</span>`
+        );
+
+      }
+
+
+      if (
+        place.indoor === true
+      ) {
+
+        chips.push(
+          `<span class="place-chip">☔ Al coperto</span>`
+        );
+
+      }
+
+
+      if (
+        place.family === true
+      ) {
+
+        chips.push(
+          `<span class="place-chip">👨‍👩‍👧 Famiglia</span>`
+        );
+
+      }
+
+
+      if (
+        place.free === true
+      ) {
+
+        chips.push(
+          `<span class="place-chip">Gratis</span>`
+        );
+
+      }
+
+
+      if (
+        place.wheelchair === "yes" ||
+        place.wheelchair === "limited"
+      ) {
+
+        chips.push(
+          `<span class="place-chip">♿ Accessibile</span>`
+        );
+
+      }
+
+
+      return chips.join("");
+
+    }
+
+
+    /* =====================================================
+       LINKS
+    ===================================================== */
+
+    function buildLinks(place) {
+
+      const links = [];
+
+
+      const website =
+        safeUrl(
+          place.website
+        );
+
+
+      if (website) {
+
+        links.push(
+          `
+            <a
+              class="place-link"
+              href="${escapeHtml(website)}"
+              target="_blank"
+              rel="noopener noreferrer"
+              onclick="event.stopPropagation();"
+            >
+              SITO ↗
+            </a>
+          `
+        );
+
+      }
+
+
+      const wiki =
+        wikipediaUrl(
+          place.wikipedia
+        );
+
+
+      if (wiki) {
+
+        links.push(
+          `
+            <a
+              class="place-link"
+              href="${escapeHtml(wiki)}"
+              target="_blank"
+              rel="noopener noreferrer"
+              onclick="event.stopPropagation();"
+            >
+              WIKIPEDIA ↗
+            </a>
+          `
+        );
+
+      }
+
+
+      return links.join("");
+
+    }
+
+
+    /* =====================================================
+       CARDS
+    ===================================================== */
+
+    function renderPlaces() {
+
+      placesList.innerHTML =
+        "";
+
+
+      const visiblePlaces =
+        filteredPlaces.slice(
+          0,
+          visibleLimit
+        );
+
+
+      resultsCount.textContent =
+        `${filteredPlaces.length} luoghi`;
+
+
+      if (
+        visiblePlaces.length === 0
+      ) {
+
+        placesList.innerHTML =
+          `
+            <div class="empty-state">
+              <strong>
+                Nessun luogo trovato
+              </strong>
+
+              <span>
+                Prova a cambiare categoria,
+                filtro o ricerca.
+              </span>
+            </div>
+          `;
+
+
+        loadMoreButton.hidden =
+          true;
+
+
+        return;
+
+      }
+
+
+      for (
+        const place
+        of visiblePlaces
+      ) {
+
+        const card =
+          document.createElement(
+            "article"
+          );
+
+
+        card.className =
+          "place-card";
+
+
+        if (
+          place.id ===
+          selectedPlaceId
+        ) {
+
+          card.classList.add(
+            "selected"
+          );
+
+        }
+
+
+        card.dataset.id =
+          place.id;
+
+
+        const address =
+          place.address ||
+          place.area ||
+          "Trento";
+
+
+        const description =
+          place.description
+            ?
+              `
+                <p class="place-description">
+                  ${escapeHtml(place.description)}
+                </p>
+              `
+            :
+              "";
+
+
+        card.innerHTML =
+          `
+            <div class="place-icon">
+              ${escapeHtml(place.icon)}
+            </div>
+
+            <div>
+
+              <span class="place-category">
+                ${escapeHtml(place.label)}
+              </span>
+
+              <h3>
+                ${escapeHtml(place.name)}
+              </h3>
+
+              <p class="place-address">
+                ${escapeHtml(address)}
+              </p>
+
+              ${description}
+
+              <div class="place-chips">
+                ${buildChips(place)}
+              </div>
+
+              <div class="place-links">
+                ${buildLinks(place)}
+              </div>
+
+            </div>
+          `;
+
+
+        card.addEventListener(
+          "click",
+          () => {
+
+            selectPlace(
+              place.id,
+              true
+            );
+
+          }
+        );
+
+
+        placesList.appendChild(
+          card
+        );
+
+      }
+
+
+      loadMoreButton.hidden =
+        visibleLimit >=
+        filteredPlaces.length;
+
+    }
+
+
+    /* =====================================================
+       MARCADORES
+    ===================================================== */
+
+    function markerIcon(
+      place,
+      selected = false
+    ) {
+
+      return L.divIcon(
+        {
+          className: "",
+
+          html:
+            `
+              <div class="discover-marker ${selected ? "selected" : ""}">
+                ${escapeHtml(place.icon)}
+              </div>
+            `,
+
+          iconSize:
+            [40, 40],
+
+          iconAnchor:
+            [20, 20],
+
+          popupAnchor:
+            [0, -20]
+        }
+      );
+
+    }
+
+
+    function popupContent(place) {
+
+      const address =
+        place.address ||
+        place.area ||
+        "Trento";
+
+
+      const distance =
+        place.distance !== null &&
+        place.distance !== undefined
+          ?
+            `
+              <div class="popup-distance">
+                ◎ ${escapeHtml(formatDistance(place.distance))}
+              </div>
+            `
+          :
+            "";
+
+
+      return `
+        <div class="popup-category">
+          ${escapeHtml(place.label)}
+        </div>
+
+        <div class="popup-name">
+          ${escapeHtml(place.name)}
+        </div>
+
+        <div class="popup-address">
+          ${escapeHtml(address)}
+        </div>
+
+        ${distance}
+      `;
+
+    }
+
+
+    function updateMarkers() {
+
+      markersLayer.clearLayers();
+
+      markerById.clear();
+
+
+      const placesForMap =
+        filteredPlaces.slice(
+          0,
+          MAX_MAP_MARKERS
+        );
+
+
+      const bounds = [];
+
+
+      for (
+        const place
+        of placesForMap
+      ) {
+
+        if (
+          !Number.isFinite(place.lat) ||
+          !Number.isFinite(place.lng)
+        ) {
+
+          continue;
+
+        }
+
+
+        const marker =
+          L.marker(
+            [
+              place.lat,
+              place.lng
+            ],
+            {
+              icon:
+                markerIcon(
+                  place,
+                  place.id ===
+                  selectedPlaceId
+                )
+            }
+          );
+
+
+        marker.bindPopup(
+          popupContent(place)
+        );
+
+
+        marker.on(
+          "click",
+          () => {
+
+            selectedPlaceId =
+              place.id;
+
+
+            renderPlaces();
+
+            refreshMarkerStyles();
+
+            scrollToCard(
+              place.id
+            );
+
+          }
+        );
+
+
+        marker.addTo(
+          markersLayer
+        );
+
+
+        markerById.set(
+          place.id,
+          marker
+        );
+
+
+        bounds.push(
+          [
+            place.lat,
+            place.lng
+          ]
+        );
+
+      }
+
+
+      /*
+       * Sem geolocalização ativa,
+       * enquadra os resultados.
+       *
+       * Com "vicino a me" ativo,
+       * mantemos o comportamento
+       * controlado pela localização.
+       */
+      if (
+        !nearbyActive &&
+        bounds.length > 0
+      ) {
+
+        map.fitBounds(
+          bounds,
+          {
+            padding:
+              [35, 35],
+
+            maxZoom:
+              15
+          }
+        );
+
+      }
+
+    }
+
+
+    function refreshMarkerStyles() {
+
+      for (
+        const place
+        of filteredPlaces.slice(
+          0,
+          MAX_MAP_MARKERS
+        )
+      ) {
+
+        const marker =
+          markerById.get(
+            place.id
+          );
+
+
+        if (!marker) {
+          continue;
+        }
+
+
+        marker.setIcon(
+          markerIcon(
+            place,
+            place.id ===
+            selectedPlaceId
+          )
+        );
+
+      }
+
+    }
+
+
+    /* =====================================================
+       SELEÇÃO
+    ===================================================== */
+
+    function selectPlace(
+      id,
+      moveMap
+    ) {
+
+      selectedPlaceId =
+        id;
+
+
+      renderPlaces();
+
+      refreshMarkerStyles();
+
+
+      const place =
+        allPlaces.find(
+          item =>
+            item.id === id
+        );
+
+
+      if (
+        !place ||
+        !moveMap
+      ) {
+
+        return;
+
+      }
+
+
+      if (
+        Number.isFinite(place.lat) &&
+        Number.isFinite(place.lng)
+      ) {
+
+        map.flyTo(
+          [
+            place.lat,
+            place.lng
+          ],
+          16,
+          {
+            duration: .6
+          }
+        );
+
+
+        const marker =
+          markerById.get(
+            place.id
+          );
+
+
+        if (marker) {
+
+          marker.openPopup();
+
+        }
+
+      }
+
+    }
+
+
+    function scrollToCard(id) {
+
+      const card =
+        document.querySelector(
+          `.place-card[data-id="${CSS.escape(id)}"]`
+        );
+
+
+      if (!card) {
+        return;
+      }
+
+
+      card.scrollIntoView(
+        {
+          behavior: "smooth",
+          block: "center"
+        }
+      );
+
+    }
+
+
+    /* =====================================================
+       GEOLOCALIZAÇÃO
+    ===================================================== */
+
+    function updateDistances() {
+
+      if (!userPosition) {
+        return;
+      }
+
+
+      for (
+        const place
+        of allPlaces
+      ) {
+
+        place.distance =
+          haversineDistance(
+            userPosition.lat,
+            userPosition.lng,
+            place.lat,
+            place.lng
+          );
+
+      }
+
+    }
+
+
+    function updateUserMarker() {
+
+      if (!userPosition) {
+        return;
+      }
+
+
+      if (userMarker) {
+
+        map.removeLayer(
+          userMarker
+        );
+
+      }
+
+
+      const icon =
+        L.divIcon(
+          {
+            className: "",
+
+            html:
+              `<div class="user-marker"></div>`,
+
+            iconSize:
+              [27, 27],
+
+            iconAnchor:
+              [13.5, 13.5]
+          }
+        );
+
+
+      userMarker =
+        L.marker(
+          [
+            userPosition.lat,
+            userPosition.lng
+          ],
+          {
+            icon
+          }
+        )
+          .bindPopup(
+            "<strong>La tua posizione</strong>"
+          )
+          .addTo(map);
+
+
+      const distanceFromTrento =
+        haversineDistance(
+          userPosition.lat,
+          userPosition.lng,
+          DEFAULT_CENTER[0],
+          DEFAULT_CENTER[1]
+        );
+
+
+      /*
+       * Se estivermos realmente próximos
+       * de Trento, centralizamos no usuário.
+       *
+       * Se estivermos testando de outro país,
+       * calculamos as distâncias, mas o mapa
+       * continua mostrando Trento.
+       */
+      if (
+        distanceFromTrento <=
+        FAR_FROM_TRENTO_KM
+      ) {
+
+        map.flyTo(
+          [
+            userPosition.lat,
+            userPosition.lng
+          ],
+          14,
+          {
+            duration: .7
+          }
+        );
+
+      }
+      else {
+
+        map.setView(
+          DEFAULT_CENTER,
+          13
+        );
+
+      }
+
+    }
+
+
+    function activateNearby() {
+
+      if (
+        !navigator.geolocation
+      ) {
+
+        nearbyStatus.textContent =
+          "La geolocalizzazione non è disponibile su questo dispositivo.";
+
+        return;
+
+      }
+
+
+      nearbyButton.disabled =
+        true;
+
+
+      nearbyButton.textContent =
+        "CERCO LA POSIZIONE...";
+
+
+      nearbyStatus.textContent =
+        "Sto cercando la tua posizione.";
+
+
+      navigator.geolocation.getCurrentPosition(
+
+        position => {
+
+          userPosition = {
+
+            lat:
+              position.coords.latitude,
+
+            lng:
+              position.coords.longitude
+
+          };
+
+
+          nearbyActive =
+            true;
+
+
+          nearbyButton.disabled =
+            false;
+
+
+          nearbyButton.classList.add(
+            "active"
+          );
+
+
+          nearbyButton.textContent =
+            "POSIZIONE ATTIVA ✓";
+
+
+          updateDistances();
+
+          updateUserMarker();
+
+          applyFilters();
+
+
+          const distanceFromTrento =
+            haversineDistance(
+              userPosition.lat,
+              userPosition.lng,
+              DEFAULT_CENTER[0],
+              DEFAULT_CENTER[1]
+            );
+
+
+          if (
+            distanceFromTrento >
+            FAR_FROM_TRENTO_KM
+          ) {
+
+            nearbyStatus.textContent =
+              "Posizione rilevata. Sei lontano da Trento: le distanze vengono comunque calcolate, mentre la mappa resta sulla città.";
+
+          }
+          else {
+
+            nearbyStatus.textContent =
+              "Posizione rilevata. I luoghi sono ordinati dal più vicino.";
+
+          }
+
+        },
+
+        error => {
+
+          nearbyButton.disabled =
+            false;
+
+
+          nearbyButton.textContent =
+            "USA LA MIA POSIZIONE";
+
+
+          let message =
+            "Non è stato possibile ottenere la posizione.";
+
+
+          if (
+            error.code === 1
+          ) {
+
+            message =
+              "Permesso di posizione non concesso.";
+
+          }
+
+
+          if (
+            error.code === 2
+          ) {
+
+            message =
+              "Posizione non disponibile.";
+
+          }
+
+
+          if (
+            error.code === 3
+          ) {
+
+            message =
+              "Tempo scaduto durante la ricerca della posizione.";
+
+          }
+
+
+          nearbyStatus.textContent =
+            message;
+
+        },
+
+        {
+          enableHighAccuracy:
+            false,
+
+          timeout:
+            10000,
+
+          maximumAge:
+            300000
+        }
+
+      );
+
+    }
+
+
+    /* =====================================================
+       RENDER
+    ===================================================== */
+
+    function renderAll() {
+
+      renderPlaces();
+
+      updateMarkers();
+
+    }
+
+
+    /* =====================================================
+       EVENTOS
+    ===================================================== */
+
+    document
+      .querySelectorAll(
+        ".category-button"
+      )
+      .forEach(
+        button => {
+
+          button.addEventListener(
+            "click",
+            () => {
+
+              document
+                .querySelectorAll(
+                  ".category-button"
+                )
+                .forEach(
+                  item =>
+                    item.classList.remove(
+                      "active"
+                    )
+                );
+
+
+              button.classList.add(
+                "active"
+              );
+
+
+              activeCategory =
+                button.dataset.category;
+
+
+              applyFilters();
+
+            }
+          );
+
+        }
+      );
+
+
+    document
+      .querySelectorAll(
+        ".filter-button"
+      )
+      .forEach(
+        button => {
+
+          button.addEventListener(
+            "click",
+            () => {
+
+              document
+                .querySelectorAll(
+                  ".filter-button"
+                )
+                .forEach(
+                  item =>
+                    item.classList.remove(
+                      "active"
+                    )
+                );
+
+
+              button.classList.add(
+                "active"
+              );
+
+
+              activeFilter =
+                button.dataset.filter;
+
+
+              applyFilters();
+
+            }
+          );
+
+        }
+      );
+
+
+    searchInput.addEventListener(
+      "input",
+      () => {
+
+        applyFilters();
+
+      }
+    );
+
+
+    loadMoreButton.addEventListener(
+      "click",
+      () => {
+
+        visibleLimit +=
+          LOAD_MORE_STEP;
+
+
+        renderPlaces();
+
+      }
+    );
+
+
+    nearbyButton.addEventListener(
+      "click",
+      activateNearby
+    );
+
+
+    /* =====================================================
+       CARREGAR JSON
+    ===================================================== */
+
+    async function loadPlaces() {
+
+      placesList.innerHTML =
+        `
+          <div class="empty-state">
+            <strong>
+              Caricamento...
+            </strong>
+
+            <span>
+              Sto cercando i luoghi da scoprire.
+            </span>
+          </div>
+        `;
+
+
+      try {
+
+        const response =
+          await fetch(
+            "data/scoprire.json",
+            {
+              cache:
+                "no-store"
+            }
+          );
+
+
+        if (!response.ok) {
+
+          throw new Error(
+            `HTTP ${response.status}`
+          );
+
+        }
+
+
+        const payload =
+          await response.json();
+
+
+        let places = [];
+
+
+        if (
+          Array.isArray(payload)
+        ) {
+
+          places =
+            payload;
+
+        }
+        else if (
+          Array.isArray(
+            payload.places
+          )
+        ) {
+
+          places =
+            payload.places;
+
+        }
+
+
+        allPlaces =
+          places
+            .map(
+              normalizePlace
+            )
+            .filter(
+              place =>
+                Number.isFinite(
+                  place.lat
+                )
+                &&
+                Number.isFinite(
+                  place.lng
+                )
+            );
+
+
+        if (
+          allPlaces.length === 0
+        ) {
+
+          throw new Error(
+            "Nessun luogo disponibile."
+          );
+
+        }
+
+
+        applyFilters();
+
+      }
+      catch (error) {
+
+        console.error(
+          "Errore caricamento Scoprire:",
+          error
+        );
+
+
+        resultsCount.textContent =
+          "0 luoghi";
+
+
+        placesList.innerHTML =
+          `
+            <div class="empty-state">
+
+              <strong>
+                Impossibile caricare i luoghi
+              </strong>
+
+              <span>
+                Controlla data/scoprire.json
+                e riprova.
+              </span>
+
+            </div>
+          `;
+
+      }
+
+    }
+
+
+    /* =====================================================
+       START
+    ===================================================== */
+
+    loadPlaces();
+
+  </script>
+
+
+</body>
+
+</html>
