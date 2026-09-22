@@ -1,893 +1,549 @@
 /* ==========================================
    ORAVICINO · METEO
-   Trento
    ========================================== */
 
-(() => {
+.ov-meteo {
+  width: 100%;
+  position: relative;
+  z-index: 20;
 
-  const LAT = 46.0679;
-  const LNG = 11.1211;
+  background: #173f32;
+  color: #fff;
 
-  const CITY = "Trento";
+  font-family: "DM Sans", sans-serif;
 
-  const HOURS_BAR = 7;
-  const HOURS_DETAIL = 12;
+  border-bottom:
+    1px solid
+    rgba(255, 255, 255, 0.12);
+}
 
-  const API =
-    "https://api.open-meteo.com/v1/forecast" +
-    `?latitude=${LAT}` +
-    `&longitude=${LNG}` +
-    "&current=temperature_2m,weather_code" +
-    "&hourly=temperature_2m,precipitation_probability,weather_code" +
-    "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max" +
-    "&timezone=Europe%2FRome" +
-    "&forecast_days=7";
+.ov-meteo-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 58px;
+  padding: 8px 22px;
+
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  box-sizing: border-box;
+}
 
 
-  /* ==========================================
-     METEO CODE
-     ========================================== */
+/* ==========================================
+   AGORA
+   ========================================== */
 
-  function weatherInfo(code) {
+.ov-meteo-now {
+  flex: 0 0 auto;
 
-    code = Number(code);
+  display: flex;
+  align-items: center;
+  gap: 9px;
 
-    if (code === 0) {
-      return {
-        icon: "☀️",
-        text: "Sereno"
-      };
-    }
+  padding-right: 18px;
 
-    if ([1, 2].includes(code)) {
-      return {
-        icon: "🌤️",
-        text: "Poco nuvoloso"
-      };
-    }
+  border-right:
+    1px solid
+    rgba(255, 255, 255, 0.20);
+}
 
-    if (code === 3) {
-      return {
-        icon: "☁️",
-        text: "Nuvoloso"
-      };
-    }
+.ov-meteo-now-icon {
+  font-size: 25px;
+  line-height: 1;
+}
 
-    if ([45, 48].includes(code)) {
-      return {
-        icon: "🌫️",
-        text: "Nebbia"
-      };
-    }
+.ov-meteo-city {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
 
-    if (
-      [51, 53, 55, 56, 57]
-        .includes(code)
-    ) {
-      return {
-        icon: "🌦️",
-        text: "Pioviggine"
-      };
-    }
+  opacity: .68;
+}
 
-    if (
-      [61, 63, 65, 66, 67]
-        .includes(code)
-    ) {
-      return {
-        icon: "🌧️",
-        text: "Pioggia"
-      };
-    }
+.ov-meteo-current {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
 
-    if (
-      [71, 73, 75, 77]
-        .includes(code)
-    ) {
-      return {
-        icon: "❄️",
-        text: "Neve"
-      };
-    }
+.ov-meteo-temp {
+  font-size: 19px;
+  font-weight: 900;
+}
 
-    if (
-      [80, 81, 82]
-        .includes(code)
-    ) {
-      return {
-        icon: "🌧️",
-        text: "Rovesci"
-      };
-    }
+.ov-meteo-description {
+  font-size: 12px;
+  opacity: .82;
+}
 
-    if (
-      [85, 86]
-        .includes(code)
-    ) {
-      return {
-        icon: "🌨️",
-        text: "Neve"
-      };
-    }
 
-    if (
-      [95, 96, 99]
-        .includes(code)
-    ) {
-      return {
-        icon: "⛈️",
-        text: "Temporale"
-      };
-    }
+/* ==========================================
+   PRÓXIMAS HORAS
+   ========================================== */
 
-    return {
-      icon: "🌤️",
-      text: "Meteo"
-    };
+.ov-meteo-hours {
+  min-width: 0;
+  flex: 1;
+
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  overflow-x: auto;
+
+  scrollbar-width: none;
+}
+
+.ov-meteo-hours::-webkit-scrollbar {
+  display: none;
+}
+
+.ov-meteo-hour {
+  flex: 0 0 auto;
+
+  min-width: 73px;
+  padding: 5px 8px;
+
+  text-align: center;
+
+  border-radius: 10px;
+
+  border:
+    1px solid
+    transparent;
+
+  box-sizing: border-box;
+}
+
+.ov-meteo-hour.rain {
+  background:
+    rgba(255, 255, 255, .11);
+
+  border-color:
+    rgba(255, 255, 255, .13);
+}
+
+.ov-meteo-hour-time {
+  font-size: 10px;
+  font-weight: 800;
+  opacity: .68;
+}
+
+.ov-meteo-hour-main {
+  margin-top: 2px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.ov-meteo-hour-rain {
+  min-height: 13px;
+  margin-top: 1px;
+
+  color: #f2c14e;
+
+  font-size: 9px;
+  font-weight: 800;
+}
+
+
+/* ==========================================
+   BOTÃO PREVISIONI
+   ========================================== */
+
+.ov-meteo-more {
+  flex: 0 0 auto;
+
+  padding: 9px 11px;
+
+  border: 0;
+  border-radius: 10px;
+
+  background: transparent;
+  color: #fff;
+
+  font: inherit;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .04em;
+
+  cursor: pointer;
+
+  opacity: .78;
+
+  transition:
+    background .2s ease,
+    opacity .2s ease;
+}
+
+.ov-meteo-more:hover,
+.ov-meteo-more.open {
+  opacity: 1;
+
+  background:
+    rgba(255, 255, 255, .10);
+}
+
+
+/* ==========================================
+   PAINEL EXPANDIDO
+   ========================================== */
+
+.ov-meteo-panel {
+  display: none;
+
+  border-top:
+    1px solid
+    rgba(255, 255, 255, .12);
+
+  background: #12362b;
+}
+
+.ov-meteo-panel.open {
+  display: block;
+}
+
+.ov-meteo-panel-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 22px;
+
+  box-sizing: border-box;
+}
+
+.ov-meteo-panel-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 30px;
+
+  margin-bottom: 19px;
+}
+
+.ov-meteo-panel-title {
+  margin: 0;
+
+  color: #fff;
+
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: -.5px;
+}
+
+.ov-meteo-panel-subtitle {
+  margin-top: 4px;
+
+  color:
+    rgba(255, 255, 255, .62);
+
+  font-size: 11px;
+}
+
+.ov-meteo-summary {
+  max-width: 440px;
+
+  padding: 10px 14px;
+
+  border-radius: 12px;
+
+  background:
+    rgba(242, 193, 78, .12);
+
+  color: #f6d77c;
+
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+
+/* ==========================================
+   PRÓXIMAS 12 HORAS
+   ========================================== */
+
+.ov-meteo-section-label {
+  margin-bottom: 9px;
+
+  color:
+    rgba(255, 255, 255, .53);
+
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .14em;
+
+  text-transform: uppercase;
+}
+
+.ov-meteo-12hours {
+  display: flex;
+  gap: 7px;
+
+  overflow-x: auto;
+
+  padding-bottom: 4px;
+  margin-bottom: 24px;
+
+  scrollbar-width: none;
+}
+
+.ov-meteo-12hours::-webkit-scrollbar {
+  display: none;
+}
+
+.ov-meteo-detail-hour {
+  flex: 0 0 78px;
+
+  padding: 11px 7px;
+
+  text-align: center;
+
+  border-radius: 13px;
+
+  background:
+    rgba(255, 255, 255, .055);
+
+  border:
+    1px solid
+    rgba(255, 255, 255, .07);
+
+  box-sizing: border-box;
+}
+
+.ov-meteo-detail-hour.rain {
+  background:
+    rgba(255, 255, 255, .10);
+}
+
+.ov-meteo-detail-time {
+  color:
+    rgba(255, 255, 255, .55);
+
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.ov-meteo-detail-icon {
+  margin: 6px 0 4px;
+
+  font-size: 21px;
+}
+
+.ov-meteo-detail-temp {
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.ov-meteo-detail-rain {
+  min-height: 14px;
+  margin-top: 3px;
+
+  color: #f2c14e;
+
+  font-size: 9px;
+  font-weight: 800;
+}
+
+
+/* ==========================================
+   PRÓXIMOS 7 DIAS
+   ========================================== */
+
+.ov-meteo-days {
+  display: grid;
+
+  grid-template-columns:
+    repeat(7, minmax(0, 1fr));
+
+  gap: 8px;
+}
+
+.ov-meteo-day {
+  min-width: 0;
+
+  padding: 13px 9px;
+
+  text-align: center;
+
+  border-radius: 14px;
+
+  background:
+    rgba(255, 255, 255, .055);
+
+  border:
+    1px solid
+    rgba(255, 255, 255, .07);
+}
+
+.ov-meteo-day.today {
+  background:
+    rgba(242, 193, 78, .10);
+
+  border-color:
+    rgba(242, 193, 78, .23);
+}
+
+.ov-meteo-day-name {
+  color:
+    rgba(255, 255, 255, .65);
+
+  font-size: 9px;
+  font-weight: 900;
+
+  text-transform: uppercase;
+}
+
+.ov-meteo-day-icon {
+  margin: 7px 0 5px;
+
+  font-size: 23px;
+}
+
+.ov-meteo-day-temp {
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.ov-meteo-day-min {
+  opacity: .54;
+  font-weight: 700;
+}
+
+.ov-meteo-day-rain {
+  min-height: 15px;
+  margin-top: 4px;
+
+  color: #f2c14e;
+
+  font-size: 9px;
+  font-weight: 800;
+}
+
+
+/* ==========================================
+   CARREGAMENTO / ERRO
+   ========================================== */
+
+.ov-meteo-loading,
+.ov-meteo-error {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 22px;
+
+  font-size: 11px;
+}
+
+.ov-meteo-loading {
+  opacity: .75;
+}
+
+.ov-meteo-error {
+  opacity: .68;
+}
+
+
+/* ==========================================
+   MOBILE
+   ========================================== */
+
+@media (max-width: 720px) {
+
+  .ov-meteo-inner {
+    min-height: 62px;
+
+    padding:
+      7px 12px;
+
+    gap: 9px;
   }
 
-
-  /* ==========================================
-     HELPERS
-     ========================================== */
-
-  function escapeHTML(value) {
-
-    return String(value)
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
+  .ov-meteo-now {
+    padding-right: 9px;
   }
 
-
-  function parseLocalTime(value) {
-
-    const parts =
-      value.split("T");
-
-    if (parts.length !== 2) {
-      return "";
-    }
-
-    return parts[1].slice(0, 5);
+  .ov-meteo-now-icon {
+    font-size: 22px;
   }
 
-
-  function localTimestamp(value) {
-
-    return new Date(
-      `${value}:00+02:00`
-    ).getTime();
+  .ov-meteo-description {
+    display: none;
   }
 
-
-  function findStartingIndex(times) {
-
-    const now =
-      new Date();
-
-    const formatter =
-      new Intl.DateTimeFormat(
-        "sv-SE",
-        {
-          timeZone:
-            "Europe/Rome",
-
-          year: "numeric",
-          month: "2-digit",
-          day: "2-digit",
-
-          hour: "2-digit",
-          minute: "2-digit",
-
-          hour12: false
-        }
-      );
-
-    const parts =
-      formatter
-        .formatToParts(now);
-
-    const values = {};
-
-    parts.forEach(part => {
-
-      if (
-        part.type !== "literal"
-      ) {
-        values[part.type] =
-          part.value;
-      }
-
-    });
-
-    const romeNow =
-      `${values.year}-${values.month}-${values.day}T${values.hour}:${values.minute}`;
-
-    for (
-      let i = 0;
-      i < times.length;
-      i++
-    ) {
-
-      if (
-        times[i] >= romeNow
-      ) {
-        return i;
-      }
-
-    }
-
-    return 0;
+  .ov-meteo-city {
+    font-size: 8px;
   }
 
-
-  function dayName(value, index) {
-
-    if (index === 0) {
-      return "Oggi";
-    }
-
-    if (index === 1) {
-      return "Domani";
-    }
-
-    const date =
-      new Date(
-        `${value}T12:00:00`
-      );
-
-    return new Intl.DateTimeFormat(
-      "it-IT",
-      {
-        weekday: "short"
-      }
-    )
-      .format(date)
-      .replace(".", "");
+  .ov-meteo-temp {
+    font-size: 17px;
   }
 
+  .ov-meteo-hour {
+    min-width: 61px;
 
-  /* ==========================================
-     CONTAINER
-     ========================================== */
-
-  function createContainer() {
-
-    let container =
-      document.getElementById(
-        "oravicino-meteo"
-      );
-
-    if (container) {
-      return container;
-    }
-
-    container =
-      document.createElement(
-        "section"
-      );
-
-    container.id =
-      "oravicino-meteo";
-
-    container.className =
-      "ov-meteo";
-
-    const header =
-      document.querySelector(
-        "header"
-      );
-
-    if (header) {
-
-      header.insertAdjacentElement(
-        "afterend",
-        container
-      );
-
-    } else {
-
-      document.body.prepend(
-        container
-      );
-
-    }
-
-    return container;
+    padding-left: 4px;
+    padding-right: 4px;
   }
 
+  .ov-meteo-more {
+    flex: 0 0 auto;
 
-  /* ==========================================
-     STATUS
-     ========================================== */
+    width: 32px;
+    height: 32px;
 
-  function renderLoading(
-    container
-  ) {
+    padding: 0;
 
-    container.innerHTML =
-      '<div class="ov-meteo-loading">' +
-      "Caricamento meteo di Trento…" +
-      "</div>";
+    font-size: 0;
   }
 
+  .ov-meteo-more::after {
+    content: "⌄";
 
-  function renderError(
-    container
-  ) {
-
-    container.innerHTML =
-      '<div class="ov-meteo-error">' +
-      "Meteo temporaneamente non disponibile." +
-      "</div>";
+    font-size: 17px;
   }
 
-
-  /* ==========================================
-     RESUMO
-     ========================================== */
-
-  function weatherSummary(
-    data,
-    startIndex
-  ) {
-
-    const hourly =
-      data.hourly;
-
-    let highestRain = 0;
-    let rainTime = null;
-
-    const end =
-      Math.min(
-        startIndex + 12,
-        hourly.time.length
-      );
-
-    for (
-      let i = startIndex;
-      i < end;
-      i++
-    ) {
-
-      const probability =
-        Number(
-          hourly
-            .precipitation_probability[i]
-          || 0
-        );
-
-      if (
-        probability >
-        highestRain
-      ) {
-
-        highestRain =
-          probability;
-
-        rainTime =
-          hourly.time[i];
-      }
-
-    }
-
-    if (
-      highestRain >= 60
-    ) {
-
-      return (
-        "☔ Pioggia probabile nelle prossime ore" +
-        (
-          rainTime
-            ? `, soprattutto verso le ${parseLocalTime(rainTime)}.`
-            : "."
-        )
-      );
-    }
-
-    if (
-      highestRain >= 35
-    ) {
-
-      return (
-        "🌦️ Possibile pioggia nelle prossime ore" +
-        (
-          rainTime
-            ? `, con probabilità maggiore verso le ${parseLocalTime(rainTime)}.`
-            : "."
-        )
-      );
-    }
-
-    return (
-      "✓ Nessuna pioggia significativa prevista nelle prossime 12 ore."
-    );
+  .ov-meteo-more.open::after {
+    content: "⌃";
   }
 
-
-  /* ==========================================
-     HORAS
-     ========================================== */
-
-  function buildHours(
-    data,
-    startIndex,
-    amount,
-    detail = false
-  ) {
-
-    const hourly =
-      data.hourly;
-
-    const items = [];
-
-    const end =
-      Math.min(
-        startIndex + amount,
-        hourly.time.length
-      );
-
-    for (
-      let i = startIndex;
-      i < end;
-      i++
-    ) {
-
-      const info =
-        weatherInfo(
-          hourly.weather_code[i]
-        );
-
-      const temperature =
-        Math.round(
-          hourly.temperature_2m[i]
-        );
-
-      const rain =
-        Number(
-          hourly
-            .precipitation_probability[i]
-          || 0
-        );
-
-      const rainClass =
-        rain >= 35
-          ? " rain"
-          : "";
-
-      const rainText =
-        rain >= 20
-          ? `☔ ${rain}%`
-          : "";
-
-      if (detail) {
-
-        items.push(`
-          <div class="ov-meteo-detail-hour${rainClass}">
-
-            <div class="ov-meteo-detail-time">
-              ${escapeHTML(
-                parseLocalTime(
-                  hourly.time[i]
-                )
-              )}
-            </div>
-
-            <div class="ov-meteo-detail-icon">
-              ${info.icon}
-            </div>
-
-            <div class="ov-meteo-detail-temp">
-              ${temperature}°
-            </div>
-
-            <div class="ov-meteo-detail-rain">
-              ${rainText}
-            </div>
-
-          </div>
-        `);
-
-      } else {
-
-        items.push(`
-          <div class="ov-meteo-hour${rainClass}">
-
-            <div class="ov-meteo-hour-time">
-              ${escapeHTML(
-                parseLocalTime(
-                  hourly.time[i]
-                )
-              )}
-            </div>
-
-            <div class="ov-meteo-hour-main">
-
-              <span>
-                ${info.icon}
-              </span>
-
-              <span>
-                ${temperature}°
-              </span>
-
-            </div>
-
-            <div class="ov-meteo-hour-rain">
-              ${rainText}
-            </div>
-
-          </div>
-        `);
-
-      }
-
-    }
-
-    return items.join("");
+  .ov-meteo-panel-inner {
+    padding:
+      18px 12px 20px;
   }
 
+  .ov-meteo-panel-top {
+    flex-direction: column;
 
-  /* ==========================================
-     DIAS
-     ========================================== */
-
-  function buildDays(data) {
-
-    const daily =
-      data.daily;
-
-    const items = [];
-
-    for (
-      let i = 0;
-      i < daily.time.length;
-      i++
-    ) {
-
-      const info =
-        weatherInfo(
-          daily.weather_code[i]
-        );
-
-      const max =
-        Math.round(
-          daily.temperature_2m_max[i]
-        );
-
-      const min =
-        Math.round(
-          daily.temperature_2m_min[i]
-        );
-
-      const rain =
-        Number(
-          daily
-            .precipitation_probability_max[i]
-          || 0
-        );
-
-      items.push(`
-        <div class="ov-meteo-day${i === 0 ? " today" : ""}">
-
-          <div class="ov-meteo-day-name">
-            ${escapeHTML(
-              dayName(
-                daily.time[i],
-                i
-              )
-            )}
-          </div>
-
-          <div class="ov-meteo-day-icon">
-            ${info.icon}
-          </div>
-
-          <div class="ov-meteo-day-temp">
-
-            ${max}°
-
-            <span class="ov-meteo-day-min">
-              / ${min}°
-            </span>
-
-          </div>
-
-          <div class="ov-meteo-day-rain">
-            ${
-              rain >= 20
-                ? `☔ ${rain}%`
-                : ""
-            }
-          </div>
-
-        </div>
-      `);
-
-    }
-
-    return items.join("");
+    gap: 10px;
   }
 
+  .ov-meteo-summary {
+    max-width: none;
+    width: 100%;
 
-  /* ==========================================
-     RENDER
-     ========================================== */
-
-  function renderWeather(
-    container,
-    data
-  ) {
-
-    const current =
-      data.current;
-
-    const startIndex =
-      findStartingIndex(
-        data.hourly.time
-      );
-
-    const currentWeather =
-      weatherInfo(
-        current.weather_code
-      );
-
-    const summary =
-      weatherSummary(
-        data,
-        startIndex
-      );
-
-    container.innerHTML = `
-
-      <div class="ov-meteo-inner">
-
-        <div class="ov-meteo-now">
-
-          <div class="ov-meteo-now-icon">
-            ${currentWeather.icon}
-          </div>
-
-          <div>
-
-            <div class="ov-meteo-city">
-              ${CITY} · ADESSO
-            </div>
-
-            <div class="ov-meteo-current">
-
-              <span class="ov-meteo-temp">
-                ${Math.round(
-                  current.temperature_2m
-                )}°
-              </span>
-
-              <span class="ov-meteo-description">
-                ${escapeHTML(
-                  currentWeather.text
-                )}
-              </span>
-
-            </div>
-
-          </div>
-
-        </div>
-
-
-        <div class="ov-meteo-hours">
-
-          ${buildHours(
-            data,
-            startIndex,
-            HOURS_BAR
-          )}
-
-        </div>
-
-
-        <button
-          class="ov-meteo-more"
-          id="ovMeteoMore"
-          type="button"
-          aria-expanded="false"
-          aria-controls="ovMeteoPanel"
-        >
-          PREVISIONI ›
-        </button>
-
-      </div>
-
-
-      <div
-        class="ov-meteo-panel"
-        id="ovMeteoPanel"
-      >
-
-        <div class="ov-meteo-panel-inner">
-
-
-          <div class="ov-meteo-panel-top">
-
-            <div>
-
-              <h2 class="ov-meteo-panel-title">
-                Previsioni per Trento
-              </h2>
-
-              <div class="ov-meteo-panel-subtitle">
-                Prossime ore e 7 giorni
-              </div>
-
-            </div>
-
-
-            <div class="ov-meteo-summary">
-              ${escapeHTML(summary)}
-            </div>
-
-          </div>
-
-
-          <div class="ov-meteo-section-label">
-            Prossime 12 ore
-          </div>
-
-
-          <div class="ov-meteo-12hours">
-
-            ${buildHours(
-              data,
-              startIndex,
-              HOURS_DETAIL,
-              true
-            )}
-
-          </div>
-
-
-          <div class="ov-meteo-section-label">
-            Prossimi 7 giorni
-          </div>
-
-
-          <div class="ov-meteo-days">
-
-            ${buildDays(data)}
-
-          </div>
-
-        </div>
-
-      </div>
-    `;
-
-
-    const button =
-      document.getElementById(
-        "ovMeteoMore"
-      );
-
-    const panel =
-      document.getElementById(
-        "ovMeteoPanel"
-      );
-
-
-    button.addEventListener(
-      "click",
-      () => {
-
-        const open =
-          panel.classList.toggle(
-            "open"
-          );
-
-        button.classList.toggle(
-          "open",
-          open
-        );
-
-        button.setAttribute(
-          "aria-expanded",
-          String(open)
-        );
-
-        button.textContent =
-          open
-            ? "CHIUDI ×"
-            : "PREVISIONI ›";
-
-      }
-    );
+    box-sizing: border-box;
   }
 
+  .ov-meteo-days {
+    display: flex;
 
-  /* ==========================================
-     LOAD
-     ========================================== */
+    overflow-x: auto;
 
-  async function loadWeather() {
-
-    const container =
-      createContainer();
-
-    renderLoading(
-      container
-    );
-
-    try {
-
-      const response =
-        await fetch(
-          API,
-          {
-            cache: "no-store"
-          }
-        );
-
-      if (!response.ok) {
-
-        throw new Error(
-          `HTTP ${response.status}`
-        );
-      }
-
-      const data =
-        await response.json();
-
-      if (
-        !data.current ||
-        !data.hourly ||
-        !data.daily
-      ) {
-
-        throw new Error(
-          "Risposta meteo incompleta"
-        );
-      }
-
-      renderWeather(
-        container,
-        data
-      );
-
-    } catch (error) {
-
-      console.error(
-        "OraVicino Meteo:",
-        error
-      );
-
-      renderError(
-        container
-      );
-
-    }
+    scrollbar-width: none;
   }
 
-
-  /* ==========================================
-     START
-     ========================================== */
-
-  if (
-    document.readyState ===
-    "loading"
-  ) {
-
-    document.addEventListener(
-      "DOMContentLoaded",
-      loadWeather
-    );
-
-  } else {
-
-    loadWeather();
-
+  .ov-meteo-days::-webkit-scrollbar {
+    display: none;
   }
 
-})();
+  .ov-meteo-day {
+    flex: 0 0 91px;
+  }
+
+}
