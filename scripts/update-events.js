@@ -14,7 +14,7 @@ const DAYS_AHEAD = 30;
 const PAGE_SIZE = 100;
 
 // ----------------------------------------------------
-// Datas
+// DATAS
 // ----------------------------------------------------
 
 function localDateString(date) {
@@ -68,7 +68,7 @@ function futureLimit(days) {
 }
 
 // ----------------------------------------------------
-// Texto
+// TEXTO
 // ----------------------------------------------------
 
 function stripHtml(value) {
@@ -99,7 +99,7 @@ function slugify(value) {
 }
 
 // ----------------------------------------------------
-// Classificação OraVicino
+// CLASSIFICAÇÃO
 // ----------------------------------------------------
 
 function classifyEvent(data) {
@@ -113,13 +113,16 @@ function classifyEvent(data) {
         .join(" ")
     : "";
 
-  const text = `${typology} ${topics} ${data.event_title || ""}`
-    .toLowerCase();
+  const title = data.event_title || "";
+
+  const text =
+    `${typology} ${topics} ${title}`.toLowerCase();
 
   if (
     text.includes("musica") ||
     text.includes("concerto") ||
-    text.includes("musicale")
+    text.includes("musicale") ||
+    text.includes("live")
   ) {
     return "Musica";
   }
@@ -127,7 +130,9 @@ function classifyEvent(data) {
   if (
     text.includes("sport") ||
     text.includes("running") ||
-    text.includes("gara")
+    text.includes("gara") ||
+    text.includes("calcio") ||
+    text.includes("baseball")
   ) {
     return "Sport";
   }
@@ -140,9 +145,7 @@ function classifyEvent(data) {
     return "Famiglie";
   }
 
-  if (
-    text.includes("festival")
-  ) {
+  if (text.includes("festival")) {
     return "Festival";
   }
 
@@ -162,18 +165,23 @@ function buildTags(data, category) {
     for (const value of data.has_public_event_typology) {
       const slug = slugify(value);
 
-      if (slug) tags.add(slug);
+      if (slug) {
+        tags.add(slug);
+      }
     }
   }
 
   if (Array.isArray(data.topics)) {
     for (const topic of data.topics) {
-      const name = topic?.name?.["ita-IT"];
+      const name =
+        topic?.name?.["ita-IT"];
 
-      if (name) {
-        const slug = slugify(name);
+      if (!name) continue;
 
-        if (slug) tags.add(slug);
+      const slug = slugify(name);
+
+      if (slug) {
+        tags.add(slug);
       }
     }
   }
@@ -182,49 +190,49 @@ function buildTags(data, category) {
 }
 
 // ----------------------------------------------------
-// Datas do evento
+// INTERVALO OFICIAL
 // ----------------------------------------------------
 
-function getInterval(data) {
+function getOfficialInterval(data) {
   const interval = data?.time_interval;
 
-  if (!interval) return null;
+  if (!interval) {
+    return null;
+  }
 
   const input = interval.input || {};
 
-  let start = input.startDateTime || null;
-  let end = input.endDateTime || null;
+  let start =
+    input.startDateTime || null;
 
-  if (
-    Array.isArray(interval.events) &&
-    interval.events.length > 0
-  ) {
-    const starts = interval.events
-      .map(event => event.start)
-      .filter(Boolean)
-      .map(value => new Date(value))
-      .filter(value => !Number.isNaN(value.getTime()));
+  let end =
+    input.endDateTime || null;
 
-    const ends = interval.events
-      .map(event => event.end)
-      .filter(Boolean)
-      .map(value => new Date(value))
-      .filter(value => !Number.isNaN(value.getTime()));
+  if (!start) {
+    const first =
+      interval?.default_value?.from_time;
 
-    if (starts.length > 0) {
-      starts.sort((a, b) => a - b);
-      start = starts[0].toISOString();
-    }
-
-    if (ends.length > 0) {
-      ends.sort((a, b) => a - b);
-      end = ends[ends.length - 1].toISOString();
+    if (first) {
+      start = first;
     }
   }
 
-  if (!start) return null;
+  if (!end) {
+    const last =
+      interval?.default_value?.to_time;
 
-  if (!end) end = start;
+    if (last) {
+      end = last;
+    }
+  }
+
+  if (!start) {
+    return null;
+  }
+
+  if (!end) {
+    end = start;
+  }
 
   return {
     start,
@@ -233,47 +241,234 @@ function getInterval(data) {
 }
 
 // ----------------------------------------------------
-// Conversão Agenda Trento → OraVicino
+// OCORRÊNCIAS
+// ----------------------------------------------------
+
+function getOccurrences(data) {
+  const interval =
+    data?.time_interval;
+
+  if (!interval) {
+    return [];
+  }
+
+  const raw = [];
+
+  if (Array.isArray(interval.events)) {
+    raw.push(...interval.events);
+  }
+
+  if (
+    raw.length === 0 &&
+    Array.isArray(interval.recurrences)
+  ) {
+    raw.push(...interval.recurrences);
+  }
+
+  return raw
+    .filter(item => item?.start)
+    .map(item => ({
+      start: item.start,
+      end: item.end || item.start
+    }))
+    .filter(item => {
+      const start =
+        new Date(item.start);
+
+      const end =
+        new Date(item.end);
+
+      return (
+        !Number.isNaN(start.getTime()) &&
+        !Number.isNaN(end.getTime())
+      );
+    })
+    .sort(
+      (a, b) =>
+        new Date(a.start) -
+        new Date(b.start)
+    );
+}
+
+// ----------------------------------------------------
+// DATA ÚTIL PARA ORAVICINO
+// ----------------------------------------------------
+
+function getUsefulOccurrence(data) {
+  const today = todayRome();
+  const limit = futureLimit(DAYS_AHEAD);
+
+  const official =
+    getOfficialInterval(data);
+
+  if (!official) {
+    return null;
+  }
+
+  const originalDateStart =
+    isoDate(official.start);
+
+  const originalDateEnd =
+    isoDate(official.end);
+
+  if (
+    !originalDateStart ||
+    !originalDateEnd
+  ) {
+    return null;
+  }
+
+  // Evento já terminou.
+  if (originalDateEnd < today) {
+    return null;
+  }
+
+  // Evento começa depois da janela.
+  if (originalDateStart > limit) {
+    return null;
+  }
+
+  const occurrences =
+    getOccurrences(data);
+
+  // ------------------------------------------------
+  // Procura ocorrência explícita atual ou futura.
+  // ------------------------------------------------
+
+  for (const occurrence of occurrences) {
+    const startDate =
+      isoDate(occurrence.start);
+
+    const endDate =
+      isoDate(occurrence.end);
+
+    if (!startDate || !endDate) {
+      continue;
+    }
+
+    if (endDate < today) {
+      continue;
+    }
+
+    if (startDate > limit) {
+      continue;
+    }
+
+    // Ocorrência já começou e ainda está válida.
+    if (
+      startDate <= today &&
+      endDate >= today
+    ) {
+      return {
+        dateStart: today,
+        dateEnd: endDate,
+        timeStart: timeRome(
+          occurrence.start
+        ),
+        timeEnd: timeRome(
+          occurrence.end
+        ),
+        originalDateStart,
+        originalDateEnd,
+        ongoing: startDate < today
+      };
+    }
+
+    // Próxima ocorrência futura.
+    if (
+      startDate >= today &&
+      startDate <= limit
+    ) {
+      return {
+        dateStart: startDate,
+        dateEnd: endDate,
+        timeStart: timeRome(
+          occurrence.start
+        ),
+        timeEnd: timeRome(
+          occurrence.end
+        ),
+        originalDateStart,
+        originalDateEnd,
+        ongoing: false
+      };
+    }
+  }
+
+  // ------------------------------------------------
+  // EVENTO DE LONGA DURAÇÃO
+  //
+  // Algumas exposições/festivais são enviados pela
+  // API como um intervalo único, sem ocorrências
+  // diárias separadas.
+  // ------------------------------------------------
+
+  if (
+    originalDateStart <= today &&
+    originalDateEnd >= today
+  ) {
+    return {
+      dateStart: today,
+      dateEnd: originalDateEnd,
+      timeStart: timeRome(
+        official.start
+      ),
+      timeEnd: timeRome(
+        official.end
+      ),
+      originalDateStart,
+      originalDateEnd,
+      ongoing: originalDateStart < today
+    };
+  }
+
+  // Evento futuro dentro dos próximos 30 dias.
+  if (
+    originalDateStart >= today &&
+    originalDateStart <= limit
+  ) {
+    return {
+      dateStart: originalDateStart,
+      dateEnd: originalDateEnd,
+      timeStart: timeRome(
+        official.start
+      ),
+      timeEnd: timeRome(
+        official.end
+      ),
+      originalDateStart,
+      originalDateEnd,
+      ongoing: false
+    };
+  }
+
+  return null;
+}
+
+// ----------------------------------------------------
+// NORMALIZAÇÃO
 // ----------------------------------------------------
 
 function normalizeEvent(hit) {
-  const metadata = hit?.metadata || {};
+  const metadata =
+    hit?.metadata || {};
 
-  if (metadata.classIdentifier !== "event") {
+  if (
+    metadata.classIdentifier !== "event"
+  ) {
     return null;
   }
 
   const data =
-    hit?.data?.["ita-IT"] ||
-    {};
+    hit?.data?.["ita-IT"] || {};
 
   const extra =
-    hit?.extradata?.["ita-IT"] ||
-    {};
+    hit?.extradata?.["ita-IT"] || {};
 
-  const interval = getInterval(data);
+  const useful =
+    getUsefulOccurrence(data);
 
-  if (!interval) {
-    return null;
-  }
-
-  const dateStart = isoDate(interval.start);
-  const dateEnd = isoDate(interval.end);
-
-  if (!dateStart || !dateEnd) {
-    return null;
-  }
-
-  const today = todayRome();
-  const limit = futureLimit(DAYS_AHEAD);
-
-  // Evento completamente encerrado.
-  if (dateEnd < today) {
-    return null;
-  }
-
-  // Evento começa além da nossa janela.
-  if (dateStart > limit) {
+  if (!useful) {
     return null;
   }
 
@@ -287,7 +482,8 @@ function normalizeEvent(hit) {
     stripHtml(data.description) ||
     "";
 
-  const category = classifyEvent(data);
+  const category =
+    classifyEvent(data);
 
   let venue = "Trento";
 
@@ -296,7 +492,8 @@ function normalizeEvent(hit) {
     data.takes_place_in.length > 0
   ) {
     venue =
-      data.takes_place_in[0]?.name?.["ita-IT"] ||
+      data.takes_place_in[0]
+        ?.name?.["ita-IT"] ||
       venue;
   }
 
@@ -306,24 +503,29 @@ function normalizeEvent(hit) {
       ? extra.geo[0]
       : null;
 
-  const lat =
+  const latitude =
     geo?.latitude != null
       ? Number(geo.latitude)
       : null;
 
-  const lng =
+  const longitude =
     geo?.longitude != null
       ? Number(geo.longitude)
       : null;
 
   let price = "Info";
 
-  if (data.is_accessible_for_free === 1) {
+  if (
+    data.is_accessible_for_free === 1
+  ) {
     price = "Gratis";
   } else {
-    const cost = stripHtml(data.cost_notes);
+    const cost =
+      stripHtml(data.cost_notes);
 
-    if (cost) price = cost;
+    if (cost) {
+      price = cost;
+    }
   }
 
   const url =
@@ -333,34 +535,67 @@ function normalizeEvent(hit) {
   return {
     id: `trento-${metadata.id}`,
     sourceId: metadata.id,
+
     title,
     category,
     description,
+
     venue,
     address: venue,
     city: "Trento",
     area: venue,
-    dateStart,
-    dateEnd,
-    timeStart: timeRome(interval.start),
-    timeEnd: timeRome(interval.end),
+
+    dateStart:
+      useful.dateStart,
+
+    dateEnd:
+      useful.dateEnd,
+
+    timeStart:
+      useful.timeStart,
+
+    timeEnd:
+      useful.timeEnd,
+
+    originalDateStart:
+      useful.originalDateStart,
+
+    originalDateEnd:
+      useful.originalDateEnd,
+
+    ongoing:
+      useful.ongoing,
+
     price,
+
     lat:
-      Number.isFinite(lat)
-        ? lat
+      Number.isFinite(latitude)
+        ? latitude
         : null,
+
     lng:
-      Number.isFinite(lng)
-        ? lng
+      Number.isFinite(longitude)
+        ? longitude
         : null,
-    tags: buildTags(data, category),
+
+    tags:
+      buildTags(
+        data,
+        category
+      ),
+
     image: null,
+
     url,
-    source: "Agenda Trento",
-    sourceUrl: url,
+
+    source:
+      "Agenda Trento",
+
+    sourceUrl:
+      url,
+
     modified:
-      metadata.modified ||
-      null
+      metadata.modified || null
   };
 }
 
@@ -382,12 +617,16 @@ async function fetchPage(offset) {
     `Consultando eventos ${offset + 1}–${offset + PAGE_SIZE}...`
   );
 
-  const response = await fetch(url, {
-    headers: {
-      Accept: "application/json",
-      "User-Agent": "OraVicino/1.0"
-    }
-  });
+  const response =
+    await fetch(url, {
+      headers: {
+        Accept:
+          "application/json",
+
+        "User-Agent":
+          "OraVicino/1.0"
+      }
+    });
 
   if (!response.ok) {
     throw new Error(
@@ -405,10 +644,14 @@ async function fetchAllEvents() {
   let total = null;
 
   while (true) {
-    const result = await fetchPage(offset);
+    const result =
+      await fetchPage(offset);
 
     if (total === null) {
-      total = Number(result.totalCount || 0);
+      total =
+        Number(
+          result.totalCount || 0
+        );
 
       console.log(
         `Total informado pela Agenda Trento: ${total}`
@@ -416,13 +659,17 @@ async function fetchAllEvents() {
     }
 
     const pageHits =
-      Array.isArray(result.searchHits)
+      Array.isArray(
+        result.searchHits
+      )
         ? result.searchHits
         : [];
 
     hits.push(...pageHits);
 
-    if (pageHits.length === 0) {
+    if (
+      pageHits.length === 0
+    ) {
       break;
     }
 
@@ -437,7 +684,7 @@ async function fetchAllEvents() {
 }
 
 // ----------------------------------------------------
-// Remoção de duplicados
+// DUPLICADOS
 // ----------------------------------------------------
 
 function deduplicate(events) {
@@ -445,25 +692,36 @@ function deduplicate(events) {
 
   for (const event of events) {
     const key =
-      `${event.sourceId}|${event.dateStart}|${event.dateEnd}`;
+      `${event.sourceId}|${event.dateStart}`;
 
     if (!map.has(key)) {
       map.set(key, event);
     }
   }
 
-  return Array.from(map.values());
+  return Array.from(
+    map.values()
+  );
 }
 
 // ----------------------------------------------------
-// Execução
+// EXECUÇÃO
 // ----------------------------------------------------
 
 async function main() {
   console.log("");
-  console.log("====================================");
-  console.log(" OraVicino · Agenda Trento");
-  console.log("====================================");
+  console.log(
+    "===================================="
+  );
+
+  console.log(
+    " OraVicino · Agenda Trento"
+  );
+
+  console.log(
+    "===================================="
+  );
+
   console.log("");
 
   console.log(
@@ -476,36 +734,47 @@ async function main() {
 
   console.log("");
 
-  const hits = await fetchAllEvents();
+  const hits =
+    await fetchAllEvents();
 
   console.log("");
+
   console.log(
     `Registros recebidos: ${hits.length}`
   );
 
-  let events = hits
-    .map(normalizeEvent)
-    .filter(Boolean);
+  let events =
+    hits
+      .map(normalizeEvent)
+      .filter(Boolean);
 
-  events = deduplicate(events);
+  events =
+    deduplicate(events);
 
   events.sort((a, b) => {
     const dateCompare =
-      a.dateStart.localeCompare(b.dateStart);
+      a.dateStart.localeCompare(
+        b.dateStart
+      );
 
     if (dateCompare !== 0) {
       return dateCompare;
     }
 
-    return (a.timeStart || "99:99")
-      .localeCompare(b.timeStart || "99:99");
+    return (
+      a.timeStart || "99:99"
+    ).localeCompare(
+      b.timeStart || "99:99"
+    );
   });
 
   console.log(
-    `Eventos atuais/próximos selecionados: ${events.length}`
+    `Eventos úteis selecionados: ${events.length}`
   );
 
-  if (events.length === 0) {
+  if (
+    events.length === 0
+  ) {
     throw new Error(
       "Nenhum evento atual ou futuro foi encontrado. O arquivo não será criado."
     );
@@ -520,28 +789,43 @@ async function main() {
 
   fs.writeFileSync(
     OUTPUT,
-    JSON.stringify(events, null, 2) + "\n",
+    JSON.stringify(
+      events,
+      null,
+      2
+    ) + "\n",
     "utf8"
   );
 
   console.log("");
+
   console.log(
     `Arquivo criado: ${OUTPUT}`
   );
 
   console.log("");
 
-  console.log("Primeiros eventos:");
-
-  events.slice(0, 10).forEach(
-    (event, index) => {
-      console.log(
-        `${index + 1}. ${event.dateStart} · ${event.title}`
-      );
-    }
+  console.log(
+    "Primeiros eventos:"
   );
 
+  events
+    .slice(0, 15)
+    .forEach(
+      (event, index) => {
+        const status =
+          event.ongoing
+            ? " [IN CORSO]"
+            : "";
+
+        console.log(
+          `${index + 1}. ${event.dateStart} · ${event.title}${status}`
+        );
+      }
+    );
+
   console.log("");
+
   console.log(
     "IMPORTAÇÃO CONCLUÍDA COM SUCESSO."
   );
@@ -549,6 +833,7 @@ async function main() {
 
 main().catch(error => {
   console.error("");
+
   console.error(
     "ERRO NA IMPORTAÇÃO:"
   );
