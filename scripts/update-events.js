@@ -7,7 +7,7 @@ const API =
 const OUTPUT = path.join(
   process.cwd(),
   "data",
-  "eventi-auto.json"
+  "eventi.json"
 );
 
 const DAYS_AHEAD = 30;
@@ -318,22 +318,16 @@ function getUsefulOccurrence(data) {
     return null;
   }
 
-  // Evento já terminou.
   if (originalDateEnd < today) {
     return null;
   }
 
-  // Evento começa depois da janela.
   if (originalDateStart > limit) {
     return null;
   }
 
   const occurrences =
     getOccurrences(data);
-
-  // ------------------------------------------------
-  // Procura ocorrência explícita atual ou futura.
-  // ------------------------------------------------
 
   for (const occurrence of occurrences) {
     const startDate =
@@ -354,7 +348,6 @@ function getUsefulOccurrence(data) {
       continue;
     }
 
-    // Ocorrência já começou e ainda está válida.
     if (
       startDate <= today &&
       endDate >= today
@@ -374,7 +367,6 @@ function getUsefulOccurrence(data) {
       };
     }
 
-    // Próxima ocorrência futura.
     if (
       startDate >= today &&
       startDate <= limit
@@ -395,14 +387,6 @@ function getUsefulOccurrence(data) {
     }
   }
 
-  // ------------------------------------------------
-  // EVENTO DE LONGA DURAÇÃO
-  //
-  // Algumas exposições/festivais são enviados pela
-  // API como um intervalo único, sem ocorrências
-  // diárias separadas.
-  // ------------------------------------------------
-
   if (
     originalDateStart <= today &&
     originalDateEnd >= today
@@ -422,7 +406,6 @@ function getUsefulOccurrence(data) {
     };
   }
 
-  // Evento futuro dentro dos próximos 30 dias.
   if (
     originalDateStart >= today &&
     originalDateStart <= limit
@@ -772,11 +755,11 @@ async function main() {
     `Eventos úteis selecionados: ${events.length}`
   );
 
-  if (
-    events.length === 0
-  ) {
+  // Proteção principal:
+  // nunca sobrescrever a agenda com arquivo vazio.
+  if (events.length === 0) {
     throw new Error(
-      "Nenhum evento atual ou futuro foi encontrado. O arquivo não será criado."
+      "Nenhum evento válido foi encontrado. data/eventi.json NÃO será alterado."
     );
   }
 
@@ -800,7 +783,7 @@ async function main() {
   console.log("");
 
   console.log(
-    `Arquivo criado: ${OUTPUT}`
+    `Arquivo oficial OraVicino criado: ${OUTPUT}`
   );
 
   console.log("");
@@ -827,18 +810,15 @@ async function main() {
   console.log("");
 
   console.log(
-    "IMPORTAÇÃO CONCLUÍDA COM SUCESSO."
+    "AGENDA ORAVICINO ATUALIZADA COM SUCESSO."
   );
 }
 
 main().catch(error => {
   console.error("");
-
   console.error(
-    "ERRO NA IMPORTAÇÃO:"
+    "ERRO NA ATUALIZAÇÃO:"
   );
-
   console.error(error);
-
   process.exit(1);
 });
