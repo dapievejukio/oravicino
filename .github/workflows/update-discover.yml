@@ -1,0 +1,65 @@
+name: Aggiorna Scoprire OraVicino
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-discover:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+
+      - name: Aggiorna luoghi Scoprire da OpenStreetMap
+        run: node scripts/update-discover.js
+
+
+      - name: Controlla scoprire.json
+        run: |
+          echo "===== SCOPRIRE.JSON ====="
+          ls -lh data/scoprire.json
+          echo ""
+          echo "Prime righe:"
+          head -60 data/scoprire.json
+
+
+      - name: Verifica modifiche
+        id: changes
+        run: |
+          if git diff --quiet -- data/scoprire.json; then
+            if git ls-files --error-unmatch data/scoprire.json >/dev/null 2>&1; then
+              echo "changed=false" >> "$GITHUB_OUTPUT"
+            else
+              echo "changed=true" >> "$GITHUB_OUTPUT"
+            fi
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+
+      - name: Commit aggiornamento
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/scoprire.json
+          git commit -m "Aggiorna Scoprire OraVicino"
+          git push
+
+
+      - name: Nessuna modifica
+        if: steps.changes.outputs.changed == 'false'
+        run: |
+          echo "Nessuna modifica ai luoghi Scoprire."
