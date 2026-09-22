@@ -1,0 +1,81 @@
+name: Test Agenda Trento
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-agenda:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Consultar API oficial da Agenda Trento
+        shell: bash
+        run: |
+          set -e
+
+          API="https://eventi.comune.trento.it/opendata/api/content/search/"
+
+          QUERY="class = [event] limit 10 offset 0"
+
+          echo "Consultando Agenda Trento..."
+          echo "Endpoint: $API"
+          echo "Query: $QUERY"
+
+          RESPONSE=$(curl --fail --silent --show-error \
+            --get \
+            --data-urlencode "q=$QUERY" \
+            "$API")
+
+          echo "$RESPONSE" > response.json
+
+          python3 <<'PY'
+          import json
+
+          with open("response.json", "r", encoding="utf-8") as f:
+              data = json.load(f)
+
+          print("")
+          print("=== AGENDA TRENTO ===")
+          print("Query:", data.get("query"))
+          print("Total encontrado:", data.get("totalCount"))
+          print("Próxima página:", data.get("nextPageQuery"))
+          print("")
+
+          hits = data.get("searchHits", [])
+
+          if not hits:
+              raise SystemExit(
+                  "ERRO: a API respondeu, mas nenhum evento foi encontrado."
+              )
+
+          eventos = []
+
+          for hit in hits:
+              metadata = hit.get("metadata", {})
+
+              if metadata.get("classIdentifier") != "event":
+                  continue
+
+              content = hit.get("data", {}).get("ita-IT", {})
+              title = (
+                  content.get("event_title")
+                  or metadata.get("name", {}).get("ita-IT")
+                  or "Sem título"
+              )
+
+              eventos.append(title)
+
+          if not eventos:
+              raise SystemExit(
+                  "ERRO: resultados recebidos, mas nenhum possui classIdentifier=event."
+              )
+
+          print(f"Eventos válidos recebidos: {len(eventos)}")
+          print("")
+
+          for numero, titulo in enumerate(eventos, 1):
+              print(f"{numero}. {titulo}")
+
+          print("")
+          print("TESTE CONCLUÍDO COM SUCESSO.")
+          PY
