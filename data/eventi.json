@@ -1,24 +1,27 @@
-{
-  "id": "exemplo-evento",
-  "title": "Nome dell'evento",
-  "category": "Musica",
-  "description": "Breve descrizione dell'evento.",
-  "venue": "Nome del locale",
-  "address": "Indirizzo",
-  "city": "Trento",
-  "area": "Centro storico",
-  "dateStart": "2026-09-25",
-  "dateEnd": "2026-09-25",
-  "timeStart": "21:00",
-  "timeEnd": "23:30",
-  "price": "Gratis",
-  "lat": 46.0679,
-  "lng": 11.1211,
-  "tags": [
-    "musica",
-    "stasera"
-  ],
-  "image": null,
-  "url": null,
-  "source": null
-}
+[
+  {
+    "id": "antiche-storie-acqua",
+    "title": "Antiche storie d’acqua",
+    "category": "Cultura",
+    "description": "Un’esperienza in realtà virtuale per scoprire le antiche rogge, i mulini e il corso originale del fiume Adige.",
+    "venue": "Cappella Vantini",
+    "address": "Trento",
+    "city": "Trento",
+    "area": "Centro storico",
+    "dateStart": "2026-09-22",
+    "dateEnd": "2026-11-04",
+    "timeStart": "16:00",
+    "timeEnd": "21:00",
+    "price": "Info",
+    "lat": 46.0679,
+    "lng": 11.1211,
+    "tags": [
+      "cultura",
+      "realta-virtuale",
+      "indoor"
+    ],
+    "image": null,
+    "url": "https://www.visittrento.it/it/eventi/antiche-storie-d-acqua-a-cappella-vantini-torna-la-realta-virtuale",
+    "source": "Visit Trento"
+  }
+]
