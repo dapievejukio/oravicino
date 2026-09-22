@@ -7,28 +7,49 @@
     "city": "Trento",
     "price": "€€",
     "area": "Centro storico",
-    "tags": ["tipico", "trentino", "centro"]
+    "lat": 46.06706,
+    "lng": 11.12451,
+    "tags": [
+      "tipico",
+      "trentino",
+      "centro"
+    ]
   },
+
   {
     "id": "due-mori",
     "name": "Antica Trattoria Due Mori",
-    "category": "Trattoria",
+    "category": "Trattoria · Cucina trentina",
     "address": "Via San Marco, 11",
     "city": "Trento",
     "price": "€€",
     "area": "San Martino",
-    "tags": ["trattoria", "italiano"]
+    "lat": 46.070252,
+    "lng": 11.124973,
+    "tags": [
+      "trattoria",
+      "italiano",
+      "trentino"
+    ]
   },
+
   {
     "id": "ca-dei-gobj",
     "name": "Ca' dei Gobj",
-    "category": "Ristorante",
+    "category": "Ristorante · Cucina regionale",
     "address": "Via del Simonino, 14",
     "city": "Trento",
     "price": "€€",
     "area": "Centro storico",
-    "tags": ["tradizione", "centro"]
+    "lat": 46.068767,
+    "lng": 11.124198,
+    "tags": [
+      "tradizione",
+      "trentino",
+      "centro"
+    ]
   },
+
   {
     "id": "forsterbrau",
     "name": "Forsterbräu Trento",
@@ -37,8 +58,16 @@
     "city": "Trento",
     "price": "€€",
     "area": "Centro storico",
-    "tags": ["birra", "ristorante", "centro"]
+    "lat": 46.06875,
+    "lng": 11.12245,
+    "tags": [
+      "birra",
+      "ristorante",
+      "trentino",
+      "centro"
+    ]
   },
+
   {
     "id": "chiste",
     "name": "Chistè",
@@ -47,8 +76,15 @@
     "city": "Trento",
     "price": "€€",
     "area": "Centro storico",
-    "tags": ["pizza", "ristorante"]
+    "lat": 46.068882,
+    "lng": 11.121739,
+    "tags": [
+      "pizza",
+      "ristorante",
+      "centro"
+    ]
   },
+
   {
     "id": "due-spade",
     "name": "Osteria a le Due Spade",
@@ -57,18 +93,32 @@
     "city": "Trento",
     "price": "€€€",
     "area": "Centro storico",
-    "tags": ["osteria", "italiano"]
+    "lat": 46.066962,
+    "lng": 11.120285,
+    "tags": [
+      "osteria",
+      "italiano",
+      "trentino"
+    ]
   },
+
   {
     "id": "il-cappello",
-    "name": "Il Cappello",
-    "category": "Ristorante",
+    "name": "Osteria Il Cappello",
+    "category": "Osteria · Cucina regionale",
     "address": "Piazzetta Bruno Lunelli, 5",
     "city": "Trento",
     "price": "€€€",
     "area": "Centro storico",
-    "tags": ["ristorante"]
+    "lat": 46.06946,
+    "lng": 11.125332,
+    "tags": [
+      "osteria",
+      "ristorante",
+      "trentino"
+    ]
   },
+
   {
     "id": "bottega-moderna",
     "name": "Bottega Moderna Bistrot",
@@ -77,28 +127,48 @@
     "city": "Trento",
     "price": "€€€",
     "area": "Centro storico",
-    "tags": ["bistrot", "italiano"]
+    "lat": 46.066798,
+    "lng": 11.122441,
+    "tags": [
+      "bistrot",
+      "italiano"
+    ]
   },
+
   {
     "id": "posto-di-ste",
     "name": "Il Posto di Ste",
-    "category": "Ristorante",
+    "category": "Osteria · Cucina italiana",
     "address": "Via Malpaga, 20",
     "city": "Trento",
     "price": "€€",
-    "area": "Centro",
-    "tags": ["ristorante"]
+    "area": "Centro storico",
+    "lat": 46.068514,
+    "lng": 11.123397,
+    "tags": [
+      "osteria",
+      "italiano",
+      "vino"
+    ]
   },
+
   {
     "id": "cantinota",
     "name": "La Cantinota",
-    "category": "Cucina italiana",
-    "address": "Via San Marco, 22-24",
+    "category": "Cucina trentina · Italiana",
+    "address": "Via San Marco, 22",
     "city": "Trento",
     "price": "€€",
     "area": "San Martino",
-    "tags": ["italiano", "ristorante"]
+    "lat": 46.07013,
+    "lng": 11.124956,
+    "tags": [
+      "italiano",
+      "trentino",
+      "ristorante"
+    ]
   },
+
   {
     "id": "libertino",
     "name": "Il Libertino",
@@ -107,38 +177,67 @@
     "city": "Trento",
     "price": "€€€",
     "area": "Piedicastello",
-    "tags": ["territorio", "vino", "fuori-percorso"]
+    "lat": 46.070962,
+    "lng": 11.112507,
+    "tags": [
+      "territorio",
+      "trentino",
+      "vino",
+      "fuori-percorso"
+    ]
   },
+
   {
     "id": "al-gusto",
     "name": "Al Gusto la cucina di Corrado",
-    "category": "Ristorante",
+    "category": "Cucina italiana",
     "address": "Via Milano, 80",
     "city": "Trento",
     "price": "€€",
-    "area": "Trento",
-    "tags": ["ristorante", "fuori-percorso"]
+    "area": "Bolghera",
+    "lat": 46.06113,
+    "lng": 11.12847,
+    "tags": [
+      "italiano",
+      "ristorante",
+      "fuori-percorso"
+    ]
   },
+
   {
     "id": "ai-frati",
     "name": "Osteria Ai Frati",
-    "category": "Osteria",
+    "category": "Osteria · Cucina italiana",
     "address": "Via dei Cappuccini, 69",
     "city": "Trento",
     "price": "€€€",
-    "area": "Trento",
-    "tags": ["osteria", "fuori-percorso"]
+    "area": "Cervara",
+    "lat": 46.07387,
+    "lng": 11.12919,
+    "tags": [
+      "osteria",
+      "italiano",
+      "fuori-percorso"
+    ]
   },
+
   {
     "id": "augurio",
     "name": "Augurio Ristorante",
-    "category": "Ristorante",
+    "category": "Cucina contemporanea",
     "address": "Via Dietro le Mura B, 16",
     "city": "Trento",
     "price": "€€€",
-    "area": "Centro",
-    "tags": ["ristorante"]
+    "area": "Centro storico",
+    "lat": 46.068072,
+    "lng": 11.126668,
+    "tags": [
+      "ristorante",
+      "italiano",
+      "contemporaneo"
+    ]
   },
+
   {
     "id": "la-gnoccata",
     "name": "Osteria La Gnoccata",
@@ -147,6 +246,12 @@
     "city": "Trento",
     "price": "€€",
     "area": "Ponte Alto",
-    "tags": ["trentino", "osteria", "fuori-percorso"]
+    "lat": 46.073741,
+    "lng": 11.150703,
+    "tags": [
+      "trentino",
+      "osteria",
+      "fuori-percorso"
+    ]
   }
 ]
