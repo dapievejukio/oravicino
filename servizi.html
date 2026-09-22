@@ -1,0 +1,3346 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Servizi vicino a te | OraVicino Trento
+  </title>
+
+  <meta
+    name="description"
+    content="Trova farmacie, supermercati, parcheggi, bancomat, bagni, acqua potabile e altri servizi vicino a te a Trento."
+  >
+
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="meteo.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  >
+
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  ></script>
+
+  <style>
+    :root {
+      --service-green: #173f32;
+      --service-green-2: #245b48;
+      --service-green-3: #2e6c56;
+      --service-orange: #ef6a3a;
+      --service-yellow: #f2c14e;
+      --service-paper: #fffdf8;
+      --service-bg: #f5f1e8;
+      --service-ink: #17231d;
+      --service-muted: #6d746f;
+      --service-line: rgba(23, 35, 29, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--service-bg);
+      color: var(--service-ink);
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .services-page {
+      min-height: 100vh;
+    }
+
+    /* ======================================================
+       TOPBAR
+    ====================================================== */
+
+    .services-topbar {
+      width: min(1180px, calc(100% - 40px));
+      min-height: 78px;
+      margin: 0 auto;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 20px;
+    }
+
+    .services-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+
+      color: var(--service-green);
+      text-decoration: none;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      font-size: 1.45rem;
+    }
+
+    .services-brand-dot {
+      width: 10px;
+      height: 10px;
+
+      border-radius: 50%;
+
+      background: var(--service-orange);
+    }
+
+    .services-location {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+
+      color: var(--service-muted);
+      font-weight: 800;
+      font-size: 0.84rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .services-location-city {
+      color: var(--service-green);
+    }
+
+    /* ======================================================
+       HERO
+    ====================================================== */
+
+    .services-hero {
+      position: relative;
+      overflow: hidden;
+
+      background:
+        linear-gradient(
+          110deg,
+          rgba(14, 48, 37, 0.97) 0%,
+          rgba(23, 63, 50, 0.94) 55%,
+          rgba(36, 91, 72, 0.91) 100%
+        );
+
+      color: white;
+    }
+
+    .services-hero::after {
+      content: "";
+
+      position: absolute;
+      inset: 0;
+
+      pointer-events: none;
+
+      background:
+        radial-gradient(
+          circle at 82% 20%,
+          rgba(242, 193, 78, 0.15),
+          transparent 26%
+        ),
+        radial-gradient(
+          circle at 10% 90%,
+          rgba(239, 106, 58, 0.11),
+          transparent 24%
+        );
+    }
+
+    .services-hero-inner {
+      position: relative;
+      z-index: 1;
+
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+
+      padding: 62px 0 54px;
+    }
+
+    .services-eyebrow {
+      margin-bottom: 12px;
+
+      color: var(--service-yellow);
+
+      font-size: 0.76rem;
+      font-weight: 900;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .services-title {
+      max-width: 760px;
+
+      margin: 0;
+
+      font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+      font-size: clamp(2.8rem, 6vw, 5.7rem);
+      line-height: 0.94;
+      letter-spacing: -0.05em;
+    }
+
+    .services-subtitle {
+      max-width: 650px;
+
+      margin: 22px 0 0;
+
+      color: rgba(255, 255, 255, 0.77);
+
+      font-size: 1.05rem;
+      line-height: 1.65;
+    }
+
+    .services-search {
+      max-width: 720px;
+
+      margin-top: 30px;
+
+      display: flex;
+      align-items: center;
+
+      border-radius: 18px;
+      overflow: hidden;
+
+      background: white;
+
+      box-shadow:
+        0 16px 40px
+        rgba(0, 0, 0, 0.15);
+    }
+
+    .services-search-icon {
+      padding-left: 19px;
+
+      color: var(--service-green);
+
+      font-size: 1.15rem;
+    }
+
+    .services-search input {
+      width: 100%;
+
+      border: 0;
+      outline: 0;
+
+      padding: 18px 15px;
+
+      background: transparent;
+
+      color: var(--service-ink);
+
+      font-size: 0.96rem;
+    }
+
+    .services-search input::placeholder {
+      color: #949b96;
+    }
+
+    .services-search-clear {
+      border: 0;
+      background: transparent;
+
+      padding: 18px 20px;
+
+      color: var(--service-muted);
+
+      font-weight: 900;
+    }
+
+    /* ======================================================
+       VICINO A ME
+    ====================================================== */
+
+    .nearby-wrapper {
+      width: min(1180px, calc(100% - 40px));
+      margin: 32px auto 0;
+    }
+
+    .nearby-feature {
+      min-height: 148px;
+
+      padding: 28px 30px;
+
+      border-radius: 26px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 30px;
+
+      color: white;
+
+      background:
+        linear-gradient(
+          115deg,
+          #173f32 0%,
+          #245b48 58%,
+          #2e6c56 100%
+        );
+
+      box-shadow:
+        0 20px 50px
+        rgba(23, 63, 50, 0.16);
+
+      transition:
+        background 0.25s ease,
+        transform 0.25s ease;
+    }
+
+    .nearby-feature.active {
+      background:
+        linear-gradient(
+          115deg,
+          #12382c 0%,
+          #1d6049 58%,
+          #26785a 100%
+        );
+    }
+
+    .nearby-feature.error {
+      background:
+        linear-gradient(
+          115deg,
+          #6f2938 0%,
+          #7c3445 100%
+        );
+    }
+
+    .nearby-main {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+    }
+
+    .nearby-icon {
+      width: 68px;
+      height: 68px;
+
+      flex: 0 0 68px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 20px;
+
+      background:
+        rgba(255, 255, 255, 0.11);
+
+      font-size: 2rem;
+    }
+
+    .nearby-kicker {
+      margin-bottom: 6px;
+
+      color: var(--service-yellow);
+
+      font-size: 0.7rem;
+      font-weight: 900;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .nearby-title {
+      margin: 0;
+
+      color: white;
+
+      font-size: clamp(1.45rem, 3vw, 2.1rem);
+      line-height: 1.05;
+      letter-spacing: -0.035em;
+    }
+
+    .nearby-description {
+      max-width: 590px;
+
+      margin: 9px 0 0;
+
+      color: rgba(255, 255, 255, 0.73);
+
+      line-height: 1.5;
+      font-size: 0.92rem;
+    }
+
+    .nearby-button {
+      min-width: 210px;
+
+      border: 0;
+      border-radius: 999px;
+
+      padding: 16px 22px;
+
+      background: var(--service-yellow);
+      color: var(--service-green);
+
+      font-size: 0.78rem;
+      font-weight: 950;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+
+      box-shadow:
+        0 10px 25px
+        rgba(0, 0, 0, 0.13);
+    }
+
+    .nearby-button:hover {
+      transform: translateY(-1px);
+    }
+
+    .nearby-button:disabled {
+      cursor: wait;
+      opacity: 0.8;
+    }
+
+    /* ======================================================
+       CATEGORIES
+    ====================================================== */
+
+    .services-categories {
+      width: min(1180px, calc(100% - 40px));
+      margin: 38px auto 0;
+    }
+
+    .section-kicker {
+      color: var(--service-orange);
+
+      font-size: 0.7rem;
+      font-weight: 950;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .section-heading {
+      margin: 6px 0 20px;
+
+      font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+      color: var(--service-green);
+
+      font-size: clamp(1.8rem, 4vw, 2.7rem);
+      letter-spacing: -0.04em;
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns:
+        repeat(7, minmax(0, 1fr));
+
+      gap: 10px;
+    }
+
+    .category-button {
+      min-height: 102px;
+
+      border:
+        1px solid
+        var(--service-line);
+
+      border-radius: 18px;
+
+      padding: 14px 8px;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      gap: 8px;
+
+      background: var(--service-paper);
+      color: var(--service-green);
+
+      font-size: 0.72rem;
+      font-weight: 900;
+
+      text-align: center;
+
+      transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease,
+        color 0.2s ease;
+    }
+
+    .category-button:hover {
+      transform: translateY(-2px);
+
+      border-color:
+        rgba(23, 63, 50, 0.3);
+    }
+
+    .category-button.active {
+      border-color: var(--service-green);
+
+      background: var(--service-green);
+      color: white;
+    }
+
+    .category-icon {
+      font-size: 1.55rem;
+    }
+
+    /* ======================================================
+       FILTERS
+    ====================================================== */
+
+    .service-tools {
+      width: min(1180px, calc(100% - 40px));
+      margin: 26px auto 0;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 16px;
+
+      padding-bottom: 18px;
+
+      border-bottom:
+        1px solid
+        var(--service-line);
+    }
+
+    .service-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .service-filter {
+      border:
+        1px solid
+        var(--service-line);
+
+      border-radius: 999px;
+
+      padding: 9px 13px;
+
+      background: transparent;
+      color: var(--service-muted);
+
+      font-size: 0.73rem;
+      font-weight: 850;
+    }
+
+    .service-filter.active {
+      border-color: var(--service-green);
+
+      background: var(--service-green);
+      color: white;
+    }
+
+    .service-count {
+      white-space: nowrap;
+
+      color: var(--service-muted);
+
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+
+    /* ======================================================
+       CONTENT
+    ====================================================== */
+
+    .services-content {
+      width: min(1180px, calc(100% - 40px));
+      margin: 28px auto 70px;
+
+      display: grid;
+      grid-template-columns:
+        minmax(0, 0.92fr)
+        minmax(380px, 1.08fr);
+
+      gap: 24px;
+      align-items: start;
+    }
+
+    .services-results {
+      min-width: 0;
+    }
+
+    .services-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .service-card {
+      position: relative;
+
+      padding: 18px;
+
+      display: grid;
+      grid-template-columns:
+        52px 1fr auto;
+
+      gap: 14px;
+      align-items: center;
+
+      border:
+        1px solid
+        var(--service-line);
+
+      border-radius: 20px;
+
+      background: var(--service-paper);
+
+      transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+
+    .service-card:hover,
+    .service-card.selected {
+      transform: translateY(-1px);
+
+      border-color:
+        rgba(23, 63, 50, 0.36);
+
+      box-shadow:
+        0 12px 30px
+        rgba(23, 35, 29, 0.07);
+    }
+
+    .service-card {
+      cursor: pointer;
+    }
+
+    .service-card-icon {
+      width: 52px;
+      height: 52px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 16px;
+
+      background:
+        rgba(23, 63, 50, 0.08);
+
+      font-size: 1.45rem;
+    }
+
+    .service-card-category {
+      margin-bottom: 3px;
+
+      color: var(--service-orange);
+
+      font-size: 0.65rem;
+      font-weight: 950;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .service-card-name {
+      margin: 0;
+
+      color: var(--service-green);
+
+      font-size: 1rem;
+      font-weight: 950;
+      letter-spacing: -0.02em;
+    }
+
+    .service-card-address {
+      margin-top: 5px;
+
+      color: var(--service-muted);
+
+      font-size: 0.78rem;
+      line-height: 1.4;
+    }
+
+    .service-card-meta {
+      margin-top: 8px;
+
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .service-chip {
+      display: inline-flex;
+      align-items: center;
+
+      min-height: 24px;
+
+      padding: 4px 8px;
+
+      border-radius: 999px;
+
+      background:
+        rgba(23, 63, 50, 0.07);
+
+      color: var(--service-green);
+
+      font-size: 0.64rem;
+      font-weight: 850;
+    }
+
+    .service-chip.open24 {
+      background:
+        rgba(242, 193, 78, 0.25);
+    }
+
+    .service-distance {
+      min-width: 74px;
+
+      text-align: right;
+
+      color: var(--service-green);
+
+      font-size: 0.8rem;
+      font-weight: 950;
+    }
+
+    .service-distance small {
+      display: block;
+
+      margin-top: 2px;
+
+      color: var(--service-muted);
+
+      font-size: 0.61rem;
+      font-weight: 750;
+    }
+
+    /* ======================================================
+       MAP
+    ====================================================== */
+
+    .services-map-wrap {
+      position: sticky;
+      top: 18px;
+
+      border-radius: 24px;
+      overflow: hidden;
+
+      border:
+        1px solid
+        var(--service-line);
+
+      background: #e9e5db;
+
+      box-shadow:
+        0 16px 38px
+        rgba(23, 35, 29, 0.08);
+    }
+
+    #servicesMap {
+      width: 100%;
+      height: 650px;
+    }
+
+    .map-note {
+      padding: 11px 14px;
+
+      background: var(--service-paper);
+      color: var(--service-muted);
+
+      font-size: 0.67rem;
+      line-height: 1.45;
+    }
+
+    .map-note a {
+      color: var(--service-green);
+      font-weight: 850;
+    }
+
+    /* ======================================================
+       EMPTY / LOAD MORE
+    ====================================================== */
+
+    .services-empty {
+      padding: 42px 24px;
+
+      border:
+        1px dashed
+        rgba(23, 63, 50, 0.22);
+
+      border-radius: 22px;
+
+      text-align: center;
+
+      color: var(--service-muted);
+
+      background:
+        rgba(255, 253, 248, 0.65);
+    }
+
+    .services-empty strong {
+      display: block;
+
+      margin-bottom: 7px;
+
+      color: var(--service-green);
+
+      font-size: 1.05rem;
+    }
+
+    .load-more-wrap {
+      padding-top: 18px;
+
+      text-align: center;
+    }
+
+    .load-more {
+      border:
+        1px solid
+        var(--service-green);
+
+      border-radius: 999px;
+
+      padding: 12px 18px;
+
+      background: transparent;
+      color: var(--service-green);
+
+      font-size: 0.75rem;
+      font-weight: 950;
+    }
+
+    .load-more:hover {
+      background: var(--service-green);
+      color: white;
+    }
+
+    /* ======================================================
+       POPUP
+    ====================================================== */
+
+    .service-popup {
+      min-width: 190px;
+    }
+
+    .service-popup-category {
+      color: var(--service-orange);
+
+      font-size: 0.63rem;
+      font-weight: 950;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+    }
+
+    .service-popup-name {
+      margin-top: 3px;
+
+      color: var(--service-green);
+
+      font-size: 0.95rem;
+      font-weight: 950;
+    }
+
+    .service-popup-address {
+      margin-top: 5px;
+
+      color: var(--service-muted);
+
+      font-size: 0.72rem;
+    }
+
+    .service-popup-distance {
+      margin-top: 7px;
+
+      color: var(--service-green);
+
+      font-size: 0.73rem;
+      font-weight: 900;
+    }
+
+    /* ======================================================
+       USER MARKER
+    ====================================================== */
+
+    .user-marker {
+      width: 22px;
+      height: 22px;
+
+      border:
+        4px solid white;
+
+      border-radius: 50%;
+
+      background: var(--service-orange);
+
+      box-shadow:
+        0 0 0 4px
+        rgba(239, 106, 58, 0.23);
+    }
+
+    /* ======================================================
+       FOOTER
+    ====================================================== */
+
+    .services-footer {
+      margin-top: 60px;
+
+      padding: 35px 20px;
+
+      text-align: center;
+
+      color: var(--service-muted);
+
+      font-size: 0.72rem;
+    }
+
+    .services-footer strong {
+      color: var(--service-green);
+    }
+
+    /* ======================================================
+       RESPONSIVE
+    ====================================================== */
+
+    @media (max-width: 1050px) {
+
+      .category-grid {
+        grid-template-columns:
+          repeat(4, minmax(0, 1fr));
+      }
+
+      .services-content {
+        grid-template-columns: 1fr;
+      }
+
+      .services-map-wrap {
+        position: relative;
+        top: auto;
+      }
+
+      #servicesMap {
+        height: 500px;
+      }
+
+    }
+
+    @media (max-width: 720px) {
+
+      .services-topbar {
+        width: min(100% - 28px, 1180px);
+        min-height: 66px;
+      }
+
+      .services-location {
+        gap: 9px;
+        font-size: 0.69rem;
+      }
+
+      .services-hero-inner,
+      .nearby-wrapper,
+      .services-categories,
+      .service-tools,
+      .services-content {
+        width: min(100% - 28px, 1180px);
+      }
+
+      .services-hero-inner {
+        padding: 46px 0 42px;
+      }
+
+      .services-title {
+        font-size: clamp(2.6rem, 15vw, 4.5rem);
+      }
+
+      .services-subtitle {
+        font-size: 0.94rem;
+      }
+
+      .nearby-feature {
+        padding: 22px;
+
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .nearby-main {
+        align-items: flex-start;
+      }
+
+      .nearby-icon {
+        width: 54px;
+        height: 54px;
+        flex-basis: 54px;
+
+        border-radius: 16px;
+
+        font-size: 1.55rem;
+      }
+
+      .nearby-button {
+        width: 100%;
+      }
+
+      .category-grid {
+        grid-template-columns:
+          repeat(3, minmax(0, 1fr));
+      }
+
+      .category-button {
+        min-height: 92px;
+      }
+
+      .service-tools {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .service-card {
+        grid-template-columns:
+          46px 1fr;
+      }
+
+      .service-card-icon {
+        width: 46px;
+        height: 46px;
+      }
+
+      .service-distance {
+        grid-column: 2;
+
+        text-align: left;
+      }
+
+      #servicesMap {
+        height: 430px;
+      }
+
+    }
+
+    @media (max-width: 460px) {
+
+      .services-location span:first-child {
+        display: none;
+      }
+
+      .category-grid {
+        grid-template-columns:
+          repeat(2, minmax(0, 1fr));
+      }
+
+      .nearby-main {
+        gap: 14px;
+      }
+
+      .services-search-clear {
+        padding-left: 10px;
+        padding-right: 15px;
+      }
+
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="services-page">
+
+    <!-- ==================================================
+         TOPBAR
+    =================================================== -->
+
+    <header class="services-topbar">
+
+      <a
+        class="services-brand"
+        href="index.html"
+      >
+        <span class="services-brand-dot"></span>
+        OraVicino
+      </a>
+
+      <div class="services-location">
+
+        <span>
+          📍
+          <span class="services-location-city">
+            Trento
+          </span>
+        </span>
+
+        <span>
+          IT
+        </span>
+
+      </div>
+
+    </header>
+
+
+    <!-- ==================================================
+         HERO
+    =================================================== -->
+
+    <section class="services-hero">
+
+      <div class="services-hero-inner">
+
+        <div class="services-eyebrow">
+          ORAVICINO · SERVIZI
+        </div>
+
+        <h1 class="services-title">
+          Di cosa hai bisogno?
+        </h1>
+
+        <p class="services-subtitle">
+          Farmacie, supermercati, parcheggi,
+          bancomat e altri servizi utili intorno a te.
+          Trova quello che ti serve senza perdere tempo.
+        </p>
+
+        <div class="services-search">
+
+          <span class="services-search-icon">
+            ⌕
+          </span>
+
+          <input
+            id="serviceSearch"
+            type="search"
+            placeholder="Cerca farmacia, supermercato, parcheggio..."
+            autocomplete="off"
+          >
+
+          <button
+            class="services-search-clear"
+            id="clearSearch"
+            type="button"
+            aria-label="Cancella ricerca"
+          >
+            ×
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ==================================================
+         METEO
+    =================================================== -->
+
+    <script src="meteo.js"></script>
+
+
+    <!-- ==================================================
+         VICINO A ME
+    =================================================== -->
+
+    <div class="nearby-wrapper">
+
+      <section
+        class="nearby-feature"
+        id="nearbyFeature"
+        aria-live="polite"
+      >
+
+        <div class="nearby-main">
+
+          <div
+            class="nearby-icon"
+            aria-hidden="true"
+          >
+            📍
+          </div>
+
+          <div>
+
+            <div
+              class="nearby-kicker"
+              id="nearbyKicker"
+            >
+              ORAVICINO · INTORNO A TE
+            </div>
+
+            <h2
+              class="nearby-title"
+              id="nearbyTitle"
+            >
+              Cosa c'è vicino a me?
+            </h2>
+
+            <p
+              class="nearby-description"
+              id="nearbyDescription"
+            >
+              Usa la tua posizione per vedere
+              automaticamente i servizi più vicini,
+              ordinati per distanza.
+            </p>
+
+          </div>
+
+        </div>
+
+        <button
+          class="nearby-button"
+          id="nearbyButton"
+          type="button"
+        >
+          USA LA MIA POSIZIONE
+        </button>
+
+      </section>
+
+    </div>
+
+
+    <!-- ==================================================
+         CATEGORIES
+    =================================================== -->
+
+    <section class="services-categories">
+
+      <div class="section-kicker">
+        TROVA SUBITO
+      </div>
+
+      <h2 class="section-heading">
+        Servizi utili intorno a te
+      </h2>
+
+      <div
+        class="category-grid"
+        id="categoryGrid"
+      >
+
+        <button
+          class="category-button active"
+          type="button"
+          data-category="all"
+        >
+          <span class="category-icon">◎</span>
+          Tutti
+        </button>
+
+        <button
+          class="category-button"
+          type="button"
+          data-category="farmacia"
+        >
+          <span class="category-icon">💊</span>
+          Farmacie
+        </button>
+
+        <button
+          class="category-button"
+          type="button"
+          data-category="supermercato"
+        >
+          <span class="category-icon">🛒</span>
+          Supermercati
+        </button>
+
+        <button
+          class="category-button"
+          type="button"
+          data-category="parcheggio"
+        >
+          <span class="category-icon">🅿️</span>
+          Parcheggi
+        </button>
+
+        <button
+          class="category-button"
+          type="button"
+          data-category="bancomat"
+        >
+          <span class="category-icon">🏧</span>
+          Bancomat
+        </button>
+
+        <button
+          class="category-button"
+          type="button"
+          data-category="bagni"
+        >
+          <span class="category-icon">🚻</span>
+          Bagni
+        </button>
+
+        <button
+          class="category-button"
+          type="button"
+          data-category="acqua"
+        >
+          <span class="category-icon">💧</span>
+          Acqua
+        </button>
+
+        <button
+          class="category-button"
+          type="button"
+          data-category="benzina"
+        >
+          <span class="category-icon">⛽</span>
+          Benzina
+        </button>
+
+        <button
+          class="category-button"
+          type="button"
+          data-category="noleggio-bici"
+        >
+          <span class="category-icon">🚲</span>
+          Bici
+        </button>
+
+        <button
+          class="category-button"
+          type="button"
+          data-category="lavanderia"
+        >
+          <span class="category-icon">🧺</span>
+          Lavanderie
+        </button>
+
+        <button
+          class="category-button"
+          type="button"
+          data-category="poste"
+        >
+          <span class="category-icon">📮</span>
+          Poste
+        </button>
+
+        <button
+          class="category-button"
+          type="button"
+          data-category="clinica"
+        >
+          <span class="category-icon">🩺</span>
+          Cliniche
+        </button>
+
+        <button
+          class="category-button"
+          type="button"
+          data-category="ospedale"
+        >
+          <span class="category-icon">🏥</span>
+          Ospedali
+        </button>
+
+        <button
+          class="category-button"
+          type="button"
+          data-category="veterinario"
+        >
+          <span class="category-icon">🐾</span>
+          Veterinari
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- ==================================================
+         FILTERS
+    =================================================== -->
+
+    <section class="service-tools">
+
+      <div class="service-filters">
+
+        <button
+          class="service-filter active"
+          type="button"
+          data-filter="all"
+        >
+          Tutti
+        </button>
+
+        <button
+          class="service-filter"
+          type="button"
+          data-filter="opening"
+        >
+          Con orari
+        </button>
+
+        <button
+          class="service-filter"
+          type="button"
+          data-filter="24h"
+        >
+          24h
+        </button>
+
+        <button
+          class="service-filter"
+          type="button"
+          data-filter="contact"
+        >
+          Con contatto
+        </button>
+
+        <button
+          class="service-filter"
+          type="button"
+          data-filter="wheelchair"
+        >
+          Accessibile
+        </button>
+
+      </div>
+
+      <div
+        class="service-count"
+        id="serviceCount"
+      >
+        Caricamento...
+      </div>
+
+    </section>
+
+
+    <!-- ==================================================
+         RESULTS + MAP
+    =================================================== -->
+
+    <main class="services-content">
+
+      <section class="services-results">
+
+        <div
+          class="services-list"
+          id="servicesList"
+        ></div>
+
+        <div
+          class="load-more-wrap"
+          id="loadMoreWrap"
+          hidden
+        >
+
+          <button
+            class="load-more"
+            id="loadMoreButton"
+            type="button"
+          >
+            MOSTRA ALTRI
+          </button>
+
+        </div>
+
+      </section>
+
+
+      <aside class="services-map-wrap">
+
+        <div id="servicesMap"></div>
+
+        <div class="map-note">
+          Dati:
+          ©
+          <a
+            href="https://www.openstreetmap.org/copyright"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            OpenStreetMap contributors
+          </a>
+          · ODbL.
+        </div>
+
+      </aside>
+
+    </main>
+
+
+    <!-- ==================================================
+         FOOTER
+    =================================================== -->
+
+    <footer class="services-footer">
+
+      <strong>
+        OraVicino · Trento
+      </strong>
+
+      <br>
+
+      I dati possono cambiare.
+      Verifica orari e disponibilità
+      direttamente con il servizio quando necessario.
+
+    </footer>
+
+  </div>
+
+
+  <script>
+
+    /* ======================================================
+       CONFIG
+    ====================================================== */
+
+    const DEFAULT_CENTER = [
+      46.06787,
+      11.12108
+    ];
+
+    const INITIAL_LIMIT = 30;
+
+    const LOAD_MORE_STEP = 30;
+
+    const MAX_MAP_MARKERS = 120;
+
+
+    /* ======================================================
+       STATE
+    ====================================================== */
+
+    let services = [];
+
+    let filteredServices = [];
+
+    let visibleServices = [];
+
+    let currentCategory = "all";
+
+    let currentFilter = "all";
+
+    let userLocation = null;
+
+    let nearbyActive = false;
+
+    let selectedServiceId = null;
+
+    let displayLimit = INITIAL_LIMIT;
+
+    let markers = {};
+
+    let userMarker = null;
+
+
+    /* ======================================================
+       ELEMENTS
+    ====================================================== */
+
+    const servicesList =
+      document.getElementById(
+        "servicesList"
+      );
+
+    const serviceSearch =
+      document.getElementById(
+        "serviceSearch"
+      );
+
+    const clearSearch =
+      document.getElementById(
+        "clearSearch"
+      );
+
+    const serviceCount =
+      document.getElementById(
+        "serviceCount"
+      );
+
+    const categoryGrid =
+      document.getElementById(
+        "categoryGrid"
+      );
+
+    const nearbyFeature =
+      document.getElementById(
+        "nearbyFeature"
+      );
+
+    const nearbyButton =
+      document.getElementById(
+        "nearbyButton"
+      );
+
+    const nearbyKicker =
+      document.getElementById(
+        "nearbyKicker"
+      );
+
+    const nearbyTitle =
+      document.getElementById(
+        "nearbyTitle"
+      );
+
+    const nearbyDescription =
+      document.getElementById(
+        "nearbyDescription"
+      );
+
+    const loadMoreWrap =
+      document.getElementById(
+        "loadMoreWrap"
+      );
+
+    const loadMoreButton =
+      document.getElementById(
+        "loadMoreButton"
+      );
+
+
+    /* ======================================================
+       MAP
+    ====================================================== */
+
+    const map =
+      L.map(
+        "servicesMap",
+        {
+          zoomControl: true
+        }
+      )
+        .setView(
+          DEFAULT_CENTER,
+          13
+        );
+
+
+    L.tileLayer(
+      "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+      {
+        maxZoom: 19,
+
+        attribution:
+          "&copy; OpenStreetMap contributors"
+      }
+    )
+      .addTo(map);
+
+
+    /* ======================================================
+       HELPERS
+    ====================================================== */
+
+    function escapeHTML(value) {
+
+      return String(
+        value ?? ""
+      )
+        .replace(
+          /&/g,
+          "&amp;"
+        )
+        .replace(
+          /</g,
+          "&lt;"
+        )
+        .replace(
+          />/g,
+          "&gt;"
+        )
+        .replace(
+          /"/g,
+          "&quot;"
+        )
+        .replace(
+          /'/g,
+          "&#039;"
+        );
+
+    }
+
+
+    function normalizeText(value) {
+
+      return String(
+        value ?? ""
+      )
+        .normalize("NFD")
+        .replace(
+          /[\u0300-\u036f]/g,
+          ""
+        )
+        .toLowerCase()
+        .trim();
+
+    }
+
+
+    function calculateDistance(
+      lat1,
+      lng1,
+      lat2,
+      lng2
+    ) {
+
+      const earthRadius =
+        6371;
+
+
+      const toRadians =
+        degrees =>
+          degrees *
+          Math.PI /
+          180;
+
+
+      const dLat =
+        toRadians(
+          lat2 - lat1
+        );
+
+
+      const dLng =
+        toRadians(
+          lng2 - lng1
+        );
+
+
+      const a =
+        Math.sin(
+          dLat / 2
+        ) ** 2
+        +
+        Math.cos(
+          toRadians(lat1)
+        )
+        *
+        Math.cos(
+          toRadians(lat2)
+        )
+        *
+        Math.sin(
+          dLng / 2
+        ) ** 2;
+
+
+      const c =
+        2 *
+        Math.atan2(
+          Math.sqrt(a),
+          Math.sqrt(1 - a)
+        );
+
+
+      return (
+        earthRadius * c
+      );
+
+    }
+
+
+    function formatDistance(
+      distance
+    ) {
+
+      if (
+        !Number.isFinite(
+          distance
+        )
+      ) {
+
+        return "";
+
+      }
+
+
+      if (
+        distance < 1
+      ) {
+
+        return (
+          Math.round(
+            distance * 1000
+          )
+          +
+          " m"
+        );
+
+      }
+
+
+      if (
+        distance < 10
+      ) {
+
+        return (
+          distance
+            .toFixed(1)
+            .replace(".", ",")
+          +
+          " km"
+        );
+
+      }
+
+
+      return (
+        Math.round(distance)
+          .toLocaleString(
+            "it-IT"
+          )
+        +
+        " km"
+      );
+
+    }
+
+
+    function categoryLabel(
+      item
+    ) {
+
+      return (
+        item.label
+        ||
+        item.category
+        ||
+        "Servizio"
+      );
+
+    }
+
+
+    /* ======================================================
+       DISTANCES
+    ====================================================== */
+
+    function updateDistances() {
+
+      services =
+        services.map(
+          item => {
+
+            if (
+              !userLocation
+              ||
+              !Number.isFinite(
+                Number(item.lat)
+              )
+              ||
+              !Number.isFinite(
+                Number(item.lng)
+              )
+            ) {
+
+              return {
+                ...item,
+                distance: null
+              };
+
+            }
+
+
+            return {
+
+              ...item,
+
+              distance:
+                calculateDistance(
+                  userLocation.lat,
+                  userLocation.lng,
+                  Number(item.lat),
+                  Number(item.lng)
+                )
+
+            };
+
+          }
+        );
+
+    }
+
+
+    /* ======================================================
+       GEOLOCATION
+    ====================================================== */
+
+    function showLocationError(
+      message
+    ) {
+
+      nearbyActive = false;
+
+      nearbyFeature
+        .classList
+        .remove("active");
+
+      nearbyFeature
+        .classList
+        .add("error");
+
+
+      nearbyKicker.textContent =
+        "ORAVICINO · POSIZIONE";
+
+
+      nearbyTitle.textContent =
+        "Non riusciamo a trovarti.";
+
+
+      nearbyDescription.textContent =
+        message;
+
+
+      nearbyButton.disabled =
+        false;
+
+
+      nearbyButton.textContent =
+        "RIPROVA";
+
+    }
+
+
+    function activateNearby() {
+
+      if (
+        !navigator.geolocation
+      ) {
+
+        showLocationError(
+          "Il tuo browser non supporta la geolocalizzazione."
+        );
+
+        return;
+
+      }
+
+
+      nearbyButton.disabled =
+        true;
+
+
+      nearbyButton.textContent =
+        "LOCALIZZAZIONE…";
+
+
+      nearbyKicker.textContent =
+        "ORAVICINO · CERCHIAMO DOVE SEI";
+
+
+      nearbyDescription.textContent =
+        "Un momento: stiamo cercando i servizi più vicini alla tua posizione.";
+
+
+      navigator.geolocation
+        .getCurrentPosition(
+
+          position => {
+
+            userLocation = {
+
+              lat:
+                position.coords.latitude,
+
+              lng:
+                position.coords.longitude
+
+            };
+
+
+            nearbyActive =
+              true;
+
+
+            nearbyFeature
+              .classList
+              .remove("error");
+
+
+            nearbyFeature
+              .classList
+              .add("active");
+
+
+            nearbyKicker.textContent =
+              "ORAVICINO · POSIZIONE ATTIVA";
+
+
+            nearbyTitle.textContent =
+              "Ora sai cosa c'è vicino a te.";
+
+
+            nearbyDescription.textContent =
+              "I servizi sono ordinati automaticamente dal più vicino alla tua posizione.";
+
+
+            nearbyButton.disabled =
+              false;
+
+
+            nearbyButton.textContent =
+              "POSIZIONE ATTIVA ✓";
+
+
+            updateDistances();
+
+
+            displayLimit =
+              INITIAL_LIMIT;
+
+
+            selectedServiceId =
+              null;
+
+
+            updateUserMarker();
+
+
+            applyFilters();
+
+          },
+
+          error => {
+
+            let message =
+              "Non è stato possibile ottenere la tua posizione.";
+
+
+            if (
+              error.code === 1
+            ) {
+
+              message =
+                "Permesso di localizzazione non concesso. Puoi abilitarlo nelle impostazioni del browser.";
+
+            }
+
+
+            if (
+              error.code === 2
+            ) {
+
+              message =
+                "La tua posizione non è disponibile in questo momento.";
+
+            }
+
+
+            if (
+              error.code === 3
+            ) {
+
+              message =
+                "La localizzazione ha impiegato troppo tempo. Prova di nuovo.";
+
+            }
+
+
+            showLocationError(
+              message
+            );
+
+          },
+
+          {
+            enableHighAccuracy:
+              false,
+
+            timeout:
+              10000,
+
+            maximumAge:
+              300000
+          }
+
+        );
+
+    }
+
+
+    nearbyButton
+      .addEventListener(
+        "click",
+        activateNearby
+      );
+
+
+    /* ======================================================
+       USER MARKER
+    ====================================================== */
+
+    function updateUserMarker() {
+
+      if (!userLocation) {
+
+        return;
+
+      }
+
+
+      if (userMarker) {
+
+        map.removeLayer(
+          userMarker
+        );
+
+      }
+
+
+      const icon =
+        L.divIcon(
+          {
+            className: "",
+
+            html:
+              '<div class="user-marker"></div>',
+
+            iconSize:
+              [22, 22],
+
+            iconAnchor:
+              [11, 11]
+          }
+        );
+
+
+      userMarker =
+        L.marker(
+          [
+            userLocation.lat,
+            userLocation.lng
+          ],
+          {
+            icon,
+            zIndexOffset: 1000
+          }
+        )
+          .addTo(map)
+          .bindPopup(
+            "<strong>Sei qui</strong>"
+          );
+
+
+      map.flyTo(
+        [
+          userLocation.lat,
+          userLocation.lng
+        ],
+        14,
+        {
+          duration: 0.8
+        }
+      );
+
+    }
+
+
+    /* ======================================================
+       DATA
+    ====================================================== */
+
+    async function loadServices() {
+
+      try {
+
+        const response =
+          await fetch(
+            "data/servizi.json",
+            {
+              cache:
+                "no-store"
+            }
+          );
+
+
+        if (!response.ok) {
+
+          throw new Error(
+            `HTTP ${response.status}`
+          );
+
+        }
+
+
+        const payload =
+          await response.json();
+
+
+        const rawServices =
+          Array.isArray(payload)
+            ?
+            payload
+            :
+            payload.services;
+
+
+        if (
+          !Array.isArray(
+            rawServices
+          )
+        ) {
+
+          throw new Error(
+            "Formato servizi.json non valido."
+          );
+
+        }
+
+
+        services =
+          rawServices
+            .map(
+              item => ({
+
+                ...item,
+
+                lat:
+                  Number(
+                    item.lat
+                  ),
+
+                lng:
+                  Number(
+                    item.lng
+                  ),
+
+                distance:
+                  null
+
+              })
+            )
+            .filter(
+              item =>
+                Number.isFinite(
+                  item.lat
+                )
+                &&
+                Number.isFinite(
+                  item.lng
+                )
+            );
+
+
+        applyFilters();
+
+      }
+      catch (error) {
+
+        console.error(
+          "Errore caricamento servizi:",
+          error
+        );
+
+
+        serviceCount.textContent =
+          "Errore dati";
+
+
+        servicesList.innerHTML = `
+
+          <div class="services-empty">
+
+            <strong>
+              Non riusciamo a caricare i servizi.
+            </strong>
+
+            Riprova tra qualche momento.
+
+          </div>
+
+        `;
+
+      }
+
+    }
+
+
+    /* ======================================================
+       FILTERS
+    ====================================================== */
+
+    function applyFilters() {
+
+      const searchValue =
+        normalizeText(
+          serviceSearch.value
+        );
+
+
+      filteredServices =
+        services.filter(
+          item => {
+
+            if (
+              currentCategory !== "all"
+              &&
+              item.category !==
+              currentCategory
+            ) {
+
+              return false;
+
+            }
+
+
+            if (searchValue) {
+
+              const haystack =
+                normalizeText(
+                  [
+                    item.name,
+                    item.category,
+                    item.label,
+                    item.address,
+                    item.area,
+                    item.operator,
+                    item.brand
+                  ]
+                    .filter(Boolean)
+                    .join(" ")
+                );
+
+
+              if (
+                !haystack.includes(
+                  searchValue
+                )
+              ) {
+
+                return false;
+
+              }
+
+            }
+
+
+            if (
+              currentFilter ===
+              "opening"
+              &&
+              !item.hasOpeningHours
+            ) {
+
+              return false;
+
+            }
+
+
+            if (
+              currentFilter ===
+              "24h"
+              &&
+              !item.open24h
+            ) {
+
+              return false;
+
+            }
+
+
+            if (
+              currentFilter ===
+              "contact"
+              &&
+              !item.hasContact
+            ) {
+
+              return false;
+
+            }
+
+
+            if (
+              currentFilter ===
+              "wheelchair"
+              &&
+              item.wheelchair !== true
+            ) {
+
+              return false;
+
+            }
+
+
+            return true;
+
+          }
+        );
+
+
+      if (nearbyActive) {
+
+        filteredServices.sort(
+          (a, b) => {
+
+            const distanceA =
+              Number.isFinite(
+                a.distance
+              )
+                ?
+                a.distance
+                :
+                Infinity;
+
+
+            const distanceB =
+              Number.isFinite(
+                b.distance
+              )
+                ?
+                b.distance
+                :
+                Infinity;
+
+
+            return (
+              distanceA -
+              distanceB
+            );
+
+          }
+        );
+
+      }
+      else {
+
+        filteredServices.sort(
+          (a, b) => {
+
+            const categoryCompare =
+              String(
+                a.category
+              )
+                .localeCompare(
+                  String(
+                    b.category
+                  ),
+                  "it"
+                );
+
+
+            if (
+              categoryCompare !== 0
+            ) {
+
+              return categoryCompare;
+
+            }
+
+
+            return (
+              String(
+                a.name
+              )
+                .localeCompare(
+                  String(
+                    b.name
+                  ),
+                  "it"
+                )
+            );
+
+          }
+        );
+
+      }
+
+
+      visibleServices =
+        filteredServices.slice(
+          0,
+          displayLimit
+        );
+
+
+      if (
+        selectedServiceId
+        &&
+        !filteredServices.some(
+          item =>
+            item.id ===
+            selectedServiceId
+        )
+      ) {
+
+        selectedServiceId =
+          null;
+
+      }
+
+
+      renderServices();
+
+      updateMarkers();
+
+      updateCount();
+
+      updateLoadMore();
+
+    }
+
+
+    /* ======================================================
+       RENDER
+    ====================================================== */
+
+    function renderServices() {
+
+      if (
+        visibleServices.length === 0
+      ) {
+
+        servicesList.innerHTML = `
+
+          <div class="services-empty">
+
+            <strong>
+              Nessun servizio trovato.
+            </strong>
+
+            Prova a cambiare categoria,
+            filtro o ricerca.
+
+          </div>
+
+        `;
+
+        return;
+
+      }
+
+
+      servicesList.innerHTML =
+        visibleServices
+          .map(
+            item => {
+
+              const distance =
+                nearbyActive
+                &&
+                Number.isFinite(
+                  item.distance
+                )
+                  ?
+                  formatDistance(
+                    item.distance
+                  )
+                  :
+                  "";
+
+
+              const address =
+                item.address
+                ||
+                item.area
+                ||
+                "Trento";
+
+
+              const chips = [];
+
+
+              if (
+                item.open24h
+              ) {
+
+                chips.push(
+                  '<span class="service-chip open24">24h</span>'
+                );
+
+              }
+              else if (
+                item.hasOpeningHours
+              ) {
+
+                chips.push(
+                  '<span class="service-chip">Orari disponibili</span>'
+                );
+
+              }
+
+
+              if (
+                item.hasContact
+              ) {
+
+                chips.push(
+                  '<span class="service-chip">Contatto</span>'
+                );
+
+              }
+
+
+              if (
+                item.wheelchair === true
+              ) {
+
+                chips.push(
+                  '<span class="service-chip">♿ Accessibile</span>'
+                );
+
+              }
+
+
+              if (
+                item.fee === "yes"
+              ) {
+
+                chips.push(
+                  '<span class="service-chip">A pagamento</span>'
+                );
+
+              }
+
+
+              return `
+
+                <article
+                  class="service-card ${
+                    selectedServiceId ===
+                    item.id
+                      ?
+                      "selected"
+                      :
+                      ""
+                  }"
+                  data-service-id="${escapeHTML(item.id)}"
+                  tabindex="0"
+                >
+
+                  <div class="service-card-icon">
+                    ${escapeHTML(item.icon || "◎")}
+                  </div>
+
+                  <div>
+
+                    <div class="service-card-category">
+                      ${escapeHTML(categoryLabel(item))}
+                    </div>
+
+                    <h3 class="service-card-name">
+                      ${escapeHTML(item.name)}
+                    </h3>
+
+                    <div class="service-card-address">
+                      ${escapeHTML(address)}
+                    </div>
+
+                    ${
+                      chips.length
+                        ?
+                        `
+                          <div class="service-card-meta">
+                            ${chips.join("")}
+                          </div>
+                        `
+                        :
+                        ""
+                    }
+
+                  </div>
+
+                  ${
+                    distance
+                      ?
+                      `
+                        <div class="service-distance">
+                          ${escapeHTML(distance)}
+                          <small>da te</small>
+                        </div>
+                      `
+                      :
+                      ""
+                  }
+
+                </article>
+
+              `;
+
+            }
+          )
+          .join("");
+
+
+      document
+        .querySelectorAll(
+          ".service-card"
+        )
+        .forEach(
+          card => {
+
+            const id =
+              card.dataset.serviceId;
+
+
+            card.addEventListener(
+              "click",
+              () => {
+
+                selectService(
+                  id
+                );
+
+              }
+            );
+
+
+            card.addEventListener(
+              "keydown",
+              event => {
+
+                if (
+                  event.key === "Enter"
+                  ||
+                  event.key === " "
+                ) {
+
+                  event.preventDefault();
+
+                  selectService(
+                    id
+                  );
+
+                }
+
+              }
+            );
+
+          }
+        );
+
+    }
+
+
+    /* ======================================================
+       COUNT
+    ====================================================== */
+
+    function updateCount() {
+
+      const total =
+        filteredServices.length;
+
+
+      if (
+        total === 1
+      ) {
+
+        serviceCount.textContent =
+          "1 servizio";
+
+        return;
+
+      }
+
+
+      serviceCount.textContent =
+        `${total.toLocaleString("it-IT")} servizi`;
+
+
+      if (
+        nearbyActive
+        &&
+        total > 0
+      ) {
+
+        serviceCount.textContent +=
+          " · per distanza";
+
+      }
+
+    }
+
+
+    /* ======================================================
+       LOAD MORE
+    ====================================================== */
+
+    function updateLoadMore() {
+
+      const hasMore =
+        filteredServices.length >
+        visibleServices.length;
+
+
+      loadMoreWrap.hidden =
+        !hasMore;
+
+
+      if (hasMore) {
+
+        const remaining =
+          filteredServices.length -
+          visibleServices.length;
+
+
+        loadMoreButton.textContent =
+          `MOSTRA ALTRI · ${remaining.toLocaleString("it-IT")}`;
+
+      }
+
+    }
+
+
+    loadMoreButton
+      .addEventListener(
+        "click",
+        () => {
+
+          displayLimit +=
+            LOAD_MORE_STEP;
+
+
+          applyFilters();
+
+        }
+      );
+
+
+    /* ======================================================
+       MARKERS
+    ====================================================== */
+
+    function clearMarkers() {
+
+      Object
+        .values(markers)
+        .forEach(
+          marker => {
+
+            map.removeLayer(
+              marker
+            );
+
+          }
+        );
+
+
+      markers = {};
+
+    }
+
+
+    function markerIcon(
+      item,
+      selected = false
+    ) {
+
+      const background =
+        selected
+          ?
+          "#ef6a3a"
+          :
+          "#173f32";
+
+
+      return L.divIcon(
+        {
+          className: "",
+
+          html: `
+
+            <div
+              style="
+                width:34px;
+                height:34px;
+                display:grid;
+                place-items:center;
+                border-radius:50%;
+                background:${background};
+                color:white;
+                border:3px solid white;
+                box-shadow:0 5px 15px rgba(0,0,0,.22);
+                font-size:15px;
+              "
+            >
+              ${escapeHTML(item.icon || "•")}
+            </div>
+
+          `,
+
+          iconSize:
+            [34, 34],
+
+          iconAnchor:
+            [17, 17],
+
+          popupAnchor:
+            [0, -16]
+        }
+      );
+
+    }
+
+
+    function updateMarkers() {
+
+      clearMarkers();
+
+
+      const mapServices =
+        filteredServices.slice(
+          0,
+          MAX_MAP_MARKERS
+        );
+
+
+      const bounds = [];
+
+
+      mapServices.forEach(
+        item => {
+
+          if (
+            !Number.isFinite(
+              item.lat
+            )
+            ||
+            !Number.isFinite(
+              item.lng
+            )
+          ) {
+
+            return;
+
+          }
+
+
+          const distance =
+            nearbyActive
+            &&
+            Number.isFinite(
+              item.distance
+            )
+              ?
+              formatDistance(
+                item.distance
+              )
+              :
+              "";
+
+
+          const marker =
+            L.marker(
+              [
+                item.lat,
+                item.lng
+              ],
+              {
+                icon:
+                  markerIcon(
+                    item,
+                    item.id ===
+                    selectedServiceId
+                  )
+              }
+            )
+              .addTo(map);
+
+
+          marker.bindPopup(`
+
+            <div class="service-popup">
+
+              <div class="service-popup-category">
+                ${escapeHTML(categoryLabel(item))}
+              </div>
+
+              <div class="service-popup-name">
+                ${escapeHTML(item.name)}
+              </div>
+
+              <div class="service-popup-address">
+                ${escapeHTML(
+                  item.address
+                  ||
+                  item.area
+                  ||
+                  "Trento"
+                )}
+              </div>
+
+              ${
+                distance
+                  ?
+                  `
+                    <div class="service-popup-distance">
+                      ◎ ${escapeHTML(distance)} da te
+                    </div>
+                  `
+                  :
+                  ""
+              }
+
+            </div>
+
+          `);
+
+
+          marker.on(
+            "click",
+            () => {
+
+              selectedServiceId =
+                item.id;
+
+
+              renderServices();
+
+              scrollToCard(
+                item.id
+              );
+
+            }
+          );
+
+
+          markers[
+            item.id
+          ] =
+            marker;
+
+
+          bounds.push(
+            [
+              item.lat,
+              item.lng
+            ]
+          );
+
+        }
+      );
+
+
+      if (
+        nearbyActive
+        &&
+        userLocation
+      ) {
+
+        /*
+         * Non facciamo fitBounds con la posizione
+         * dell'utente se è molto lontano da Trento
+         * durante i test.
+         *
+         * Il marker utente rimane comunque disponibile.
+         */
+
+        const distanceFromTrento =
+          calculateDistance(
+            userLocation.lat,
+            userLocation.lng,
+            DEFAULT_CENTER[0],
+            DEFAULT_CENTER[1]
+          );
+
+
+        if (
+          distanceFromTrento < 80
+        ) {
+
+          bounds.push(
+            [
+              userLocation.lat,
+              userLocation.lng
+            ]
+          );
+
+        }
+
+      }
+
+
+      if (
+        !selectedServiceId
+        &&
+        !nearbyActive
+        &&
+        bounds.length > 0
+      ) {
+
+        map.fitBounds(
+          bounds,
+          {
+            padding:
+              [30, 30],
+
+            maxZoom:
+              14
+          }
+        );
+
+      }
+
+    }
+
+
+    /* ======================================================
+       SELECT
+    ====================================================== */
+
+    function selectService(id) {
+
+      const item =
+        services.find(
+          service =>
+            service.id === id
+        );
+
+
+      if (!item) {
+
+        return;
+
+      }
+
+
+      selectedServiceId =
+        id;
+
+
+      renderServices();
+
+      updateMarkers();
+
+
+      map.flyTo(
+        [
+          item.lat,
+          item.lng
+        ],
+        17,
+        {
+          duration: 0.7
+        }
+      );
+
+
+      const marker =
+        markers[id];
+
+
+      if (marker) {
+
+        marker.openPopup();
+
+      }
+
+    }
+
+
+    function scrollToCard(id) {
+
+      const card =
+        document.querySelector(
+          `[data-service-id="${CSS.escape(id)}"]`
+        );
+
+
+      if (!card) {
+
+        return;
+
+      }
+
+
+      card.scrollIntoView(
+        {
+          behavior:
+            "smooth",
+
+          block:
+            "center"
+        }
+      );
+
+    }
+
+
+    /* ======================================================
+       CATEGORY BUTTONS
+    ====================================================== */
+
+    categoryGrid
+      .querySelectorAll(
+        ".category-button"
+      )
+      .forEach(
+        button => {
+
+          button.addEventListener(
+            "click",
+            () => {
+
+              categoryGrid
+                .querySelectorAll(
+                  ".category-button"
+                )
+                .forEach(
+                  item => {
+
+                    item
+                      .classList
+                      .remove(
+                        "active"
+                      );
+
+                  }
+                );
+
+
+              button
+                .classList
+                .add("active");
+
+
+              currentCategory =
+                button.dataset.category;
+
+
+              displayLimit =
+                INITIAL_LIMIT;
+
+
+              selectedServiceId =
+                null;
+
+
+              applyFilters();
+
+            }
+          );
+
+        }
+      );
+
+
+    /* ======================================================
+       SECONDARY FILTERS
+    ====================================================== */
+
+    document
+      .querySelectorAll(
+        ".service-filter"
+      )
+      .forEach(
+        button => {
+
+          button.addEventListener(
+            "click",
+            () => {
+
+              document
+                .querySelectorAll(
+                  ".service-filter"
+                )
+                .forEach(
+                  item => {
+
+                    item
+                      .classList
+                      .remove(
+                        "active"
+                      );
+
+                  }
+                );
+
+
+              button
+                .classList
+                .add("active");
+
+
+              currentFilter =
+                button.dataset.filter;
+
+
+              displayLimit =
+                INITIAL_LIMIT;
+
+
+              selectedServiceId =
+                null;
+
+
+              applyFilters();
+
+            }
+          );
+
+        }
+      );
+
+
+    /* ======================================================
+       SEARCH
+    ====================================================== */
+
+    serviceSearch
+      .addEventListener(
+        "input",
+        () => {
+
+          displayLimit =
+            INITIAL_LIMIT;
+
+
+          selectedServiceId =
+            null;
+
+
+          applyFilters();
+
+        }
+      );
+
+
+    clearSearch
+      .addEventListener(
+        "click",
+        () => {
+
+          serviceSearch.value =
+            "";
+
+
+          serviceSearch.focus();
+
+
+          displayLimit =
+            INITIAL_LIMIT;
+
+
+          selectedServiceId =
+            null;
+
+
+          applyFilters();
+
+        }
+      );
+
+
+    /* ======================================================
+       START
+    ====================================================== */
+
+    loadServices();
+
+  </script>
+
+</body>
+</html>
