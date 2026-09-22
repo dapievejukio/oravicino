@@ -1,0 +1,194 @@
+/* ==========================================
+   ORAVICINO · METEO
+   ========================================== */
+
+.ov-meteo {
+  width: 100%;
+  background: #173f32;
+  color: #fff;
+  font-family: "DM Sans", sans-serif;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.ov-meteo-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 58px;
+  padding: 8px 22px;
+
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.ov-meteo-now {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding-right: 18px;
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.ov-meteo-now-icon {
+  font-size: 25px;
+  line-height: 1;
+}
+
+.ov-meteo-city {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.68;
+}
+
+.ov-meteo-current {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.ov-meteo-temp {
+  font-size: 19px;
+  font-weight: 900;
+}
+
+.ov-meteo-description {
+  font-size: 12px;
+  opacity: 0.82;
+}
+
+.ov-meteo-hours {
+  min-width: 0;
+  flex: 1;
+
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.ov-meteo-hours::-webkit-scrollbar {
+  display: none;
+}
+
+.ov-meteo-hour {
+  flex: 0 0 auto;
+
+  min-width: 73px;
+  padding: 5px 8px;
+
+  text-align: center;
+
+  border-radius: 10px;
+  border: 1px solid transparent;
+}
+
+.ov-meteo-hour.rain {
+  background: rgba(255, 255, 255, 0.11);
+  border-color: rgba(255, 255, 255, 0.13);
+}
+
+.ov-meteo-hour-time {
+  font-size: 10px;
+  font-weight: 800;
+  opacity: 0.68;
+}
+
+.ov-meteo-hour-main {
+  margin-top: 2px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.ov-meteo-hour-rain {
+  min-height: 13px;
+  margin-top: 1px;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  color: #f2c14e;
+}
+
+.ov-meteo-more {
+  flex: 0 0 auto;
+
+  border: 0;
+  background: transparent;
+  color: #fff;
+
+  font: inherit;
+  font-size: 11px;
+  font-weight: 900;
+
+  cursor: pointer;
+  opacity: 0.82;
+}
+
+.ov-meteo-more:hover {
+  opacity: 1;
+}
+
+.ov-meteo-loading {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 22px;
+
+  font-size: 12px;
+  opacity: 0.75;
+}
+
+.ov-meteo-error {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 13px 22px;
+
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+/* MOBILE */
+
+@media (max-width: 720px) {
+  .ov-meteo-inner {
+    min-height: 62px;
+    padding: 7px 12px;
+    gap: 10px;
+  }
+
+  .ov-meteo-now {
+    padding-right: 10px;
+  }
+
+  .ov-meteo-description {
+    display: none;
+  }
+
+  .ov-meteo-city {
+    font-size: 9px;
+  }
+
+  .ov-meteo-temp {
+    font-size: 17px;
+  }
+
+  .ov-meteo-hour {
+    min-width: 62px;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
+  .ov-meteo-more {
+    display: none;
+  }
+}
