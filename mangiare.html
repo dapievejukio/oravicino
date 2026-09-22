@@ -37,56 +37,307 @@
   <style>
 
     /* ========================================
-       PAGINA MANGIARE
+       BASE DA PÁGINA
     ======================================== */
 
-    .food-page {
-      max-width: 1240px;
-      margin: auto;
-      padding: 35px 30px 100px;
+    body {
+
+      background:
+        radial-gradient(
+          circle at 82% 8%,
+          rgba(242, 193, 78, .12),
+          transparent 24%
+        ),
+        radial-gradient(
+          circle at 3% 45%,
+          rgba(23, 63, 50, .08),
+          transparent 20%
+        ),
+        linear-gradient(
+          180deg,
+          #f7f3e9 0%,
+          #f4efe4 52%,
+          #f8f5ed 100%
+        );
+
+      color: #17231d;
+
     }
 
 
-    .back {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      margin: 15px 0 50px;
-      color: #6d746f;
-      font-weight: 600;
-      transition: color .2s ease;
-    }
 
+    /* textura suave */
 
-    .back:hover {
-      color: #173f32;
+    body::before {
+
+      content: "";
+
+      position: fixed;
+
+      inset: 0;
+
+      pointer-events: none;
+
+      opacity: .22;
+
+      z-index: -1;
+
+      background-image:
+
+        linear-gradient(
+          rgba(23,63,50,.018) 1px,
+          transparent 1px
+        ),
+
+        linear-gradient(
+          90deg,
+          rgba(23,63,50,.018) 1px,
+          transparent 1px
+        );
+
+      background-size:
+        42px 42px;
+
     }
 
 
 
     /* ========================================
-       CABEÇALHO
+       CONTAINER
     ======================================== */
 
+    .food-page {
+
+      max-width: 1240px;
+
+      margin: auto;
+
+      padding:
+        35px 30px 110px;
+
+    }
+
+
+
+    /* ========================================
+       VOLTAR
+    ======================================== */
+
+    .back {
+
+      display: inline-flex;
+
+      align-items: center;
+
+      gap: 7px;
+
+      margin:
+        15px 0 52px;
+
+      color: #667068;
+
+      font-size: 14px;
+
+      font-weight: 650;
+
+      text-decoration: none;
+
+      transition:
+        color .2s ease;
+
+    }
+
+
+    .back:hover {
+
+      color: #173f32;
+
+    }
+
+
+
+    /* ========================================
+       HERO
+    ======================================== */
+
+    .food-hero {
+
+      position: relative;
+
+      overflow: hidden;
+
+      margin-bottom: 32px;
+
+      padding:
+        8px 0 18px;
+
+    }
+
+
+    .food-hero::after {
+
+      content: "";
+
+      position: absolute;
+
+      width: 380px;
+
+      height: 380px;
+
+      right: 2%;
+
+      top: -185px;
+
+      border-radius: 50%;
+
+      background:
+        rgba(242,193,78,.13);
+
+      pointer-events: none;
+
+    }
+
+
+
     .food-header {
-      margin-bottom: 35px;
+
+      position: relative;
+
+      z-index: 1;
+
+      margin-bottom: 34px;
+
+    }
+
+
+    .mini-title {
+
+      display: inline-flex;
+
+      align-items: center;
+
+      gap: 8px;
+
+      color: #ef6a3a;
+
+      font-size: 12px;
+
+      font-weight: 800;
+
+      letter-spacing: 1.4px;
+
+    }
+
+
+    .mini-title::before {
+
+      content: "";
+
+      width: 28px;
+
+      height: 2px;
+
+      border-radius: 999px;
+
+      background: #ef6a3a;
+
     }
 
 
     .food-header h1 {
-      margin: 8px 0 12px;
-      font-size: clamp(48px, 6vw, 78px);
+
+      margin:
+        10px 0 12px;
+
+      max-width: 720px;
+
+      font-size:
+        clamp(52px, 6vw, 82px);
+
+      line-height: .93;
+
       letter-spacing: -4px;
-      line-height: .95;
+
+      color: #173f32;
+
     }
 
 
     .food-header p {
+
       max-width: 600px;
+
       margin: 0;
-      color: #6d746f;
+
+      color: #667068;
+
       font-size: 18px;
-      line-height: 1.5;
+
+      line-height: 1.55;
+
+    }
+
+
+
+    /* ========================================
+       FRASE DECORATIVA
+    ======================================== */
+
+    .trento-note {
+
+      position: absolute;
+
+      right: 3%;
+
+      top: 42px;
+
+      z-index: 2;
+
+      max-width: 250px;
+
+      text-align: center;
+
+      color: #173f32;
+
+      opacity: .76;
+
+    }
+
+
+    .trento-note strong {
+
+      display: block;
+
+      font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+      font-size: 35px;
+
+      font-style: italic;
+
+      font-weight: 500;
+
+      line-height: 1;
+
+    }
+
+
+    .trento-note span {
+
+      display: block;
+
+      margin-top: 10px;
+
+      font-size: 9px;
+
+      font-weight: 700;
+
+      letter-spacing: 3px;
+
+      text-transform: uppercase;
+
     }
 
 
@@ -96,31 +347,78 @@
     ======================================== */
 
     .food-search {
-      max-width: 700px;
-      background: white;
-      border-radius: 18px;
-      padding: 8px 18px;
+
+      position: relative;
+
+      z-index: 3;
+
+      max-width: 735px;
+
+      min-height: 62px;
+
+      background:
+        rgba(255,253,248,.88);
+
+      border:
+        1px solid
+        rgba(23,35,29,.08);
+
+      border-radius: 20px;
+
+      padding:
+        0 20px;
+
       display: flex;
+
       align-items: center;
-      gap: 10px;
-      box-shadow: 0 15px 45px rgba(25,39,32,.08);
+
+      gap: 12px;
+
+      box-shadow:
+        0 16px 45px
+        rgba(25,39,32,.07);
+
+      backdrop-filter:
+        blur(10px);
+
     }
 
 
     .food-search-icon {
-      font-size: 22px;
+
+      color: #173f32;
+
+      font-size: 21px;
+
     }
 
 
     .food-search input {
+
       flex: 1;
+
       min-width: 0;
-      padding: 13px 5px;
+
+      padding:
+        16px 4px;
+
       border: 0;
+
       outline: none;
+
       background: transparent;
-      font-size: 16px;
+
       color: #17231d;
+
+      font-size: 16px;
+
+    }
+
+
+    .food-search input::placeholder {
+
+      color: #9b9f9b;
+
     }
 
 
@@ -130,63 +428,122 @@
     ======================================== */
 
     .filters {
+
       display: flex;
+
       flex-wrap: wrap;
+
       gap: 9px;
-      margin: 20px 0 45px;
+
+      margin:
+        18px 0 48px;
+
     }
 
 
     .filter {
-      padding: 10px 16px;
+
+      min-height: 40px;
+
+      padding:
+        0 16px;
+
       border-radius: 999px;
-      border: 1px solid rgba(23,35,29,.15);
-      background: transparent;
+
+      border:
+        1px solid
+        rgba(23,35,29,.14);
+
+      background:
+        rgba(255,253,248,.42);
+
       color: #17231d;
+
       cursor: pointer;
+
+      font-size: 13px;
+
       transition:
         background .2s ease,
         color .2s ease,
-        border-color .2s ease;
+        border-color .2s ease,
+        transform .2s ease;
+
     }
 
 
     .filter:hover {
-      border-color: #173f32;
-      background: rgba(23,63,50,.06);
+
+      transform:
+        translateY(-1px);
+
+      border-color:
+        #173f32;
+
+      background:
+        rgba(255,253,248,.85);
+
     }
 
 
     .filter.active {
+
       background: #173f32;
-      color: white;
+
+      color: #fffdf8;
+
       border-color: #173f32;
+
     }
 
 
 
     /* ========================================
-       CABEÇALHO DOS RESULTADOS
+       CABEÇALHO RESULTADOS
     ======================================== */
 
     .results-header {
+
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
+
+      justify-content:
+        space-between;
+
+      align-items:
+        center;
+
+      margin-bottom:
+        18px;
+
     }
 
 
     .results-header strong {
-      font-size: 14px;
+
+      font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+      font-size: 16px;
+
+      color: #17231d;
+
     }
 
 
     .map-label {
-      color: #6d746f;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: .5px;
+
+      color: #69736d;
+
+      font-size: 10px;
+
+      font-weight: 800;
+
+      letter-spacing: .8px;
+
+      text-transform: uppercase;
+
     }
 
 
@@ -196,6 +553,7 @@
     ======================================== */
 
     .discovery-layout {
+
       display: grid;
 
       grid-template-columns:
@@ -203,7 +561,9 @@
         minmax(360px, .85fr);
 
       gap: 24px;
+
       align-items: start;
+
     }
 
 
@@ -213,9 +573,14 @@
     ======================================== */
 
     .restaurants {
+
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
       gap: 18px;
+
     }
 
 
@@ -225,122 +590,197 @@
     ======================================== */
 
     .restaurant {
+
       position: relative;
+
       overflow: hidden;
 
-      background: #fffdf8;
+      background:
+        rgba(255,253,248,.88);
 
       border:
-        2px solid
-        rgba(23,35,29,.10);
+        1px solid
+        rgba(23,35,29,.11);
 
-      border-radius: 24px;
+      border-radius: 25px;
 
       cursor: pointer;
+
+      box-shadow:
+        0 10px 30px
+        rgba(25,39,32,.035);
 
       transition:
         transform .25s ease,
         box-shadow .25s ease,
         border-color .25s ease;
+
     }
 
 
     .restaurant:hover {
-      transform: translateY(-4px);
+
+      transform:
+        translateY(-4px);
 
       border-color:
-        rgba(23,63,50,.30);
+        rgba(23,63,50,.32);
 
       box-shadow:
         0 18px 50px
         rgba(25,39,32,.10);
+
     }
 
 
-
-    /* RESTAURANTE SELECIONADO */
-
     .restaurant.selected {
+
       border-color: #173f32;
 
       box-shadow:
         0 18px 55px
-        rgba(23,63,50,.20);
+        rgba(23,63,50,.18);
+
     }
 
 
     .restaurant.selected::after {
+
       content: "";
+
       position: absolute;
+
       inset: 0;
-      border: 2px solid #173f32;
-      border-radius: 22px;
+
+      border:
+        2px solid #173f32;
+
+      border-radius: 24px;
+
       pointer-events: none;
+
     }
 
 
 
     /* ========================================
-       CAPA
+       CAPA DO RESTAURANTE
     ======================================== */
 
     .restaurant-cover {
+
       height: 175px;
+
       position: relative;
 
       display: flex;
+
       align-items: center;
+
       justify-content: center;
 
+      overflow: hidden;
+
       background:
+
         radial-gradient(
           circle at 75% 20%,
-          rgba(242,193,78,.55),
+          rgba(242,193,78,.58),
           transparent 25%
         ),
+
         linear-gradient(
           145deg,
-          #285d49,
-          #173f32
+          #28604b,
+          #153b2f
         );
 
       font-size: 55px;
+
+    }
+
+
+    .restaurant-cover::before {
+
+      content: "";
+
+      position: absolute;
+
+      width: 190px;
+
+      height: 190px;
+
+      left: -80px;
+
+      bottom: -115px;
+
+      border-radius: 50%;
+
+      border:
+        1px solid
+        rgba(255,255,255,.10);
+
+    }
+
+
+    .restaurant-cover > span:last-child {
+
+      position: relative;
+
+      z-index: 2;
+
+      filter:
+        drop-shadow(
+          0 7px 12px
+          rgba(0,0,0,.20)
+        );
+
     }
 
 
 
     /* ========================================
-       NÚMERO DO RESTAURANTE
+       NÚMERO
     ======================================== */
 
     .restaurant-number {
-      position: absolute;
+
+      position: absolute !important;
+
+      z-index: 5 !important;
 
       right: 15px;
+
       top: 15px;
 
-      width: 34px;
-      height: 34px;
+      width: 36px;
+
+      height: 36px;
 
       display: flex;
+
       align-items: center;
+
       justify-content: center;
 
       border-radius: 50%;
 
       background: #fffdf8;
+
       color: #173f32;
 
       border:
         2px solid
-        rgba(23,63,50,.15);
+        rgba(23,63,50,.13);
 
       font-size: 12px;
+
       font-weight: 800;
 
       box-shadow:
         0 5px 18px
-        rgba(0,0,0,.12);
+        rgba(0,0,0,.13);
+
     }
 
 
@@ -350,93 +790,127 @@
     ======================================== */
 
     .route-badge {
-      position: absolute;
+
+      position: absolute !important;
+
+      z-index: 5 !important;
 
       left: 16px;
+
       top: 16px;
 
-      padding: 7px 10px;
+      padding:
+        7px 11px;
 
       border-radius: 999px;
 
       background: #f2c14e;
+
       color: #17231d;
 
       font-size: 9px;
+
       font-weight: 800;
 
       letter-spacing: .7px;
+
+      box-shadow:
+        0 5px 15px
+        rgba(0,0,0,.10);
+
     }
 
 
 
     /* ========================================
-       CONTEÚDO DO CARD
+       CONTEÚDO CARD
     ======================================== */
 
     .restaurant-content {
+
       padding: 22px;
+
     }
 
 
     .restaurant-area {
+
       color: #ef6a3a;
 
-      font-size: 11px;
-      font-weight: 700;
+      font-size: 10px;
+
+      font-weight: 800;
 
       text-transform: uppercase;
 
-      letter-spacing: 1.2px;
+      letter-spacing: 1.25px;
+
     }
 
 
     .restaurant h2 {
-      margin: 7px 0 6px;
+
+      margin:
+        7px 0 6px;
+
+      color: #17231d;
 
       font-size: 23px;
+
       line-height: 1.1;
 
       letter-spacing: -1px;
+
     }
 
 
     .category {
+
       min-height: 24px;
 
-      color: #6d746f;
+      color: #687069;
 
       line-height: 1.4;
+
     }
 
 
     .address {
+
       margin-top: 14px;
 
-      color: #6d746f;
+      color: #687069;
 
       font-size: 13px;
 
       line-height: 1.4;
+
     }
 
 
     .restaurant-info {
+
       margin-top: 20px;
 
       padding-top: 17px;
 
       border-top:
         1px solid
-        rgba(23,35,29,.1);
+        rgba(23,35,29,.09);
 
       display: flex;
-      justify-content: space-between;
+
+      justify-content:
+        space-between;
 
       gap: 15px;
 
+      color: #17231d;
+
       font-size: 13px;
-      font-weight: 600;
+
+      font-weight: 650;
+
     }
 
 
@@ -446,52 +920,69 @@
     ======================================== */
 
     .map-column {
+
       position: sticky;
+
       top: 20px;
+
     }
 
 
     .map-wrapper {
+
       position: relative;
+
+      padding: 7px;
+
+      border-radius: 30px;
+
+      background:
+        rgba(255,253,248,.72);
+
+      border:
+        1px solid
+        rgba(23,35,29,.08);
+
+      box-shadow:
+        0 18px 50px
+        rgba(25,39,32,.07);
+
     }
 
 
     #map {
+
       width: 100%;
 
       height:
-        calc(100vh - 40px);
+        calc(100vh - 55px);
 
       min-height: 620px;
 
-      border-radius: 28px;
+      border-radius: 24px;
 
       overflow: hidden;
 
-      border:
-        1px solid
-        rgba(23,35,29,.12);
-
-      box-shadow:
-        0 18px 50px
-        rgba(25,39,32,.08);
-
       background: #e8e7df;
+
     }
 
 
     .map-badge {
+
       position: absolute;
 
       z-index: 500;
 
-      top: 16px;
+      top: 24px;
+
       left: 50%;
 
       transform:
         translateX(-50%);
 
-      padding: 9px 15px;
+      padding:
+        9px 15px;
 
       border-radius: 999px;
 
@@ -509,43 +1000,56 @@
       color: #173f32;
 
       font-size: 11px;
-      font-weight: 700;
+
+      font-weight: 800;
 
       letter-spacing: .7px;
 
       white-space: nowrap;
+
     }
 
 
     .leaflet-container {
+
       font-family:
         "DM Sans",
         sans-serif;
+
     }
 
 
     .leaflet-control-attribution {
+
       font-size: 10px;
+
     }
 
 
 
     /* ========================================
-       PIN PERSONALIZADO
+       PIN ORAVICINO
     ======================================== */
 
     .oravicino-marker {
+
       background: transparent;
+
       border: 0;
+
     }
 
 
     .marker-pin {
+
       width: 34px;
+
       height: 34px;
 
       display: flex;
+
       align-items: center;
+
       justify-content: center;
 
       position: relative;
@@ -568,23 +1072,26 @@
       transition:
         transform .18s ease,
         background .18s ease;
+
     }
 
 
     .marker-pin span {
-      transform: rotate(45deg);
+
+      transform:
+        rotate(45deg);
 
       color: white;
 
       font-size: 11px;
+
       font-weight: 800;
+
     }
 
 
-
-    /* PIN SELECIONADO */
-
     .marker-pin.active {
+
       background: #ef6a3a;
 
       transform:
@@ -592,6 +1099,7 @@
         scale(1.28);
 
       z-index: 999;
+
     }
 
 
@@ -601,18 +1109,24 @@
     ======================================== */
 
     .popup-content {
+
       min-width: 175px;
+
       padding: 3px;
+
     }
 
 
     .popup-number {
+
       display: inline-flex;
 
       align-items: center;
+
       justify-content: center;
 
       width: 24px;
+
       height: 24px;
 
       margin-bottom: 7px;
@@ -620,14 +1134,18 @@
       border-radius: 50%;
 
       background: #173f32;
+
       color: white;
 
       font-size: 10px;
+
       font-weight: 800;
+
     }
 
 
     .popup-content strong {
+
       display: block;
 
       margin-bottom: 4px;
@@ -635,43 +1153,56 @@
       color: #17231d;
 
       font-size: 14px;
+
     }
 
 
     .popup-category {
+
       color: #6d746f;
 
       font-size: 12px;
+
     }
 
 
     .popup-address {
+
       margin-top: 7px;
 
       color: #6d746f;
 
       font-size: 11px;
+
     }
 
 
 
     /* ========================================
-       SEM RESULTADOS
+       VAZIO
     ======================================== */
 
     .empty {
-      grid-column: 1 / -1;
 
-      padding: 70px 20px;
+      grid-column:
+        1 / -1;
+
+      padding:
+        70px 20px;
 
       text-align: center;
 
       color: #6d746f;
 
       background:
-        rgba(255,255,255,.35);
+        rgba(255,253,248,.55);
+
+      border:
+        1px solid
+        rgba(23,35,29,.08);
 
       border-radius: 24px;
+
     }
 
 
@@ -682,27 +1213,46 @@
 
     @media (max-width: 1000px) {
 
+      .trento-note {
+
+        display: none;
+
+      }
+
+
       .discovery-layout {
-        grid-template-columns: 1fr;
+
+        grid-template-columns:
+          1fr;
+
       }
 
 
       .map-column {
+
         position: relative;
+
         top: auto;
+
         order: -1;
+
       }
 
 
       #map {
+
         height: 440px;
+
         min-height: 0;
+
       }
 
 
       .restaurants {
+
         grid-template-columns:
           repeat(2, minmax(0, 1fr));
+
       }
 
     }
@@ -716,26 +1266,36 @@
     @media (max-width: 560px) {
 
       .food-page {
-        padding: 20px 18px 70px;
+
+        padding:
+          20px 18px 70px;
+
       }
 
 
       .back {
+
         margin-bottom: 35px;
+
       }
 
 
       .food-header h1 {
+
         letter-spacing: -2.5px;
+
       }
 
 
       .food-header p {
+
         font-size: 16px;
+
       }
 
 
       .filters {
+
         flex-wrap: nowrap;
 
         overflow-x: auto;
@@ -743,32 +1303,44 @@
         padding-bottom: 5px;
 
         scrollbar-width: none;
+
       }
 
 
       .filters::-webkit-scrollbar {
+
         display: none;
+
       }
 
 
       .filter {
+
         flex: 0 0 auto;
+
       }
 
 
       .restaurants {
+
         grid-template-columns: 1fr;
+
       }
 
 
       #map {
+
         height: 390px;
-        border-radius: 22px;
+
+        border-radius: 20px;
+
       }
 
 
       .map-label {
+
         display: none;
+
       }
 
     }
@@ -835,114 +1407,140 @@
 
 
 
-    <section class="food-header">
+    <!-- HERO -->
 
-      <span class="mini-title">
-        MANGIARE · TRENTO
-      </span>
+    <section class="food-hero">
 
-      <h1>
-        Dove mangiamo?
-      </h1>
 
-      <p>
-        Ristoranti, trattorie,
-        osterie e piccoli posti
-        da scoprire.
-      </p>
+      <div class="food-header">
+
+        <span class="mini-title">
+          MANGIARE · TRENTO
+        </span>
+
+
+        <h1>
+          Dove mangiamo?
+        </h1>
+
+
+        <p>
+          Ristoranti, trattorie,
+          osterie e piccoli posti
+          da scoprire.
+        </p>
+
+      </div>
+
+
+
+      <div class="trento-note">
+
+        <strong>
+          Trento
+        </strong>
+
+        <span>
+          più vicina di quanto pensi
+        </span>
+
+      </div>
+
+
+
+      <!-- BUSCA -->
+
+      <div class="food-search">
+
+        <span class="food-search-icon">
+          ⌕
+        </span>
+
+        <input
+          id="search"
+          type="text"
+          autocomplete="off"
+          placeholder="Cerca un posto, una cucina o un quartiere..."
+        >
+
+      </div>
+
+
+
+      <!-- FILTROS -->
+
+      <div class="filters">
+
+        <button
+          class="filter active"
+          data-filter="all"
+          type="button"
+        >
+          Tutti
+        </button>
+
+
+        <button
+          class="filter"
+          data-filter="trentino"
+          type="button"
+        >
+          🥘 Tipico
+        </button>
+
+
+        <button
+          class="filter"
+          data-filter="pizza"
+          type="button"
+        >
+          🍕 Pizza
+        </button>
+
+
+        <button
+          class="filter"
+          data-filter="osteria"
+          type="button"
+        >
+          🍷 Osteria
+        </button>
+
+
+        <button
+          class="filter"
+          data-filter="fuori-percorso"
+          type="button"
+        >
+          🧭 Fuori dal percorso
+        </button>
+
+
+        <button
+          class="filter"
+          data-filter="€€"
+          type="button"
+        >
+          €€
+        </button>
+
+
+        <button
+          class="filter"
+          data-filter="€€€"
+          type="button"
+        >
+          €€€
+        </button>
+
+      </div>
+
 
     </section>
 
 
 
-    <!-- BUSCA -->
-
-    <div class="food-search">
-
-      <span class="food-search-icon">
-        ⌕
-      </span>
-
-      <input
-        id="search"
-        type="text"
-        autocomplete="off"
-        placeholder="Cerca un posto, una cucina o un quartiere..."
-      >
-
-    </div>
-
-
-
-    <!-- FILTROS -->
-
-    <div class="filters">
-
-      <button
-        class="filter active"
-        data-filter="all"
-        type="button"
-      >
-        Tutti
-      </button>
-
-
-      <button
-        class="filter"
-        data-filter="trentino"
-        type="button"
-      >
-        🥘 Tipico
-      </button>
-
-
-      <button
-        class="filter"
-        data-filter="pizza"
-        type="button"
-      >
-        🍕 Pizza
-      </button>
-
-
-      <button
-        class="filter"
-        data-filter="osteria"
-        type="button"
-      >
-        🍷 Osteria
-      </button>
-
-
-      <button
-        class="filter"
-        data-filter="fuori-percorso"
-        type="button"
-      >
-        🧭 Fuori dal percorso
-      </button>
-
-
-      <button
-        class="filter"
-        data-filter="€€"
-        type="button"
-      >
-        €€
-      </button>
-
-
-      <button
-        class="filter"
-        data-filter="€€€"
-        type="button"
-      >
-        €€€
-      </button>
-
-    </div>
-
-
+    <!-- RESULTADOS -->
 
     <div class="results-header">
 
@@ -950,13 +1548,16 @@
         Caricamento...
       </strong>
 
+
       <span class="map-label">
-        CLICCA UN POSTO PER TROVARLO SULLA MAPPA
+        📍 Clicca un posto per trovarlo sulla mappa
       </span>
 
     </div>
 
 
+
+    <!-- LISTA + MAPA -->
 
     <div class="discovery-layout">
 
@@ -974,14 +1575,17 @@
 
         <div class="map-wrapper">
 
+
           <div class="map-badge">
             📍 TRENTO
           </div>
+
 
           <div
             id="map"
             aria-label="Mappa di Trento"
           ></div>
+
 
         </div>
 
@@ -989,6 +1593,7 @@
 
 
     </div>
+
 
   </main>
 
@@ -1025,10 +1630,6 @@
 
   <script>
 
-    /* ========================================
-       ESTADO
-    ======================================== */
-
     let restaurants = [];
 
     let currentFilter = "all";
@@ -1041,15 +1642,21 @@
 
 
     const container =
-      document.getElementById("restaurants");
+      document.getElementById(
+        "restaurants"
+      );
 
 
     const search =
-      document.getElementById("search");
+      document.getElementById(
+        "search"
+      );
 
 
     const count =
-      document.getElementById("resultCount");
+      document.getElementById(
+        "resultCount"
+      );
 
 
 
@@ -1072,17 +1679,19 @@
     L.tileLayer(
       "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
       {
+
         maxZoom: 19,
 
         attribution:
           '&copy; OpenStreetMap contributors'
+
       }
     ).addTo(map);
 
 
 
     /* ========================================
-       CARREGAR RESTAURANTES
+       CARREGAR JSON
     ======================================== */
 
     async function loadRestaurants() {
@@ -1108,13 +1717,6 @@
         restaurants =
           await response.json();
 
-
-        /*
-          Número fixo de cada restaurante.
-
-          Assim o número não muda
-          quando aplicamos filtros.
-        */
 
         restaurants =
           restaurants.map(
@@ -1184,29 +1786,45 @@
           (item.category || "") +
           " " +
           tags.join(" ")
-        ).toLowerCase();
+        )
+        .toLowerCase();
 
 
-      if (text.includes("pizza")) {
+      if (
+        text.includes("pizza")
+      ) {
+
         return "🍕";
-      }
 
-
-      if (text.includes("osteria")) {
-        return "🍷";
       }
 
 
       if (
-        text.includes("trentino") ||
-        text.includes("territorio")
+        text.includes("osteria")
       ) {
-        return "🥘";
+
+        return "🍷";
+
       }
 
 
-      if (text.includes("birra")) {
+      if (
+        text.includes("trentino")
+        ||
+        text.includes("territorio")
+      ) {
+
+        return "🥘";
+
+      }
+
+
+      if (
+        text.includes("birra")
+      ) {
+
         return "🍺";
+
       }
 
 
@@ -1217,7 +1835,7 @@
 
 
     /* ========================================
-       RENDER DOS CARDS
+       CARDS
     ======================================== */
 
     function renderRestaurants(items) {
@@ -1238,6 +1856,7 @@
           <div class="empty">
 
             Nessun posto trovato.
+
             <br><br>
 
             Prova un'altra ricerca
@@ -1294,17 +1913,17 @@
                   ${
                     fuori
 
-                      ? `
+                    ? `
 
-                        <span
-                          class="route-badge"
-                        >
-                          FUORI DAL PERCORSO
-                        </span>
+                      <span
+                        class="route-badge"
+                      >
+                        FUORI DAL PERCORSO
+                      </span>
 
-                      `
+                    `
 
-                      : ""
+                    : ""
                   }
 
 
@@ -1316,7 +1935,9 @@
 
 
                   <span>
+
                     ${restaurantEmoji(item)}
+
                   </span>
 
 
@@ -1332,26 +1953,34 @@
                   <span
                     class="restaurant-area"
                   >
+
                     ${item.area || "Trento"}
+
                   </span>
 
 
                   <h2>
+
                     ${item.name}
+
                   </h2>
 
 
                   <div
                     class="category"
                   >
+
                     ${item.category || "Ristorante"}
+
                   </div>
 
 
                   <div
                     class="address"
                   >
+
                     📍 ${item.address}
+
                   </div>
 
 
@@ -1359,13 +1988,20 @@
                     class="restaurant-info"
                   >
 
-                    <span>
-                      ${item.price || ""}
-                    </span>
 
                     <span>
-                      Mappa →
+
+                      ${item.price || ""}
+
                     </span>
+
+
+                    <span>
+
+                      Mappa →
+
+                    </span>
+
 
                   </div>
 
@@ -1378,7 +2014,8 @@
             `;
 
           }
-        ).join("");
+        )
+        .join("");
 
 
       addCardEvents();
@@ -1394,33 +2031,16 @@
     function addCardEvents() {
 
       document
-        .querySelectorAll(".restaurant")
-        .forEach(card => {
+        .querySelectorAll(
+          ".restaurant"
+        )
+        .forEach(
+          card => {
 
 
-          card.addEventListener(
-            "click",
-            () => {
-
-              selectRestaurant(
-                card.dataset.id,
-                "card"
-              );
-
-            }
-          );
-
-
-          card.addEventListener(
-            "keydown",
-            event => {
-
-              if (
-                event.key === "Enter" ||
-                event.key === " "
-              ) {
-
-                event.preventDefault();
+            card.addEventListener(
+              "click",
+              () => {
 
                 selectRestaurant(
                   card.dataset.id,
@@ -1428,11 +2048,34 @@
                 );
 
               }
+            );
 
-            }
-          );
 
-        });
+            card.addEventListener(
+              "keydown",
+              event => {
+
+                if (
+                  event.key === "Enter"
+                  ||
+                  event.key === " "
+                ) {
+
+                  event.preventDefault();
+
+
+                  selectRestaurant(
+                    card.dataset.id,
+                    "card"
+                  );
+
+                }
+
+              }
+            );
+
+          }
+        );
 
     }
 
@@ -1460,7 +2103,9 @@
           >
 
             <span>
+
               ${item.number}
+
             </span>
 
           </div>
@@ -1488,12 +2133,17 @@
 
     function clearMarkers() {
 
-      Object.values(markers)
-        .forEach(marker => {
+      Object
+        .values(markers)
+        .forEach(
+          marker => {
 
-          map.removeLayer(marker);
+            map.removeLayer(
+              marker
+            );
 
-        });
+          }
+        );
 
 
       markers = {};
@@ -1503,7 +2153,7 @@
 
 
     /* ========================================
-       CRIAR PINS
+       PINS
     ======================================== */
 
     function updateMarkers(items) {
@@ -1524,92 +2174,92 @@
             Number.isFinite(
               Number(item.lng)
             )
+
         );
 
 
-      placesWithCoordinates.forEach(
-        item => {
+      placesWithCoordinates
+        .forEach(
+          item => {
 
 
-          const active =
-            item.id ===
-            selectedRestaurantId;
+            const active =
+              item.id ===
+              selectedRestaurantId;
 
 
-          const marker =
-            L.marker(
-              [
-                Number(item.lat),
-                Number(item.lng)
-              ],
-              {
-                icon:
-                  createMarkerIcon(
-                    item,
-                    active
-                  )
+            const marker =
+              L.marker(
+                [
+                  Number(item.lat),
+                  Number(item.lng)
+                ],
+                {
+
+                  icon:
+                    createMarkerIcon(
+                      item,
+                      active
+                    )
+
+                }
+              )
+              .addTo(map);
+
+
+            marker.bindPopup(`
+
+              <div
+                class="popup-content"
+              >
+
+                <span
+                  class="popup-number"
+                >
+                  ${item.number}
+                </span>
+
+                <strong>
+                  ${item.name}
+                </strong>
+
+                <div
+                  class="popup-category"
+                >
+                  ${item.category || ""}
+                </div>
+
+                <div
+                  class="popup-address"
+                >
+                  📍 ${item.address || ""}
+                </div>
+
+              </div>
+
+            `);
+
+
+            marker.on(
+              "click",
+              () => {
+
+                selectRestaurant(
+                  item.id,
+                  "marker"
+                );
+
               }
-            )
-            .addTo(map);
+            );
 
 
-          marker.bindPopup(`
+            markers[item.id] =
+              marker;
 
-            <div
-              class="popup-content"
-            >
-
-              <span
-                class="popup-number"
-              >
-                ${item.number}
-              </span>
-
-              <strong>
-                ${item.name}
-              </strong>
-
-              <div
-                class="popup-category"
-              >
-                ${item.category || ""}
-              </div>
-
-              <div
-                class="popup-address"
-              >
-                📍 ${item.address || ""}
-              </div>
-
-            </div>
-
-          `);
+          }
+        );
 
 
-          marker.on(
-            "click",
-            () => {
-
-              selectRestaurant(
-                item.id,
-                "marker"
-              );
-
-            }
-          );
-
-
-          markers[item.id] =
-            marker;
-
-        }
-      );
-
-
-      /*
-        Ajustar mapa aos
-        resultados atuais.
-      */
 
       if (
         placesWithCoordinates.length > 1
@@ -1618,7 +2268,9 @@
       ) {
 
         const markerList =
-          Object.values(markers);
+          Object.values(
+            markers
+          );
 
 
         const group =
@@ -1630,11 +2282,13 @@
         map.fitBounds(
           group.getBounds(),
           {
+
             padding:
               [40, 40],
 
             maxZoom:
               15
+
           }
         );
 
@@ -1667,7 +2321,7 @@
 
 
     /* ========================================
-       SELECIONAR RESTAURANTE
+       SELEÇÃO
     ======================================== */
 
     function selectRestaurant(
@@ -1683,7 +2337,9 @@
 
 
       if (!item) {
+
         return;
+
       }
 
 
@@ -1692,9 +2348,7 @@
 
 
 
-      /* ----------------------------
-         DESTACAR CARD
-      ---------------------------- */
+      /* CARD */
 
       document
         .querySelectorAll(
@@ -1713,11 +2367,10 @@
 
 
 
-      /* ----------------------------
-         DESTACAR PIN
-      ---------------------------- */
+      /* PIN */
 
-      Object.keys(markers)
+      Object
+        .keys(markers)
         .forEach(
           markerId => {
 
@@ -1730,7 +2383,9 @@
 
 
             if (!restaurant) {
+
               return;
+
             }
 
 
@@ -1750,15 +2405,15 @@
 
 
 
-      /* ----------------------------
-         APROXIMAR MAPA
-      ---------------------------- */
+      /* MAPA */
 
       if (
         Number.isFinite(
           Number(item.lat)
         )
+
         &&
+
         Number.isFinite(
           Number(item.lng)
         )
@@ -1771,8 +2426,11 @@
           ],
           17,
           {
+
             animate: true,
+
             duration: .8
+
           }
         );
 
@@ -1798,10 +2456,7 @@
 
 
 
-      /* ----------------------------
-         SE VEIO DO PIN,
-         IR ATÉ O CARD
-      ---------------------------- */
+      /* PIN → CARD */
 
       if (
         source === "marker"
@@ -1817,8 +2472,13 @@
 
           card.scrollIntoView(
             {
-              behavior: "smooth",
-              block: "center"
+
+              behavior:
+                "smooth",
+
+              block:
+                "center"
+
             }
           );
 
@@ -1922,12 +2582,6 @@
 
 
 
-      /*
-        Se o restaurante selecionado
-        desapareceu com o filtro,
-        removemos a seleção.
-      */
-
       if (
         selectedRestaurantId
         &&
@@ -1942,7 +2596,6 @@
           null;
 
       }
-
 
 
       renderRestaurants(
@@ -1970,11 +2623,13 @@
 
 
     /* ========================================
-       FILTROS
+       BOTÕES
     ======================================== */
 
     document
-      .querySelectorAll(".filter")
+      .querySelectorAll(
+        ".filter"
+      )
       .forEach(
         button => {
 
