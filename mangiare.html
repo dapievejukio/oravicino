@@ -65,9 +65,6 @@
     }
 
 
-
-    /* textura suave */
-
     body::before {
 
       content: "";
@@ -83,20 +80,17 @@
       z-index: -1;
 
       background-image:
-
         linear-gradient(
           rgba(23,63,50,.018) 1px,
           transparent 1px
         ),
-
         linear-gradient(
           90deg,
           rgba(23,63,50,.018) 1px,
           transparent 1px
         );
 
-      background-size:
-        42px 42px;
+      background-size: 42px 42px;
 
     }
 
@@ -112,8 +106,7 @@
 
       margin: auto;
 
-      padding:
-        35px 30px 110px;
+      padding: 35px 30px 110px;
 
     }
 
@@ -131,8 +124,7 @@
 
       gap: 7px;
 
-      margin:
-        15px 0 52px;
+      margin: 15px 0 52px;
 
       color: #667068;
 
@@ -142,8 +134,7 @@
 
       text-decoration: none;
 
-      transition:
-        color .2s ease;
+      transition: color .2s ease;
 
     }
 
@@ -168,8 +159,7 @@
 
       margin-bottom: 32px;
 
-      padding:
-        8px 0 18px;
+      padding: 8px 0 18px;
 
     }
 
@@ -190,13 +180,11 @@
 
       border-radius: 50%;
 
-      background:
-        rgba(242,193,78,.13);
+      background: rgba(242,193,78,.13);
 
       pointer-events: none;
 
     }
-
 
 
     .food-header {
@@ -246,13 +234,11 @@
 
     .food-header h1 {
 
-      margin:
-        10px 0 12px;
+      margin: 10px 0 12px;
 
       max-width: 720px;
 
-      font-size:
-        clamp(52px, 6vw, 82px);
+      font-size: clamp(52px, 6vw, 82px);
 
       line-height: .93;
 
@@ -356,17 +342,13 @@
 
       min-height: 62px;
 
-      background:
-        rgba(255,253,248,.88);
+      background: rgba(255,253,248,.88);
 
-      border:
-        1px solid
-        rgba(23,35,29,.08);
+      border: 1px solid rgba(23,35,29,.08);
 
       border-radius: 20px;
 
-      padding:
-        0 20px;
+      padding: 0 20px;
 
       display: flex;
 
@@ -378,8 +360,7 @@
         0 16px 45px
         rgba(25,39,32,.07);
 
-      backdrop-filter:
-        blur(10px);
+      backdrop-filter: blur(10px);
 
     }
 
@@ -399,8 +380,7 @@
 
       min-width: 0;
 
-      padding:
-        16px 4px;
+      padding: 16px 4px;
 
       border: 0;
 
@@ -435,8 +415,7 @@
 
       gap: 9px;
 
-      margin:
-        18px 0 48px;
+      margin: 18px 0 48px;
 
     }
 
@@ -445,17 +424,13 @@
 
       min-height: 40px;
 
-      padding:
-        0 16px;
+      padding: 0 16px;
 
       border-radius: 999px;
 
-      border:
-        1px solid
-        rgba(23,35,29,.14);
+      border: 1px solid rgba(23,35,29,.14);
 
-      background:
-        rgba(255,253,248,.42);
+      background: rgba(255,253,248,.42);
 
       color: #17231d;
 
@@ -474,14 +449,11 @@
 
     .filter:hover {
 
-      transform:
-        translateY(-1px);
+      transform: translateY(-1px);
 
-      border-color:
-        #173f32;
+      border-color: #173f32;
 
-      background:
-        rgba(255,253,248,.85);
+      background: rgba(255,253,248,.85);
 
     }
 
@@ -499,21 +471,18 @@
 
 
     /* ========================================
-       CABEÇALHO RESULTADOS
+       RESULTADOS
     ======================================== */
 
     .results-header {
 
       display: flex;
 
-      justify-content:
-        space-between;
+      justify-content: space-between;
 
-      align-items:
-        center;
+      align-items: center;
 
-      margin-bottom:
-        18px;
+      margin-bottom: 18px;
 
     }
 
@@ -567,11 +536,6 @@
     }
 
 
-
-    /* ========================================
-       LISTA
-    ======================================== */
-
     .restaurants {
 
       display: grid;
@@ -595,12 +559,9 @@
 
       overflow: hidden;
 
-      background:
-        rgba(255,253,248,.88);
+      background: rgba(255,253,248,.88);
 
-      border:
-        1px solid
-        rgba(23,35,29,.11);
+      border: 1px solid rgba(23,35,29,.11);
 
       border-radius: 25px;
 
@@ -620,11 +581,9 @@
 
     .restaurant:hover {
 
-      transform:
-        translateY(-4px);
+      transform: translateY(-4px);
 
-      border-color:
-        rgba(23,63,50,.32);
+      border-color: rgba(23,63,50,.32);
 
       box-shadow:
         0 18px 50px
@@ -652,8 +611,7 @@
 
       inset: 0;
 
-      border:
-        2px solid #173f32;
+      border: 2px solid #173f32;
 
       border-radius: 24px;
 
@@ -664,7 +622,7 @@
 
 
     /* ========================================
-       CAPA DO RESTAURANTE
+       CAPA
     ======================================== */
 
     .restaurant-cover {
@@ -682,13 +640,11 @@
       overflow: hidden;
 
       background:
-
         radial-gradient(
           circle at 75% 20%,
           rgba(242,193,78,.58),
           transparent 25%
         ),
-
         linear-gradient(
           145deg,
           #28604b,
@@ -720,10 +676,72 @@
         1px solid
         rgba(255,255,255,.10);
 
+      z-index: 1;
+
     }
 
 
-    .restaurant-cover > span:last-child {
+
+    /* ========================================
+       FOTO DO RESTAURANTE
+    ======================================== */
+
+    .restaurant-photo {
+
+      position: absolute;
+
+      inset: 0;
+
+      width: 100%;
+
+      height: 100%;
+
+      object-fit: cover;
+
+      display: block;
+
+      z-index: 0;
+
+      transition:
+        transform .45s ease;
+
+    }
+
+
+    .restaurant:hover
+    .restaurant-photo {
+
+      transform: scale(1.045);
+
+    }
+
+
+    /* pequena sombra para número e badge */
+
+    .restaurant-cover.has-photo::after {
+
+      content: "";
+
+      position: absolute;
+
+      inset: 0;
+
+      z-index: 1;
+
+      pointer-events: none;
+
+      background:
+        linear-gradient(
+          180deg,
+          rgba(0,0,0,.12) 0%,
+          rgba(0,0,0,0) 42%,
+          rgba(0,0,0,.08) 100%
+        );
+
+    }
+
+
+    .restaurant-emoji {
 
       position: relative;
 
@@ -786,7 +804,7 @@
 
 
     /* ========================================
-       FUORI DAL PERCORSO
+       BADGE
     ======================================== */
 
     .route-badge {
@@ -799,8 +817,7 @@
 
       top: 16px;
 
-      padding:
-        7px 11px;
+      padding: 7px 11px;
 
       border-radius: 999px;
 
@@ -850,8 +867,7 @@
 
     .restaurant h2 {
 
-      margin:
-        7px 0 6px;
+      margin: 7px 0 6px;
 
       color: #17231d;
 
@@ -900,8 +916,7 @@
 
       display: flex;
 
-      justify-content:
-        space-between;
+      justify-content: space-between;
 
       gap: 15px;
 
@@ -936,8 +951,7 @@
 
       border-radius: 30px;
 
-      background:
-        rgba(255,253,248,.72);
+      background: rgba(255,253,248,.72);
 
       border:
         1px solid
@@ -954,8 +968,7 @@
 
       width: 100%;
 
-      height:
-        calc(100vh - 55px);
+      height: calc(100vh - 55px);
 
       min-height: 620px;
 
@@ -978,16 +991,13 @@
 
       left: 50%;
 
-      transform:
-        translateX(-50%);
+      transform: translateX(-50%);
 
-      padding:
-        9px 15px;
+      padding: 9px 15px;
 
       border-radius: 999px;
 
-      background:
-        rgba(255,253,248,.94);
+      background: rgba(255,253,248,.94);
 
       border:
         1px solid
@@ -1028,7 +1038,7 @@
 
 
     /* ========================================
-       PIN ORAVICINO
+       PIN
     ======================================== */
 
     .oravicino-marker {
@@ -1057,13 +1067,11 @@
       border-radius:
         50% 50% 50% 4px;
 
-      transform:
-        rotate(-45deg);
+      transform: rotate(-45deg);
 
       background: #173f32;
 
-      border:
-        3px solid #fffdf8;
+      border: 3px solid #fffdf8;
 
       box-shadow:
         0 5px 15px
@@ -1078,8 +1086,7 @@
 
     .marker-pin span {
 
-      transform:
-        rotate(45deg);
+      transform: rotate(45deg);
 
       color: white;
 
@@ -1184,11 +1191,9 @@
 
     .empty {
 
-      grid-column:
-        1 / -1;
+      grid-column: 1 / -1;
 
-      padding:
-        70px 20px;
+      padding: 70px 20px;
 
       text-align: center;
 
@@ -1222,8 +1227,7 @@
 
       .discovery-layout {
 
-        grid-template-columns:
-          1fr;
+        grid-template-columns: 1fr;
 
       }
 
@@ -1267,8 +1271,7 @@
 
       .food-page {
 
-        padding:
-          20px 18px 70px;
+        padding: 20px 18px 70px;
 
       }
 
@@ -1354,10 +1357,6 @@
 <body>
 
 
-  <!-- ========================================
-       HEADER
-  ======================================== -->
-
   <header class="topbar">
 
     <a
@@ -1391,10 +1390,6 @@
 
 
 
-  <!-- ========================================
-       CONTEÚDO
-  ======================================== -->
-
   <main class="food-page">
 
 
@@ -1406,8 +1401,6 @@
     </a>
 
 
-
-    <!-- HERO -->
 
     <section class="food-hero">
 
@@ -1448,8 +1441,6 @@
 
 
 
-      <!-- BUSCA -->
-
       <div class="food-search">
 
         <span class="food-search-icon">
@@ -1466,8 +1457,6 @@
       </div>
 
 
-
-      <!-- FILTROS -->
 
       <div class="filters">
 
@@ -1540,8 +1529,6 @@
 
 
 
-    <!-- RESULTADOS -->
-
     <div class="results-header">
 
       <strong id="resultCount">
@@ -1556,8 +1543,6 @@
     </div>
 
 
-
-    <!-- LISTA + MAPA -->
 
     <div class="discovery-layout">
 
@@ -1599,10 +1584,6 @@
 
 
 
-  <!-- ========================================
-       FOOTER
-  ======================================== -->
-
   <footer>
 
     <a
@@ -1623,10 +1604,6 @@
   </footer>
 
 
-
-  <!-- ========================================
-       JAVASCRIPT
-  ======================================== -->
 
   <script>
 
@@ -1770,6 +1747,29 @@
 
 
     /* ========================================
+       FOTO
+       Neste primeiro teste somente Chistè
+       usa a imagem pizza.jpg
+    ======================================== */
+
+    function restaurantImage(item) {
+
+      if (
+        item.id === "chiste"
+      ) {
+
+        return "images/restaurants/pizza.jpg";
+
+      }
+
+
+      return null;
+
+    }
+
+
+
+    /* ========================================
        EMOJI
     ======================================== */
 
@@ -1893,6 +1893,10 @@
               selectedRestaurantId;
 
 
+            const image =
+              restaurantImage(item);
+
+
             return `
 
               <article
@@ -1906,8 +1910,27 @@
 
 
                 <div
-                  class="restaurant-cover"
+                  class="restaurant-cover
+                  ${image ? "has-photo" : ""}"
                 >
+
+
+                  ${
+                    image
+
+                    ? `
+
+                      <img
+                        class="restaurant-photo"
+                        src="${image}"
+                        alt=""
+                        loading="lazy"
+                      >
+
+                    `
+
+                    : ""
+                  }
 
 
                   ${
@@ -1934,11 +1957,21 @@
                   </span>
 
 
-                  <span>
+                  ${
+                    !image
 
-                    ${restaurantEmoji(item)}
+                    ? `
 
-                  </span>
+                      <span
+                        class="restaurant-emoji"
+                      >
+                        ${restaurantEmoji(item)}
+                      </span>
+
+                    `
+
+                    : ""
+                  }
 
 
                 </div>
@@ -1953,34 +1986,26 @@
                   <span
                     class="restaurant-area"
                   >
-
                     ${item.area || "Trento"}
-
                   </span>
 
 
                   <h2>
-
                     ${item.name}
-
                   </h2>
 
 
                   <div
                     class="category"
                   >
-
                     ${item.category || "Ristorante"}
-
                   </div>
 
 
                   <div
                     class="address"
                   >
-
                     📍 ${item.address}
-
                   </div>
 
 
@@ -1990,16 +2015,12 @@
 
 
                     <span>
-
                       ${item.price || ""}
-
                     </span>
 
 
                     <span>
-
                       Mappa →
-
                     </span>
 
 
@@ -2103,9 +2124,7 @@
           >
 
             <span>
-
               ${item.number}
-
             </span>
 
           </div>
@@ -2348,8 +2367,6 @@
 
 
 
-      /* CARD */
-
       document
         .querySelectorAll(
           ".restaurant"
@@ -2366,8 +2383,6 @@
         );
 
 
-
-      /* PIN */
 
       Object
         .keys(markers)
@@ -2404,8 +2419,6 @@
         );
 
 
-
-      /* MAPA */
 
       if (
         Number.isFinite(
@@ -2456,8 +2469,6 @@
 
 
 
-      /* PIN → CARD */
-
       if (
         source === "marker"
       ) {
@@ -2473,11 +2484,9 @@
           card.scrollIntoView(
             {
 
-              behavior:
-                "smooth",
+              behavior: "smooth",
 
-              block:
-                "center"
+              block: "center"
 
             }
           );
@@ -2623,7 +2632,7 @@
 
 
     /* ========================================
-       BOTÕES
+       FILTROS
     ======================================== */
 
     document
