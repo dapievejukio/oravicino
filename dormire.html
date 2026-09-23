@@ -1,0 +1,2318 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Dormire a Trento | OraVicino</title>
+
+  <meta
+    name="description"
+    content="Scopri hotel, appartamenti, B&B, ostelli e altre strutture dove dormire a Trento."
+  >
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="meteo.css">
+
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  >
+
+  <style>
+    :root {
+      --dormire: #74452f;
+      --dormire-dark: #583323;
+      --dormire-soft: #eee1d8;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #f5f1e8;
+      color: #17231d;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    /* =========================
+       TOPBAR
+    ========================= */
+
+    .dormire-topbar {
+      max-width: 1240px;
+      margin: 0 auto;
+      min-height: 76px;
+      padding: 0 28px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 20px;
+    }
+
+    .dormire-logo {
+      font-family: "Playfair Display", serif;
+      font-size: 29px;
+      font-weight: 800;
+      text-decoration: none;
+      letter-spacing: -0.8px;
+    }
+
+    .dormire-logo span {
+      color: #ef6a3a;
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .city-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    /* =========================
+       HERO
+    ========================= */
+
+    .dormire-hero {
+      background:
+        radial-gradient(
+          circle at 82% 25%,
+          rgba(242, 193, 78, 0.15),
+          transparent 28%
+        ),
+        linear-gradient(
+          135deg,
+          #173f32 0%,
+          #1e4b3c 55%,
+          #173f32 100%
+        );
+
+      color: white;
+      overflow: hidden;
+    }
+
+    .hero-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 64px 28px 58px;
+
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      margin-bottom: 14px;
+
+      color: #f2c14e;
+
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+    }
+
+    .dormire-hero h1 {
+      max-width: 760px;
+      margin: 0;
+
+      font-family: "Playfair Display", serif;
+      font-size: clamp(43px, 6vw, 75px);
+      line-height: 0.98;
+      letter-spacing: -2.5px;
+    }
+
+    .hero-description {
+      max-width: 660px;
+      margin: 20px 0 0;
+
+      color: rgba(255, 255, 255, 0.8);
+
+      font-size: 17px;
+      line-height: 1.65;
+    }
+
+    .hero-icon {
+      width: 150px;
+      height: 150px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 50%;
+
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+
+      font-size: 66px;
+
+      transform: rotate(4deg);
+    }
+
+    /* =========================
+       METEO
+    ========================= */
+
+    .meteo-wrap {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 18px 28px 0;
+    }
+
+    /* =========================
+       VICINO A ME
+    ========================= */
+
+    .nearby-wrap {
+      max-width: 1240px;
+      margin: 26px auto 0;
+      padding: 0 28px;
+    }
+
+    .nearby-box {
+      position: relative;
+      overflow: hidden;
+
+      padding: 34px 36px;
+
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 30px;
+
+      border-radius: 24px;
+
+      background:
+        radial-gradient(
+          circle at 85% 20%,
+          rgba(242, 193, 78, 0.18),
+          transparent 28%
+        ),
+        #173f32;
+
+      color: white;
+    }
+
+    .nearby-box::after {
+      content: "⌖";
+
+      position: absolute;
+      right: 28%;
+      top: -37px;
+
+      font-size: 170px;
+      line-height: 1;
+
+      color: rgba(255, 255, 255, 0.035);
+
+      pointer-events: none;
+    }
+
+    .nearby-eyebrow {
+      color: #f2c14e;
+
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .nearby-title {
+      margin: 7px 0 5px;
+
+      font-family: "Playfair Display", serif;
+      font-size: 31px;
+      line-height: 1.05;
+    }
+
+    .nearby-text {
+      margin: 0;
+
+      color: rgba(255, 255, 255, 0.7);
+
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .nearby-action {
+      position: relative;
+      z-index: 2;
+    }
+
+    .nearby-button {
+      appearance: none;
+      border: 0;
+
+      padding: 15px 21px;
+
+      border-radius: 999px;
+
+      background: #f2c14e;
+      color: #17231d;
+
+      cursor: pointer;
+
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.5px;
+    }
+
+    .nearby-button:hover {
+      transform: translateY(-1px);
+    }
+
+    .nearby-button.active {
+      background: #ef6a3a;
+      color: white;
+    }
+
+    .location-status {
+      margin-top: 9px;
+      max-width: 260px;
+
+      color: rgba(255, 255, 255, 0.66);
+
+      font-size: 11px;
+      line-height: 1.35;
+      text-align: center;
+    }
+
+    /* =========================
+       CONTENT
+    ========================= */
+
+    .main {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 42px 28px 70px;
+    }
+
+    .section-label {
+      margin-bottom: 12px;
+
+      color: #6d746f;
+
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+    }
+
+    /* =========================
+       SEARCH
+    ========================= */
+
+    .search-box {
+      margin-bottom: 26px;
+
+      display: flex;
+      align-items: center;
+
+      overflow: hidden;
+
+      border: 1px solid rgba(23, 35, 29, 0.12);
+      border-radius: 16px;
+
+      background: #fffdf8;
+
+      box-shadow: 0 8px 28px rgba(23, 35, 29, 0.05);
+    }
+
+    .search-icon {
+      padding-left: 19px;
+
+      color: #6d746f;
+      font-size: 18px;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 17px 18px;
+
+      border: 0;
+      outline: 0;
+
+      background: transparent;
+
+      color: #17231d;
+
+      font-family: inherit;
+      font-size: 15px;
+    }
+
+    /* =========================
+       CATEGORY FILTERS
+    ========================= */
+
+    .categories {
+      margin-bottom: 28px;
+
+      display: grid;
+      grid-template-columns: repeat(8, minmax(100px, 1fr));
+      gap: 10px;
+    }
+
+    .category-button {
+      min-height: 80px;
+      padding: 12px 9px;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+
+      border: 1px solid rgba(23, 35, 29, 0.1);
+      border-radius: 16px;
+
+      background: #fffdf8;
+      color: #17231d;
+
+      cursor: pointer;
+
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 850;
+
+      transition:
+        transform 0.16s ease,
+        background 0.16s ease,
+        color 0.16s ease;
+    }
+
+    .category-button:hover {
+      transform: translateY(-2px);
+    }
+
+    .category-button.active {
+      background: var(--dormire);
+      color: white;
+      border-color: var(--dormire);
+    }
+
+    .category-icon {
+      font-size: 23px;
+      line-height: 1;
+    }
+
+    /* =========================
+       SECONDARY FILTERS
+    ========================= */
+
+    .secondary-filters {
+      margin-bottom: 35px;
+
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .filter-button {
+      padding: 10px 14px;
+
+      border: 1px solid rgba(23, 35, 29, 0.12);
+      border-radius: 999px;
+
+      background: transparent;
+      color: #59615c;
+
+      cursor: pointer;
+
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 850;
+    }
+
+    .filter-button.active {
+      background: #17231d;
+      color: white;
+      border-color: #17231d;
+    }
+
+    /* =========================
+       RESULT HEADER
+    ========================= */
+
+    .result-header {
+      margin-bottom: 17px;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 20px;
+    }
+
+    .result-title {
+      margin: 0;
+
+      font-family: "Playfair Display", serif;
+      font-size: 31px;
+    }
+
+    .result-count {
+      margin-top: 5px;
+
+      color: #6d746f;
+      font-size: 13px;
+    }
+
+    .source-small {
+      color: #7c817e;
+      font-size: 11px;
+      text-align: right;
+    }
+
+    /* =========================
+       LIST + MAP
+    ========================= */
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(370px, 0.88fr);
+      gap: 26px;
+      align-items: start;
+    }
+
+    .cards {
+      display: grid;
+      gap: 13px;
+    }
+
+    .stay-card {
+      padding: 19px;
+
+      display: grid;
+      grid-template-columns: 58px minmax(0, 1fr);
+      gap: 15px;
+
+      border: 1px solid rgba(23, 35, 29, 0.09);
+      border-radius: 18px;
+
+      background: #fffdf8;
+
+      cursor: pointer;
+
+      box-shadow: 0 7px 25px rgba(23, 35, 29, 0.035);
+
+      transition:
+        transform 0.16s ease,
+        box-shadow 0.16s ease,
+        border-color 0.16s ease;
+    }
+
+    .stay-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(23, 35, 29, 0.07);
+    }
+
+    .stay-card.selected {
+      border-color: #ef6a3a;
+      box-shadow: 0 0 0 2px rgba(239, 106, 58, 0.12);
+    }
+
+    .stay-icon {
+      width: 58px;
+      height: 58px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 16px;
+
+      background: var(--dormire-soft);
+
+      font-size: 27px;
+    }
+
+    .stay-category {
+      margin-bottom: 4px;
+
+      color: var(--dormire);
+
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .stay-name {
+      margin: 0;
+
+      font-family: "Playfair Display", serif;
+      font-size: 21px;
+      line-height: 1.15;
+    }
+
+    .stay-address {
+      margin-top: 6px;
+
+      color: #6d746f;
+
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .stay-description {
+      margin-top: 10px;
+
+      color: #59615c;
+
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .chips {
+      margin-top: 11px;
+
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .chip {
+      padding: 6px 9px;
+
+      border-radius: 999px;
+
+      background: #f1ede4;
+      color: #4f5853;
+
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .chip.distance {
+      background: #e4eee9;
+      color: #173f32;
+    }
+
+    .chip.star {
+      background: #f8ebc5;
+      color: #684f12;
+    }
+
+    .card-links {
+      margin-top: 12px;
+
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .card-link {
+      padding: 8px 10px;
+
+      border-radius: 9px;
+
+      background: #173f32;
+      color: white;
+
+      text-decoration: none;
+
+      font-size: 10px;
+      font-weight: 850;
+    }
+
+    .card-link.secondary {
+      background: transparent;
+      color: #173f32;
+      border: 1px solid rgba(23, 63, 50, 0.2);
+    }
+
+    /* =========================
+       MAP
+    ========================= */
+
+    .map-column {
+      position: sticky;
+      top: 18px;
+    }
+
+    .map-shell {
+      overflow: hidden;
+
+      border: 1px solid rgba(23, 35, 29, 0.1);
+      border-radius: 20px;
+
+      background: #e8e5dd;
+
+      box-shadow: 0 10px 30px rgba(23, 35, 29, 0.05);
+    }
+
+    #map {
+      height: 650px;
+      width: 100%;
+    }
+
+    .map-note {
+      padding: 11px 14px;
+
+      background: #fffdf8;
+      color: #747b77;
+
+      font-size: 10px;
+      line-height: 1.4;
+    }
+
+    /* =========================
+       EMPTY / LOAD MORE
+    ========================= */
+
+    .empty-state {
+      padding: 45px 25px;
+
+      border: 1px dashed rgba(23, 35, 29, 0.18);
+      border-radius: 18px;
+
+      color: #6d746f;
+
+      text-align: center;
+    }
+
+    .load-more-wrap {
+      margin-top: 18px;
+      text-align: center;
+    }
+
+    .load-more {
+      padding: 13px 20px;
+
+      border: 1px solid rgba(23, 35, 29, 0.16);
+      border-radius: 999px;
+
+      background: #fffdf8;
+      color: #17231d;
+
+      cursor: pointer;
+
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    /* =========================
+       FUTURE BOOKING
+    ========================= */
+
+    .booking-future {
+      margin-top: 45px;
+      padding: 27px 30px;
+
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 25px;
+      align-items: center;
+
+      border-radius: 20px;
+
+      background: #eee5dc;
+    }
+
+    .booking-future strong {
+      display: block;
+      margin-bottom: 5px;
+
+      font-family: "Playfair Display", serif;
+      font-size: 22px;
+    }
+
+    .booking-future p {
+      margin: 0;
+
+      color: #626965;
+
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .booking-status {
+      padding: 9px 12px;
+
+      border-radius: 999px;
+
+      background: #fffdf8;
+      color: #74452f;
+
+      font-size: 10px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    .dormire-footer {
+      padding: 30px 28px;
+
+      background: #17231d;
+      color: rgba(255, 255, 255, 0.7);
+
+      font-size: 11px;
+    }
+
+    .footer-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+    }
+
+    .footer-brand {
+      color: white;
+      font-weight: 900;
+    }
+
+    /* =========================
+       LEAFLET
+    ========================= */
+
+    .leaflet-popup-content-wrapper {
+      border-radius: 13px;
+    }
+
+    .map-popup-category {
+      margin-bottom: 3px;
+
+      color: #74452f;
+
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: 0.7px;
+      text-transform: uppercase;
+    }
+
+    .map-popup-name {
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .map-popup-address {
+      margin-top: 4px;
+
+      color: #666;
+
+      font-size: 10px;
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
+    @media (max-width: 1050px) {
+      .categories {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .map-column {
+        position: static;
+      }
+
+      #map {
+        height: 460px;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .dormire-topbar {
+        min-height: 66px;
+        padding: 0 18px;
+      }
+
+      .dormire-logo {
+        font-size: 25px;
+      }
+
+      .topbar-right {
+        gap: 11px;
+      }
+
+      .hero-inner {
+        padding: 47px 19px 43px;
+        grid-template-columns: 1fr;
+      }
+
+      .hero-icon {
+        display: none;
+      }
+
+      .dormire-hero h1 {
+        font-size: 47px;
+        letter-spacing: -1.5px;
+      }
+
+      .hero-description {
+        font-size: 15px;
+      }
+
+      .meteo-wrap,
+      .nearby-wrap,
+      .main {
+        padding-left: 17px;
+        padding-right: 17px;
+      }
+
+      .nearby-box {
+        padding: 26px 22px;
+        grid-template-columns: 1fr;
+      }
+
+      .nearby-title {
+        font-size: 27px;
+      }
+
+      .location-status {
+        text-align: left;
+      }
+
+      .main {
+        padding-top: 31px;
+      }
+
+      .categories {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .result-header {
+        align-items: start;
+        flex-direction: column;
+      }
+
+      .source-small {
+        text-align: left;
+      }
+
+      .stay-card {
+        grid-template-columns: 49px minmax(0, 1fr);
+        padding: 15px;
+      }
+
+      .stay-icon {
+        width: 49px;
+        height: 49px;
+        border-radius: 13px;
+        font-size: 23px;
+      }
+
+      .stay-name {
+        font-size: 19px;
+      }
+
+      #map {
+        height: 400px;
+      }
+
+      .booking-future {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- =========================
+       TOPBAR
+  ========================== -->
+
+  <header class="dormire-topbar">
+    <a href="index.html" class="dormire-logo">
+      Ora<span>Vicino</span>
+    </a>
+
+    <div class="topbar-right">
+      <span class="city-pill">📍 Trento</span>
+      <span>IT</span>
+    </div>
+  </header>
+
+  <!-- =========================
+       HERO
+  ========================== -->
+
+  <section class="dormire-hero">
+    <div class="hero-inner">
+
+      <div>
+        <div class="eyebrow">
+          ORAVICINO · DORMIRE
+        </div>
+
+        <h1>
+          Dove vuoi svegliarti domani?
+        </h1>
+
+        <p class="hero-description">
+          Hotel, appartamenti, B&amp;B, ostelli e rifugi.
+          Non solo dove dormire: scopri dove stare per vivere meglio Trento.
+        </p>
+      </div>
+
+      <div class="hero-icon" aria-hidden="true">
+        🛏️
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================
+       METEO
+  ========================== -->
+
+  <div class="meteo-wrap">
+    <div id="meteo"></div>
+  </div>
+
+  <!-- =========================
+       VICINO A ME
+  ========================== -->
+
+  <section class="nearby-wrap">
+    <div class="nearby-box">
+
+      <div>
+        <div class="nearby-eyebrow">
+          ORAVICINO · INTORNO A TE
+        </div>
+
+        <h2 class="nearby-title">
+          Dove posso dormire vicino a me?
+        </h2>
+
+        <p class="nearby-text">
+          Usa la tua posizione per ordinare le strutture dalla più vicina.
+        </p>
+      </div>
+
+      <div class="nearby-action">
+        <button
+          id="nearbyButton"
+          class="nearby-button"
+          type="button"
+        >
+          📍 USA LA MIA POSIZIONE
+        </button>
+
+        <div
+          id="locationStatus"
+          class="location-status"
+        ></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================
+       MAIN
+  ========================== -->
+
+  <main class="main">
+
+    <div class="section-label">
+      CERCA
+    </div>
+
+    <div class="search-box">
+      <span class="search-icon">⌕</span>
+
+      <input
+        id="searchInput"
+        type="search"
+        placeholder="Cerca hotel, appartamento, B&B..."
+        autocomplete="off"
+      >
+    </div>
+
+    <div class="section-label">
+      COME VUOI DORMIRE?
+    </div>
+
+    <div class="categories">
+
+      <button
+        class="category-button active"
+        data-category="all"
+        type="button"
+      >
+        <span class="category-icon">✦</span>
+        Tutto
+      </button>
+
+      <button
+        class="category-button"
+        data-category="hotel"
+        type="button"
+      >
+        <span class="category-icon">🏨</span>
+        Hotel
+      </button>
+
+      <button
+        class="category-button"
+        data-category="appartamento"
+        type="button"
+      >
+        <span class="category-icon">🏠</span>
+        Appartamenti
+      </button>
+
+      <button
+        class="category-button"
+        data-category="bnb"
+        type="button"
+      >
+        <span class="category-icon">🛏️</span>
+        B&amp;B
+      </button>
+
+      <button
+        class="category-button"
+        data-category="hostel"
+        type="button"
+      >
+        <span class="category-icon">🎒</span>
+        Ostelli
+      </button>
+
+      <button
+        class="category-button"
+        data-category="chalet"
+        type="button"
+      >
+        <span class="category-icon">🏡</span>
+        Chalet
+      </button>
+
+      <button
+        class="category-button"
+        data-category="campeggio"
+        type="button"
+      >
+        <span class="category-icon">⛺</span>
+        Campeggi
+      </button>
+
+      <button
+        class="category-button"
+        data-category="rifugio"
+        type="button"
+      >
+        <span class="category-icon">🏔️</span>
+        Rifugi
+      </button>
+
+    </div>
+
+    <div class="section-label">
+      FILTRA
+    </div>
+
+    <div class="secondary-filters">
+
+      <button
+        class="filter-button active"
+        data-filter="all"
+        type="button"
+      >
+        Tutti
+      </button>
+
+      <button
+        class="filter-button"
+        data-filter="website"
+        type="button"
+      >
+        Sito web
+      </button>
+
+      <button
+        class="filter-button"
+        data-filter="contact"
+        type="button"
+      >
+        Con contatto
+      </button>
+
+      <button
+        class="filter-button"
+        data-filter="wifi"
+        type="button"
+      >
+        Wi-Fi
+      </button>
+
+      <button
+        class="filter-button"
+        data-filter="accessible"
+        type="button"
+      >
+        Accessibilità indicata
+      </button>
+
+    </div>
+
+    <div class="result-header">
+
+      <div>
+        <h2 class="result-title">
+          Dormire a Trento
+        </h2>
+
+        <div
+          id="resultCount"
+          class="result-count"
+        >
+          Caricamento...
+        </div>
+      </div>
+
+      <div class="source-small">
+        Dati delle strutture:
+        OpenStreetMap contributors
+      </div>
+
+    </div>
+
+    <div class="content-grid">
+
+      <section>
+
+        <div
+          id="cards"
+          class="cards"
+        ></div>
+
+        <div
+          id="loadMoreWrap"
+          class="load-more-wrap"
+          hidden
+        >
+          <button
+            id="loadMoreButton"
+            class="load-more"
+            type="button"
+          >
+            MOSTRA ALTRI
+          </button>
+        </div>
+
+      </section>
+
+      <aside class="map-column">
+
+        <div class="map-shell">
+
+          <div id="map"></div>
+
+          <div class="map-note">
+            Mappa © OpenStreetMap contributors ·
+            Le informazioni possono essere incomplete o cambiare nel tempo.
+            Verifica sempre direttamente con la struttura.
+          </div>
+
+        </div>
+
+      </aside>
+
+    </div>
+
+    <!-- =========================
+         BOOKING FUTURE
+    ========================== -->
+
+    <section class="booking-future">
+
+      <div>
+        <strong>
+          Prezzi e disponibilità arriveranno dopo.
+        </strong>
+
+        <p>
+          OraVicino sta preparando l'integrazione con partner di prenotazione.
+          Per ora trovi strutture, posizione e contatti senza inventare
+          prezzi o disponibilità.
+        </p>
+      </div>
+
+      <div class="booking-status">
+        PRENOTAZIONI · PROSSIMAMENTE
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- =========================
+       FOOTER
+  ========================== -->
+
+  <footer class="dormire-footer">
+
+    <div class="footer-inner">
+
+      <div>
+        <span class="footer-brand">OraVicino</span>
+        · Trento
+      </div>
+
+      <div>
+        Dati OpenStreetMap · ODbL
+      </div>
+
+    </div>
+
+  </footer>
+
+  <!-- =========================
+       SCRIPTS
+  ========================== -->
+
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  ></script>
+
+  <script src="meteo.js"></script>
+
+  <script>
+    const DEFAULT_CENTER = [46.06787, 11.12108];
+
+    const INITIAL_LIMIT = 30;
+    const LOAD_MORE_STEP = 30;
+    const MAX_MAP_MARKERS = 120;
+    const FAR_FROM_TRENTO_KM = 80;
+
+    let allStays = [];
+    let filteredStays = [];
+
+    let activeCategory = "all";
+    let activeFilter = "all";
+
+    let visibleLimit = INITIAL_LIMIT;
+
+    let selectedStayId = null;
+
+    let userPosition = null;
+    let nearbyActive = false;
+    let userMarker = null;
+
+    const markerMap = new Map();
+
+    /* =========================
+       DOM
+    ========================== */
+
+    const cardsElement =
+      document.getElementById("cards");
+
+    const resultCountElement =
+      document.getElementById("resultCount");
+
+    const searchInput =
+      document.getElementById("searchInput");
+
+    const nearbyButton =
+      document.getElementById("nearbyButton");
+
+    const locationStatus =
+      document.getElementById("locationStatus");
+
+    const loadMoreWrap =
+      document.getElementById("loadMoreWrap");
+
+    const loadMoreButton =
+      document.getElementById("loadMoreButton");
+
+    /* =========================
+       MAP
+    ========================== */
+
+    const map = L.map("map", {
+      zoomControl: true
+    }).setView(DEFAULT_CENTER, 13);
+
+    L.tileLayer(
+      "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+      {
+        maxZoom: 19,
+        attribution:
+          "&copy; OpenStreetMap contributors"
+      }
+    ).addTo(map);
+
+    const markersLayer =
+      L.layerGroup().addTo(map);
+
+    /* =========================
+       UTILS
+    ========================== */
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function safeUrl(value) {
+      if (!value) return null;
+
+      try {
+        const url = new URL(value);
+
+        if (
+          url.protocol === "http:" ||
+          url.protocol === "https:"
+        ) {
+          return url.href;
+        }
+      } catch (error) {
+        return null;
+      }
+
+      return null;
+    }
+
+    function normalizeText(value) {
+      return String(value ?? "")
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+    }
+
+    function toRadians(value) {
+      return value * Math.PI / 180;
+    }
+
+    function haversineDistance(
+      lat1,
+      lng1,
+      lat2,
+      lng2
+    ) {
+      const earthRadius = 6371;
+
+      const dLat =
+        toRadians(lat2 - lat1);
+
+      const dLng =
+        toRadians(lng2 - lng1);
+
+      const a =
+        Math.sin(dLat / 2) *
+        Math.sin(dLat / 2) +
+        Math.cos(toRadians(lat1)) *
+        Math.cos(toRadians(lat2)) *
+        Math.sin(dLng / 2) *
+        Math.sin(dLng / 2);
+
+      const c =
+        2 * Math.atan2(
+          Math.sqrt(a),
+          Math.sqrt(1 - a)
+        );
+
+      return earthRadius * c;
+    }
+
+    function formatDistance(distance) {
+      if (
+        distance === null ||
+        distance === undefined ||
+        !Number.isFinite(distance)
+      ) {
+        return null;
+      }
+
+      if (distance < 1) {
+        return `${Math.round(distance * 1000)} m`;
+      }
+
+      if (distance < 10) {
+        return `${distance.toFixed(1)} km`;
+      }
+
+      return `${Math.round(distance)} km`;
+    }
+
+    function formatAddress(stay) {
+      const parts = [];
+
+      if (stay.address) {
+        parts.push(stay.address);
+      }
+
+      if (
+        stay.area &&
+        !parts.includes(stay.area)
+      ) {
+        parts.push(stay.area);
+      }
+
+      if (
+        stay.city &&
+        !parts.includes(stay.city)
+      ) {
+        parts.push(stay.city);
+      }
+
+      return parts.length
+        ? parts.join(" · ")
+        : "Trento";
+    }
+
+    /* =========================
+       DATA
+    ========================== */
+
+    async function loadData() {
+      try {
+        const response = await fetch(
+          "data/dormire.json",
+          {
+            cache: "no-store"
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error(
+            `HTTP ${response.status}`
+          );
+        }
+
+        const data = await response.json();
+
+        const stays = Array.isArray(data)
+          ? data
+          : Array.isArray(data.stays)
+            ? data.stays
+            : [];
+
+        allStays = stays
+          .map(stay => ({
+            ...stay,
+            lat: Number(stay.lat),
+            lng: Number(stay.lng),
+            distance: null
+          }))
+          .filter(
+            stay =>
+              Number.isFinite(stay.lat) &&
+              Number.isFinite(stay.lng)
+          );
+
+        applyFilters();
+
+      } catch (error) {
+        console.error(
+          "Errore caricamento Dormire:",
+          error
+        );
+
+        resultCountElement.textContent =
+          "Impossibile caricare le strutture.";
+
+        cardsElement.innerHTML = `
+          <div class="empty-state">
+            Non riesco a caricare
+            <strong>data/dormire.json</strong>.
+            <br><br>
+            Esegui prima l'aggiornamento Dormire.
+          </div>
+        `;
+      }
+    }
+
+    /* =========================
+       FILTERS
+    ========================== */
+
+    function applyFilters() {
+      const query =
+        normalizeText(searchInput.value);
+
+      filteredStays =
+        allStays.filter(stay => {
+
+          if (
+            activeCategory !== "all" &&
+            stay.category !== activeCategory
+          ) {
+            return false;
+          }
+
+          if (query) {
+            const haystack =
+              normalizeText([
+                stay.name,
+                stay.label,
+                stay.category,
+                stay.address,
+                stay.area,
+                stay.city,
+                stay.description,
+                stay.operator,
+                stay.brand
+              ].filter(Boolean).join(" "));
+
+            if (!haystack.includes(query)) {
+              return false;
+            }
+          }
+
+          switch (activeFilter) {
+            case "website":
+              if (!stay.website) {
+                return false;
+              }
+              break;
+
+            case "contact":
+              if (!stay.hasContact) {
+                return false;
+              }
+              break;
+
+            case "wifi":
+              if (!stay.wifi) {
+                return false;
+              }
+              break;
+
+            case "accessible":
+              if (
+                stay.wheelchair !== "yes" &&
+                stay.wheelchair !== "limited"
+              ) {
+                return false;
+              }
+              break;
+          }
+
+          return true;
+        });
+
+      if (
+        nearbyActive &&
+        userPosition
+      ) {
+        filteredStays.sort(
+          (a, b) =>
+            (a.distance ?? Infinity) -
+            (b.distance ?? Infinity)
+        );
+      } else {
+        filteredStays.sort((a, b) => {
+          const categoryCompare =
+            String(a.category).localeCompare(
+              String(b.category),
+              "it"
+            );
+
+          if (categoryCompare !== 0) {
+            return categoryCompare;
+          }
+
+          return String(a.name).localeCompare(
+            String(b.name),
+            "it"
+          );
+        });
+      }
+
+      visibleLimit = INITIAL_LIMIT;
+
+      render();
+    }
+
+    /* =========================
+       RENDER
+    ========================== */
+
+    function render() {
+      renderCards();
+      renderMap();
+
+      const total =
+        filteredStays.length;
+
+      resultCountElement.textContent =
+        total === 1
+          ? "1 struttura trovata"
+          : `${total} strutture trovate`;
+
+      loadMoreWrap.hidden =
+        visibleLimit >= total;
+    }
+
+    function renderCards() {
+      const visible =
+        filteredStays.slice(
+          0,
+          visibleLimit
+        );
+
+      if (!visible.length) {
+        cardsElement.innerHTML = `
+          <div class="empty-state">
+            Nessuna struttura trovata
+            con questi filtri.
+          </div>
+        `;
+
+        return;
+      }
+
+      cardsElement.innerHTML =
+        visible.map(stay =>
+          cardHtml(stay)
+        ).join("");
+
+      document
+        .querySelectorAll(".stay-card")
+        .forEach(card => {
+          card.addEventListener(
+            "click",
+            event => {
+              if (
+                event.target.closest("a")
+              ) {
+                return;
+              }
+
+              selectStay(
+                card.dataset.id,
+                true
+              );
+            }
+          );
+        });
+    }
+
+    function cardHtml(stay) {
+      const website =
+        safeUrl(stay.website);
+
+      const distance =
+        formatDistance(stay.distance);
+
+      const chips = [];
+
+      if (distance) {
+        chips.push(
+          `<span class="chip distance">📍 ${escapeHtml(distance)}</span>`
+        );
+      }
+
+      if (stay.stars) {
+        chips.push(
+          `<span class="chip star">★ ${escapeHtml(stay.stars)}</span>`
+        );
+      }
+
+      if (stay.wifi) {
+        chips.push(
+          `<span class="chip">Wi-Fi</span>`
+        );
+      }
+
+      if (stay.rooms) {
+        chips.push(
+          `<span class="chip">${escapeHtml(stay.rooms)} camere</span>`
+        );
+      }
+
+      if (stay.beds) {
+        chips.push(
+          `<span class="chip">${escapeHtml(stay.beds)} posti letto</span>`
+        );
+      }
+
+      if (
+        stay.wheelchair === "yes"
+      ) {
+        chips.push(
+          `<span class="chip">♿ Accessibile</span>`
+        );
+      }
+
+      if (
+        stay.wheelchair === "limited"
+      ) {
+        chips.push(
+          `<span class="chip">♿ Accessibilità limitata</span>`
+        );
+      }
+
+      const links = [];
+
+      if (website) {
+        links.push(`
+          <a
+            class="card-link"
+            href="${escapeHtml(website)}"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            SITO UFFICIALE ↗
+          </a>
+        `);
+      }
+
+      if (stay.phone) {
+        const phoneHref =
+          String(stay.phone)
+            .replace(/[^\d+]/g, "");
+
+        links.push(`
+          <a
+            class="card-link secondary"
+            href="tel:${escapeHtml(phoneHref)}"
+          >
+            ☎ CHIAMA
+          </a>
+        `);
+      }
+
+      return `
+        <article
+          class="stay-card ${
+            selectedStayId === stay.id
+              ? "selected"
+              : ""
+          }"
+          data-id="${escapeHtml(stay.id)}"
+        >
+
+          <div class="stay-icon">
+            ${escapeHtml(stay.icon || "🛏️")}
+          </div>
+
+          <div>
+
+            <div class="stay-category">
+              ${escapeHtml(
+                stay.label ||
+                stay.category ||
+                "Dormire"
+              )}
+            </div>
+
+            <h3 class="stay-name">
+              ${escapeHtml(stay.name)}
+            </h3>
+
+            <div class="stay-address">
+              📍 ${escapeHtml(
+                formatAddress(stay)
+              )}
+            </div>
+
+            ${
+              stay.description
+                ? `
+                  <div class="stay-description">
+                    ${escapeHtml(stay.description)}
+                  </div>
+                `
+                : ""
+            }
+
+            ${
+              chips.length
+                ? `
+                  <div class="chips">
+                    ${chips.join("")}
+                  </div>
+                `
+                : ""
+            }
+
+            ${
+              links.length
+                ? `
+                  <div class="card-links">
+                    ${links.join("")}
+                  </div>
+                `
+                : ""
+            }
+
+          </div>
+
+        </article>
+      `;
+    }
+
+    /* =========================
+       MAP RENDER
+    ========================== */
+
+    function renderMap() {
+      markersLayer.clearLayers();
+      markerMap.clear();
+
+      const mapStays =
+        filteredStays.slice(
+          0,
+          MAX_MAP_MARKERS
+        );
+
+      const bounds = [];
+
+      mapStays.forEach(stay => {
+        const marker =
+          L.circleMarker(
+            [stay.lat, stay.lng],
+            {
+              radius:
+                selectedStayId === stay.id
+                  ? 9
+                  : 7,
+
+              color:
+                selectedStayId === stay.id
+                  ? "#ef6a3a"
+                  : "#74452f",
+
+              weight: 2,
+
+              fillColor:
+                selectedStayId === stay.id
+                  ? "#ef6a3a"
+                  : "#74452f",
+
+              fillOpacity: 0.86
+            }
+          );
+
+        marker.bindPopup(
+          popupHtml(stay)
+        );
+
+        marker.on("click", () => {
+          selectStay(
+            stay.id,
+            false
+          );
+        });
+
+        marker.addTo(markersLayer);
+
+        markerMap.set(
+          stay.id,
+          marker
+        );
+
+        bounds.push([
+          stay.lat,
+          stay.lng
+        ]);
+      });
+
+      if (
+        !nearbyActive &&
+        bounds.length > 0
+      ) {
+        if (bounds.length === 1) {
+          map.setView(
+            bounds[0],
+            15
+          );
+        } else {
+          map.fitBounds(
+            bounds,
+            {
+              padding: [35, 35],
+              maxZoom: 15
+            }
+          );
+        }
+      }
+    }
+
+    function popupHtml(stay) {
+      const distance =
+        formatDistance(stay.distance);
+
+      return `
+        <div>
+          <div class="map-popup-category">
+            ${escapeHtml(
+              stay.label ||
+              stay.category ||
+              "Dormire"
+            )}
+          </div>
+
+          <div class="map-popup-name">
+            ${escapeHtml(stay.name)}
+          </div>
+
+          <div class="map-popup-address">
+            ${escapeHtml(
+              formatAddress(stay)
+            )}
+            ${
+              distance
+                ? `<br>📍 ${escapeHtml(distance)}`
+                : ""
+            }
+          </div>
+        </div>
+      `;
+    }
+
+    /* =========================
+       SELECT CARD / MARKER
+    ========================== */
+
+    function selectStay(
+      stayId,
+      openPopup
+    ) {
+      selectedStayId = stayId;
+
+      const stay =
+        filteredStays.find(
+          item =>
+            String(item.id) ===
+            String(stayId)
+        );
+
+      if (!stay) {
+        return;
+      }
+
+      const index =
+        filteredStays.findIndex(
+          item =>
+            String(item.id) ===
+            String(stayId)
+        );
+
+      if (
+        index >= visibleLimit
+      ) {
+        visibleLimit =
+          index + 1;
+
+        renderCards();
+
+        loadMoreWrap.hidden =
+          visibleLimit >=
+          filteredStays.length;
+      }
+
+      document
+        .querySelectorAll(".stay-card")
+        .forEach(card => {
+          card.classList.toggle(
+            "selected",
+            String(card.dataset.id) ===
+            String(stayId)
+          );
+        });
+
+      renderMap();
+
+      const marker =
+        markerMap.get(stayId);
+
+      if (marker) {
+        map.flyTo(
+          [stay.lat, stay.lng],
+          Math.max(
+            map.getZoom(),
+            15
+          ),
+          {
+            duration: 0.55
+          }
+        );
+
+        if (openPopup) {
+          marker.openPopup();
+        }
+      }
+
+      const card =
+        document.querySelector(
+          `.stay-card[data-id="${CSS.escape(String(stayId))}"]`
+        );
+
+      if (
+        card &&
+        !openPopup
+      ) {
+        card.scrollIntoView({
+          behavior: "smooth",
+          block: "center"
+        });
+      }
+    }
+
+    /* =========================
+       GEOLOCATION
+    ========================== */
+
+    function activateNearby() {
+      if (
+        !navigator.geolocation
+      ) {
+        locationStatus.textContent =
+          "La geolocalizzazione non è disponibile su questo dispositivo.";
+
+        return;
+      }
+
+      nearbyButton.disabled = true;
+      nearbyButton.textContent =
+        "CERCO LA POSIZIONE...";
+
+      locationStatus.textContent =
+        "Sto cercando la tua posizione.";
+
+      navigator.geolocation.getCurrentPosition(
+        position => {
+          const lat =
+            position.coords.latitude;
+
+          const lng =
+            position.coords.longitude;
+
+          userPosition = {
+            lat,
+            lng
+          };
+
+          allStays =
+            allStays.map(stay => ({
+              ...stay,
+
+              distance:
+                haversineDistance(
+                  lat,
+                  lng,
+                  stay.lat,
+                  stay.lng
+                )
+            }));
+
+          nearbyActive = true;
+
+          nearbyButton.disabled = false;
+          nearbyButton.classList.add(
+            "active"
+          );
+
+          nearbyButton.textContent =
+            "✓ POSIZIONE ATTIVA";
+
+          const distanceFromTrento =
+            haversineDistance(
+              lat,
+              lng,
+              DEFAULT_CENTER[0],
+              DEFAULT_CENTER[1]
+            );
+
+          if (userMarker) {
+            map.removeLayer(
+              userMarker
+            );
+          }
+
+          userMarker =
+            L.circleMarker(
+              [lat, lng],
+              {
+                radius: 9,
+                color: "#17231d",
+                weight: 3,
+                fillColor: "#f2c14e",
+                fillOpacity: 1
+              }
+            )
+            .addTo(map)
+            .bindPopup(
+              "<strong>La tua posizione</strong>"
+            );
+
+          if (
+            distanceFromTrento <=
+            FAR_FROM_TRENTO_KM
+          ) {
+            locationStatus.textContent =
+              "Strutture ordinate dalla più vicina.";
+
+            map.flyTo(
+              [lat, lng],
+              13,
+              {
+                duration: 0.7
+              }
+            );
+          } else {
+            locationStatus.textContent =
+              "Posizione rilevata. Sei lontano da Trento: mantengo la mappa sulla città.";
+          }
+
+          applyFilters();
+        },
+
+        error => {
+          console.error(
+            "Errore geolocalizzazione:",
+            error
+          );
+
+          nearbyButton.disabled = false;
+
+          nearbyButton.textContent =
+            "📍 USA LA MIA POSIZIONE";
+
+          locationStatus.textContent =
+            "Non riesco ad accedere alla tua posizione. Controlla i permessi del browser.";
+        },
+
+        {
+          enableHighAccuracy: false,
+          timeout: 10000,
+          maximumAge: 300000
+        }
+      );
+    }
+
+    /* =========================
+       EVENTS
+    ========================== */
+
+    document
+      .querySelectorAll(
+        ".category-button"
+      )
+      .forEach(button => {
+        button.addEventListener(
+          "click",
+          () => {
+            document
+              .querySelectorAll(
+                ".category-button"
+              )
+              .forEach(item =>
+                item.classList.remove(
+                  "active"
+                )
+              );
+
+            button.classList.add(
+              "active"
+            );
+
+            activeCategory =
+              button.dataset.category;
+
+            selectedStayId = null;
+
+            applyFilters();
+          }
+        );
+      });
+
+    document
+      .querySelectorAll(
+        ".filter-button"
+      )
+      .forEach(button => {
+        button.addEventListener(
+          "click",
+          () => {
+            document
+              .querySelectorAll(
+                ".filter-button"
+              )
+              .forEach(item =>
+                item.classList.remove(
+                  "active"
+                )
+              );
+
+            button.classList.add(
+              "active"
+            );
+
+            activeFilter =
+              button.dataset.filter;
+
+            selectedStayId = null;
+
+            applyFilters();
+          }
+        );
+      });
+
+    searchInput.addEventListener(
+      "input",
+      () => {
+        selectedStayId = null;
+        applyFilters();
+      }
+    );
+
+    nearbyButton.addEventListener(
+      "click",
+      activateNearby
+    );
+
+    loadMoreButton.addEventListener(
+      "click",
+      () => {
+        visibleLimit +=
+          LOAD_MORE_STEP;
+
+        renderCards();
+
+        loadMoreWrap.hidden =
+          visibleLimit >=
+          filteredStays.length;
+      }
+    );
+
+    /* =========================
+       START
+    ========================== */
+
+    loadData();
+  </script>
+
+</body>
+</html>
