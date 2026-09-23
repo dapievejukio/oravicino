@@ -29,7 +29,6 @@
     href="meteo.css"
   >
 
-
   <!-- LEAFLET -->
 
   <link
@@ -45,24 +44,29 @@
   <style>
 
     /* =====================================================
-       BASE
+       IDENTIDADE BERE
     ===================================================== */
 
     :root {
 
-      --wine: #6f2938;
-      --wine-dark: #4f1c29;
-      --wine-soft: #8d4352;
+      --wine: #713b58;
+      --wine-dark: #51283f;
+      --wine-soft: #8b5570;
+
       --cream: #f7f3e9;
       --paper: #fffdf8;
       --ink: #17231d;
       --muted: #6d746f;
-      --orange: #ef6a3a;
+
       --yellow: #f2c14e;
-      --green: #173f32;
 
     }
 
+
+
+    /* =====================================================
+       BASE
+    ===================================================== */
 
     body {
 
@@ -70,13 +74,13 @@
 
         radial-gradient(
           circle at 83% 7%,
-          rgba(111,41,56,.11),
+          rgba(113,59,88,.12),
           transparent 25%
         ),
 
         radial-gradient(
           circle at 2% 45%,
-          rgba(23,63,50,.06),
+          rgba(23,63,50,.05),
           transparent 20%
         ),
 
@@ -137,43 +141,6 @@
 
       padding:
         35px 30px 110px;
-
-    }
-
-
-
-    /* =====================================================
-       VOLTAR
-    ===================================================== */
-
-    .back {
-
-      display: inline-flex;
-
-      align-items: center;
-
-      gap: 7px;
-
-      margin:
-        15px 0 32px;
-
-      color: #667068;
-
-      font-size: 14px;
-
-      font-weight: 650;
-
-      text-decoration: none;
-
-      transition:
-        color .2s ease;
-
-    }
-
-
-    .back:hover {
-
-      color: var(--wine);
 
     }
 
@@ -300,7 +267,7 @@
       border-radius: 50%;
 
       background:
-        rgba(111,41,56,.16);
+        rgba(113,59,88,.17);
 
       pointer-events: none;
 
@@ -719,14 +686,18 @@
 
         linear-gradient(
           115deg,
-          #4f1c29 0%,
-          #6f2938 55%,
-          #7c3445 100%
+          var(--wine-dark) 0%,
+          var(--wine) 55%,
+          var(--wine-soft) 100%
         );
 
       box-shadow:
         0 18px 45px
-        rgba(79,28,41,.16);
+        rgba(81,40,63,.17);
+
+      transition:
+        background .25s ease,
+        box-shadow .25s ease;
 
     }
 
@@ -960,25 +931,32 @@
     }
 
 
+    /*
+      Quando la posizione viene attivata
+      BERE rimane BERE.
+      Nessun passaggio al verde.
+    */
+
     .nearby-feature.active {
 
       background:
 
         radial-gradient(
           circle at 80% -40%,
-          rgba(242,193,78,.18),
+          rgba(242,193,78,.21),
           transparent 38%
         ),
 
         linear-gradient(
           115deg,
-          #173f32 0%,
-          #245b48 100%
+          #51283f 0%,
+          #713b58 58%,
+          #85506b 100%
         );
 
       box-shadow:
-        0 18px 45px
-        rgba(23,63,50,.16);
+        0 20px 50px
+        rgba(81,40,63,.22);
 
     }
 
@@ -986,7 +964,7 @@
     .nearby-feature.active
     .nearby-button {
 
-      color: #173f32;
+      color: var(--wine-dark);
 
       background: #fffdf8;
 
@@ -999,8 +977,8 @@
 
         linear-gradient(
           115deg,
-          #5e3038,
-          #7b3945
+          #5e303f,
+          #7c425d
         );
 
     }
@@ -1164,7 +1142,7 @@
         translateY(-4px);
 
       border-color:
-        rgba(111,41,56,.34);
+        rgba(113,59,88,.36);
 
       box-shadow:
         0 18px 50px
@@ -1180,7 +1158,7 @@
 
       box-shadow:
         0 18px 55px
-        rgba(111,41,56,.17);
+        rgba(113,59,88,.18);
 
     }
 
@@ -1233,8 +1211,8 @@
 
         linear-gradient(
           145deg,
-          #81384a,
-          #4f1c29
+          var(--wine-soft),
+          var(--wine-dark)
         );
 
       font-size: 55px;
@@ -1373,7 +1351,7 @@
 
       border:
         2px solid
-        rgba(111,41,56,.13);
+        rgba(113,59,88,.15);
 
       font-size: 12px;
 
@@ -1694,16 +1672,28 @@
     }
 
 
+    /*
+      Amarelo = estado selecionado global.
+      Evita usar o laranja reservado a Stasera.
+    */
+
     .marker-pin.active {
 
       background:
-        var(--orange);
+        var(--yellow);
 
       transform:
         rotate(-45deg)
         scale(1.28);
 
       z-index: 999;
+
+    }
+
+
+    .marker-pin.active span {
+
+      color: var(--ink);
 
     }
 
@@ -1898,13 +1888,6 @@
 
         padding:
           20px 18px 70px;
-
-      }
-
-
-      .back {
-
-        margin-bottom: 25px;
 
       }
 
@@ -2132,7 +2115,7 @@
 
 
 
-<body>
+<body class="page-bere">
 
 
   <!-- =====================================================
@@ -2173,19 +2156,75 @@
 
 
   <!-- =====================================================
+       NAVEGAÇÃO GLOBAL
+  ===================================================== -->
+
+  <div class="section-nav-wrap">
+
+    <nav
+      class="section-nav"
+      aria-label="Sezioni OraVicino"
+    >
+
+      <a
+        class="nav-mangiare"
+        href="mangiare.html"
+      >
+        🍝 Mangiare
+      </a>
+
+
+      <a
+        class="nav-bere active"
+        href="bere.html"
+        aria-current="page"
+      >
+        🍷 Bere
+      </a>
+
+
+      <a
+        class="nav-stasera"
+        href="stasera.html"
+      >
+        🌙 Stasera
+      </a>
+
+
+      <a
+        class="nav-scoprire"
+        href="scoprire.html"
+      >
+        🧭 Scoprire
+      </a>
+
+
+      <a
+        class="nav-servizi"
+        href="servizi.html"
+      >
+        🏥 Servizi
+      </a>
+
+
+      <a
+        class="nav-dormire"
+        href="dormire.html"
+      >
+        🛏️ Dormire
+      </a>
+
+    </nav>
+
+  </div>
+
+
+
+  <!-- =====================================================
        CONTEÚDO
   ===================================================== -->
 
   <main class="drink-page">
-
-
-    <a
-      class="back"
-      href="index.html"
-    >
-      ← Torna alla home
-    </a>
-
 
 
     <!-- =================================================
@@ -2503,6 +2542,12 @@
 
     <p>
       Trento · Italia
+    </p>
+
+    <p>
+      <a href="mailto:ciao@oravicino.com">
+        ciao@oravicino.com
+      </a>
     </p>
 
     <p class="footer-small">
@@ -3118,8 +3163,6 @@
 
     /* =====================================================
        BUSCA RECEBIDA PELA URL
-       Exemplo:
-       bere.html?search=birra
     ===================================================== */
 
     function readSearchFromUrl() {
