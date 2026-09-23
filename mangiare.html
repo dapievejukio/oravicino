@@ -44,6 +44,17 @@
   <style>
 
     /* ========================================
+       IDENTIDADE DA PÁGINA
+    ======================================== */
+
+    :root {
+      --page-color: var(--mangiare, #173f32);
+      --page-color-2: #245b48;
+      --page-accent: #f2c14e;
+    }
+
+
+    /* ========================================
        BASE
     ======================================== */
 
@@ -120,35 +131,122 @@
 
 
     /* ========================================
-       VOLTAR
+       NAVEGAÇÃO RÁPIDA
     ======================================== */
 
-    .back {
+    .section-nav {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 8px;
+
+      margin:
+        15px 0 32px;
+
+      overflow-x: auto;
+
+      scrollbar-width: none;
+
+      -webkit-overflow-scrolling: touch;
+
+    }
+
+
+    .section-nav::-webkit-scrollbar {
+
+      display: none;
+
+    }
+
+
+    .section-nav-home,
+    .section-nav-link {
+
+      flex: 0 0 auto;
+
+      min-height: 44px;
 
       display: inline-flex;
 
       align-items: center;
 
+      justify-content: center;
+
       gap: 7px;
 
-      margin: 15px 0 32px;
+      padding:
+        0 15px;
 
-      color: #667068;
+      border-radius: 999px;
 
-      font-size: 14px;
+      border:
+        1px solid
+        rgba(23,35,29,.11);
 
-      font-weight: 650;
+      background:
+        rgba(255,253,248,.62);
+
+      color: #59645d;
 
       text-decoration: none;
 
-      transition: color .2s ease;
+      font-size: 12px;
+
+      font-weight: 700;
+
+      white-space: nowrap;
+
+      transition:
+        transform .2s ease,
+        background .2s ease,
+        color .2s ease,
+        border-color .2s ease;
 
     }
 
 
-    .back:hover {
+    .section-nav-home {
 
-      color: #173f32;
+      width: 44px;
+
+      padding: 0;
+
+      font-size: 17px;
+
+    }
+
+
+    .section-nav-link:hover,
+    .section-nav-home:hover {
+
+      transform:
+        translateY(-1px);
+
+      background: #fffdf8;
+
+      color: #17231d;
+
+      border-color:
+        rgba(23,35,29,.22);
+
+    }
+
+
+    .section-nav-link.active {
+
+      background:
+        var(--page-color);
+
+      color: #fffdf8;
+
+      border-color:
+        var(--page-color);
+
+      box-shadow:
+        0 7px 18px
+        rgba(23,63,50,.14);
 
     }
 
@@ -265,7 +363,7 @@
       border-radius: 50%;
 
       background:
-        rgba(242,193,78,.14);
+        rgba(23,63,50,.12);
 
       pointer-events: none;
 
@@ -298,7 +396,7 @@
 
       gap: 8px;
 
-      color: #ef6a3a;
+      color: var(--page-color);
 
       font-size: 12px;
 
@@ -319,7 +417,8 @@
 
       border-radius: 999px;
 
-      background: #ef6a3a;
+      background:
+        var(--page-color);
 
     }
 
@@ -337,7 +436,7 @@
 
       letter-spacing: -4px;
 
-      color: #173f32;
+      color: var(--page-color);
 
     }
 
@@ -378,7 +477,7 @@
 
       text-align: center;
 
-      color: #173f32;
+      color: var(--page-color);
 
       border-radius: 20px;
 
@@ -486,7 +585,7 @@
 
     .food-search-icon {
 
-      color: #173f32;
+      color: var(--page-color);
 
       font-size: 21px;
 
@@ -582,7 +681,7 @@
         translateY(-1px);
 
       border-color:
-        #173f32;
+        var(--page-color);
 
       background:
         rgba(255,253,248,.98);
@@ -592,11 +691,13 @@
 
     .filter.active {
 
-      background: #173f32;
+      background:
+        var(--page-color);
 
       color: #fffdf8;
 
-      border-color: #173f32;
+      border-color:
+        var(--page-color);
 
     }
 
@@ -680,9 +781,9 @@
       background:
         linear-gradient(
           120deg,
-          #173f32 0%,
+          var(--page-color) 0%,
           #1b4939 58%,
-          #245b48 100%
+          var(--page-color-2) 100%
         );
 
       box-shadow:
@@ -751,7 +852,7 @@
       background:
         linear-gradient(
           120deg,
-          #173f32 0%,
+          var(--page-color) 0%,
           #205443 65%,
           #28634f 100%
         );
@@ -812,7 +913,7 @@
 
       margin-bottom: 4px;
 
-      color: #f2c14e;
+      color: var(--page-accent);
 
       font-size: 9px;
 
@@ -881,7 +982,8 @@
 
       border-radius: 999px;
 
-      background: #f2c14e;
+      background:
+        var(--page-accent);
 
       color: #17231d;
 
@@ -932,9 +1034,9 @@
 
     .nearby-button.active {
 
-      background: #ef6a3a;
+      background: #fffdf8;
 
-      color: #fff;
+      color: var(--page-color);
 
       border-color:
         rgba(255,255,255,.12);
@@ -1075,7 +1177,8 @@
 
     .restaurant.selected {
 
-      border-color: #173f32;
+      border-color:
+        var(--page-color);
 
       box-shadow:
         0 18px 55px
@@ -1094,7 +1197,7 @@
 
       border:
         2px solid
-        #173f32;
+        var(--page-color);
 
       border-radius: 24px;
 
@@ -1266,7 +1369,7 @@
 
       background: #fffdf8;
 
-      color: #173f32;
+      color: var(--page-color);
 
       border:
         2px solid
@@ -1305,7 +1408,8 @@
 
       border-radius: 999px;
 
-      background: #f2c14e;
+      background:
+        var(--page-accent);
 
       color: #17231d;
 
@@ -1336,7 +1440,7 @@
 
     .restaurant-area {
 
-      color: #ef6a3a;
+      color: var(--page-color);
 
       font-size: 10px;
 
@@ -1406,7 +1510,7 @@
       background:
         rgba(23,63,50,.08);
 
-      color: #173f32;
+      color: var(--page-color);
 
       font-size: 11px;
 
@@ -1524,7 +1628,7 @@
         0 8px 25px
         rgba(25,39,32,.10);
 
-      color: #173f32;
+      color: var(--page-color);
 
       font-size: 11px;
 
@@ -1587,7 +1691,8 @@
       transform:
         rotate(-45deg);
 
-      background: #173f32;
+      background:
+        var(--page-color);
 
       border:
         3px solid
@@ -1620,13 +1725,21 @@
 
     .marker-pin.active {
 
-      background: #ef6a3a;
+      background:
+        var(--page-accent);
 
       transform:
         rotate(-45deg)
         scale(1.28);
 
       z-index: 999;
+
+    }
+
+
+    .marker-pin.active span {
+
+      color: #17231d;
 
     }
 
@@ -1697,7 +1810,8 @@
 
       border-radius: 50%;
 
-      background: #173f32;
+      background:
+        var(--page-color);
 
       color: white;
 
@@ -1745,7 +1859,7 @@
 
       margin-top: 7px;
 
-      color: #173f32;
+      color: var(--page-color);
 
       font-size: 11px;
 
@@ -1883,9 +1997,20 @@
       }
 
 
-      .back {
+      .section-nav {
 
-        margin-bottom: 25px;
+        margin:
+          10px 0 24px;
+
+        padding-bottom: 3px;
+
+      }
+
+
+      .section-nav-home,
+      .section-nav-link {
+
+        min-height: 42px;
 
       }
 
@@ -2132,12 +2257,74 @@
   <main class="food-page">
 
 
-    <a
-      class="back"
-      href="index.html"
+    <!-- ========================================
+         NAVEGAÇÃO ENTRE ÁREAS
+    ======================================== -->
+
+    <nav
+      class="section-nav"
+      aria-label="Sezioni OraVicino"
     >
-      ← Torna alla home
-    </a>
+
+      <a
+        class="section-nav-home"
+        href="index.html"
+        aria-label="Home OraVicino"
+        title="Home"
+      >
+        ←
+      </a>
+
+
+      <a
+        class="section-nav-link active"
+        href="mangiare.html"
+        aria-current="page"
+      >
+        🍝 Mangiare
+      </a>
+
+
+      <a
+        class="section-nav-link"
+        href="bere.html"
+      >
+        🍷 Bere
+      </a>
+
+
+      <a
+        class="section-nav-link"
+        href="stasera.html"
+      >
+        🌙 Stasera
+      </a>
+
+
+      <a
+        class="section-nav-link"
+        href="scoprire.html"
+      >
+        🏔️ Scoprire
+      </a>
+
+
+      <a
+        class="section-nav-link"
+        href="servizi.html"
+      >
+        ◉ Servizi
+      </a>
+
+
+      <a
+        class="section-nav-link"
+        href="dormire.html"
+      >
+        🛏️ Dormire
+      </a>
+
+    </nav>
 
 
 
@@ -2297,6 +2484,19 @@
 
 
     <!-- ========================================
+         METEO
+    ======================================== -->
+
+    <div
+      id="oravicino-meteo"
+      data-city="Trento"
+      data-lat="46.0679"
+      data-lon="11.1211"
+    ></div>
+
+
+
+    <!-- ========================================
          VICINO A ME · DESTAQUE
     ======================================== -->
 
@@ -2422,6 +2622,14 @@
 
     <p>
       Trento · Italia
+    </p>
+
+    <p>
+      <a
+        href="mailto:ciao@oravicino.com"
+      >
+        ciao@oravicino.com
+      </a>
     </p>
 
     <p class="footer-small">
