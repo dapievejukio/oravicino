@@ -1,4 +1,456 @@
-/* CORREÇÃO FINAL — MENU RÁPIDO */
+/* =========================================================
+   ORAVICINO — DESIGN SYSTEM GLOBAL
+   ========================================================= */
+
+
+/* =========================================================
+   1. VARIÁVEIS GLOBAIS
+   ========================================================= */
+
+:root {
+
+  /* Identidade OraVicino */
+
+  --bg: #f5f1e8;
+  --paper: #fffdf8;
+
+  --ink: #17231d;
+  --muted: #6d746f;
+
+  --line: rgba(23, 35, 29, 0.12);
+
+  --green: #173f32;
+  --green-2: #245b48;
+
+  --orange: #ef6a3a;
+  --yellow: #f2c14e;
+
+
+  /* =======================================================
+     CORES DAS ÁREAS
+     ======================================================= */
+
+  /* Mangiare */
+  --mangiare: #245b48;
+  --mangiare-soft: #e7efe9;
+
+  /* Bere */
+  --bere: #713b58;
+  --bere-soft: #f0e5eb;
+
+  /* Stasera */
+  --stasera: #d85b32;
+  --stasera-soft: #f8e5dc;
+
+  /* Scoprire */
+  --scoprire: #28716d;
+  --scoprire-soft: #e1efed;
+
+  /* Servizi */
+  --servizi: #416d87;
+  --servizi-soft: #e5edf2;
+
+  /* Dormire */
+  --dormire: #74452f;
+  --dormire-soft: #efe5df;
+
+
+  /* =======================================================
+     COMPONENTES
+     ======================================================= */
+
+  --section-color: var(--green);
+  --section-soft: #e7efe9;
+
+  --radius-small: 10px;
+  --radius-medium: 16px;
+  --radius-large: 22px;
+
+  --shadow-small:
+    0 5px 18px rgba(23, 35, 29, 0.05);
+
+  --shadow-medium:
+    0 10px 30px rgba(23, 35, 29, 0.08);
+}
+
+
+/* =========================================================
+   2. RESET BÁSICO
+   ========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+
+  background: var(--bg);
+  color: var(--ink);
+
+  font-family:
+    "DM Sans",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+}
+
+img {
+  max-width: 100%;
+}
+
+
+/* =========================================================
+   3. IDENTIDADE POR PÁGINA
+
+   Usar no BODY:
+
+   body class="page-mangiare"
+   body class="page-bere"
+   body class="page-stasera"
+   body class="page-scoprire"
+   body class="page-servizi"
+   body class="page-dormire"
+   ========================================================= */
+
+body.page-mangiare {
+  --section-color: var(--mangiare);
+  --section-soft: var(--mangiare-soft);
+}
+
+body.page-bere {
+  --section-color: var(--bere);
+  --section-soft: var(--bere-soft);
+}
+
+body.page-stasera {
+  --section-color: var(--stasera);
+  --section-soft: var(--stasera-soft);
+}
+
+body.page-scoprire {
+  --section-color: var(--scoprire);
+  --section-soft: var(--scoprire-soft);
+}
+
+body.page-servizi {
+  --section-color: var(--servizi);
+  --section-soft: var(--servizi-soft);
+}
+
+body.page-dormire {
+  --section-color: var(--dormire);
+  --section-soft: var(--dormire-soft);
+}
+
+
+/* =========================================================
+   4. NAVEGAÇÃO PRINCIPAL DAS ÁREAS
+   ========================================================= */
+
+.section-nav-wrap {
+  width: 100%;
+
+  background: var(--paper);
+
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.section-nav {
+  width: min(1180px, calc(100% - 40px));
+
+  margin: 0 auto;
+  padding: 10px 0;
+
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  overflow-x: auto;
+
+  scrollbar-width: none;
+}
+
+.section-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.section-nav a {
+  flex: 0 0 auto;
+
+  min-height: 38px;
+
+  padding: 0 14px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 6px;
+
+  border: 1px solid transparent;
+  border-radius: 999px;
+
+  color: var(--muted);
+
+  font-size: 13px;
+  font-weight: 700;
+
+  text-decoration: none;
+
+  white-space: nowrap;
+
+  transition:
+    background .18s ease,
+    color .18s ease,
+    border-color .18s ease,
+    transform .18s ease;
+}
+
+.section-nav a:hover {
+  background: rgba(23, 35, 29, 0.05);
+
+  color: var(--ink);
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   5. CORES INDIVIDUAIS DA NAVEGAÇÃO
+   ========================================================= */
+
+.section-nav a.nav-mangiare:hover,
+.section-nav a.nav-mangiare.active {
+  background: var(--mangiare);
+  border-color: var(--mangiare);
+  color: white;
+}
+
+.section-nav a.nav-bere:hover,
+.section-nav a.nav-bere.active {
+  background: var(--bere);
+  border-color: var(--bere);
+  color: white;
+}
+
+.section-nav a.nav-stasera:hover,
+.section-nav a.nav-stasera.active {
+  background: var(--stasera);
+  border-color: var(--stasera);
+  color: white;
+}
+
+.section-nav a.nav-scoprire:hover,
+.section-nav a.nav-scoprire.active {
+  background: var(--scoprire);
+  border-color: var(--scoprire);
+  color: white;
+}
+
+.section-nav a.nav-servizi:hover,
+.section-nav a.nav-servizi.active {
+  background: var(--servizi);
+  border-color: var(--servizi);
+  color: white;
+}
+
+.section-nav a.nav-dormire:hover,
+.section-nav a.nav-dormire.active {
+  background: var(--dormire);
+  border-color: var(--dormire);
+  color: white;
+}
+
+
+/* =========================================================
+   6. COMPONENTES QUE HERDAM A COR DA PÁGINA
+   ========================================================= */
+
+.section-color {
+  color: var(--section-color);
+}
+
+.section-background {
+  background: var(--section-color);
+  color: white;
+}
+
+.section-soft {
+  background: var(--section-soft);
+}
+
+.section-button {
+  min-height: 44px;
+
+  padding: 0 18px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  border: 1px solid var(--section-color);
+  border-radius: 999px;
+
+  background: var(--section-color);
+  color: white;
+
+  font-size: 13px;
+  font-weight: 800;
+
+  text-decoration: none;
+
+  cursor: pointer;
+
+  transition:
+    transform .18s ease,
+    opacity .18s ease,
+    box-shadow .18s ease;
+}
+
+.section-button:hover {
+  transform: translateY(-1px);
+
+  box-shadow: var(--shadow-small);
+}
+
+.section-button:active {
+  transform: translateY(0);
+}
+
+
+/* =========================================================
+   7. CORES DAS CATEGORIAS NA HOME
+   ========================================================= */
+
+.category-mangiare {
+  --category-color: var(--mangiare);
+  --category-soft: var(--mangiare-soft);
+}
+
+.category-bere {
+  --category-color: var(--bere);
+  --category-soft: var(--bere-soft);
+}
+
+.category-stasera {
+  --category-color: var(--stasera);
+  --category-soft: var(--stasera-soft);
+}
+
+.category-scoprire {
+  --category-color: var(--scoprire);
+  --category-soft: var(--scoprire-soft);
+}
+
+.category-servizi {
+  --category-color: var(--servizi);
+  --category-soft: var(--servizi-soft);
+}
+
+.category-dormire {
+  --category-color: var(--dormire);
+  --category-soft: var(--dormire-soft);
+}
+
+
+/* Elementos opcionais dentro dos cards da Home */
+
+.category-accent {
+  color: var(--category-color);
+}
+
+.category-icon {
+  background: var(--category-soft);
+  color: var(--category-color);
+}
+
+.category-button {
+  border-color: var(--category-color);
+
+  background: var(--category-color);
+  color: white;
+}
+
+
+/* =========================================================
+   8. CARDS GLOBAIS
+   ========================================================= */
+
+.ov-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-medium);
+
+  background: var(--paper);
+
+  box-shadow: var(--shadow-small);
+
+  transition:
+    transform .18s ease,
+    box-shadow .18s ease;
+}
+
+.ov-card:hover {
+  transform: translateY(-2px);
+
+  box-shadow: var(--shadow-medium);
+}
+
+
+/* =========================================================
+   9. ESTADOS / CHIPS
+   ========================================================= */
+
+.ov-chip {
+  min-height: 27px;
+
+  padding: 0 9px;
+
+  display: inline-flex;
+  align-items: center;
+
+  border-radius: 999px;
+
+  background: rgba(23, 35, 29, 0.06);
+
+  color: var(--muted);
+
+  font-size: 10px;
+  font-weight: 800;
+
+  white-space: nowrap;
+}
+
+.ov-chip.section {
+  background: var(--section-soft);
+  color: var(--section-color);
+}
+
+
+/* =========================================================
+   10. QUICK FILTERS
+   CORREÇÃO FINAL — MENU RÁPIDO
+   ========================================================= */
 
 .quick-filters > a.quick-link,
 .quick-filters > button {
@@ -39,13 +491,11 @@
     transform .2s ease;
 }
 
-
 .quick-filters > a.quick-link span,
 .quick-filters > button span {
   margin: 0;
   display: inline-block;
 }
-
 
 .quick-filters > a.quick-link:hover,
 .quick-filters > button:hover {
@@ -56,13 +506,109 @@
 }
 
 
+/* =========================================================
+   11. FOOTER INSTITUCIONAL
+   ========================================================= */
+
+.ov-footer {
+  padding: 36px 20px;
+
+  background: var(--ink);
+
+  color: rgba(255, 255, 255, 0.67);
+}
+
+.ov-footer-inner {
+  width: min(1180px, 100%);
+
+  margin: 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 25px;
+}
+
+.ov-footer-brand {
+  color: white;
+
+  font-family: "Playfair Display", serif;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.ov-footer-brand span {
+  color: var(--orange);
+}
+
+.ov-footer a {
+  color: rgba(255, 255, 255, 0.82);
+
+  text-decoration: none;
+}
+
+.ov-footer a:hover {
+  color: white;
+}
+
+
+/* =========================================================
+   12. ACESSIBILIDADE
+   ========================================================= */
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid rgba(242, 193, 78, 0.7);
+  outline-offset: 3px;
+}
+
+
+/* =========================================================
+   13. MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+  .section-nav {
+    width: 100%;
+
+    padding:
+      9px
+      16px;
+  }
+
+  .section-nav a {
+    min-height: 38px;
+
+    padding:
+      0
+      13px;
+
+    font-size: 12px;
+  }
+
+  .ov-footer-inner {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+}
+
+
 @media (max-width: 560px) {
 
   .quick-filters {
     display: flex;
     flex-wrap: nowrap;
+
     gap: 8px;
+
     overflow-x: auto;
+
     scrollbar-width: none;
   }
 
@@ -73,9 +619,12 @@
   .quick-filters > a.quick-link,
   .quick-filters > button {
     flex: 0 0 auto;
+
     height: 44px;
     min-height: 44px;
+
     padding: 0 16px;
+
     font-size: 14px;
   }
 
