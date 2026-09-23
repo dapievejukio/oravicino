@@ -1,0 +1,2186 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Adesso a Trento | OraVicino</title>
+
+  <meta
+    name="description"
+    content="Cosa fare adesso a Trento? OraVicino combina luoghi, cibo, eventi e contesto per aiutarti a decidere."
+  >
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="meteo.css">
+
+  <style>
+    :root {
+      --green: #173f32;
+      --green-2: #245b48;
+      --orange: #ef6a3a;
+      --yellow: #f2c14e;
+      --paper: #fffdf8;
+      --bg: #f5f1e8;
+      --ink: #17231d;
+      --muted: #6d746f;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+    }
+
+    a {
+      color: inherit;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    /* =========================
+       TOPBAR
+    ========================= */
+
+    .topbar {
+      max-width: 1240px;
+      min-height: 76px;
+      margin: 0 auto;
+      padding: 0 28px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      font-family: "Playfair Display", serif;
+      font-size: 29px;
+      font-weight: 800;
+      letter-spacing: -0.8px;
+      text-decoration: none;
+    }
+
+    .logo span {
+      color: var(--orange);
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    /* =========================
+       HERO
+    ========================= */
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+
+      background:
+        radial-gradient(
+          circle at 84% 20%,
+          rgba(242, 193, 78, 0.18),
+          transparent 30%
+        ),
+        linear-gradient(
+          135deg,
+          #173f32 0%,
+          #1d4a3a 58%,
+          #173f32 100%
+        );
+
+      color: white;
+    }
+
+    .hero::after {
+      content: "⌖";
+
+      position: absolute;
+      right: 7%;
+      top: -55px;
+
+      color: rgba(255, 255, 255, 0.035);
+
+      font-size: 310px;
+      line-height: 1;
+
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+
+      max-width: 1240px;
+      min-height: 345px;
+      margin: 0 auto;
+      padding: 60px 28px 54px;
+
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 55px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      margin-bottom: 13px;
+
+      color: var(--yellow);
+
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 1.7px;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      max-width: 800px;
+      margin: 0;
+
+      font-family: "Playfair Display", serif;
+      font-size: clamp(45px, 6.2vw, 78px);
+      line-height: 0.98;
+      letter-spacing: -2.7px;
+    }
+
+    .hero-description {
+      max-width: 700px;
+      margin: 19px 0 0;
+
+      color: rgba(255, 255, 255, 0.78);
+
+      font-size: 16px;
+      line-height: 1.65;
+    }
+
+    .hero-icon {
+      width: 150px;
+      height: 150px;
+
+      display: grid;
+      place-items: center;
+
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 50%;
+
+      background: rgba(255, 255, 255, 0.06);
+
+      font-size: 65px;
+    }
+
+    /* =========================
+       MODE SELECTOR
+    ========================= */
+
+    .mode-wrap {
+      max-width: 1240px;
+      margin: -25px auto 0;
+      padding: 0 28px;
+
+      position: relative;
+      z-index: 5;
+    }
+
+    .mode-bar {
+      padding: 10px;
+
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+
+      border: 1px solid rgba(23, 35, 29, 0.08);
+      border-radius: 19px;
+
+      background: var(--paper);
+
+      box-shadow: 0 12px 35px rgba(23, 35, 29, 0.08);
+    }
+
+    .mode-button {
+      min-height: 64px;
+      padding: 10px;
+
+      border: 0;
+      border-radius: 13px;
+
+      background: transparent;
+      color: var(--ink);
+
+      cursor: pointer;
+
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .mode-button:hover {
+      background: #f0ece3;
+    }
+
+    .mode-button.active {
+      background: var(--green);
+      color: white;
+    }
+
+    .mode-button span {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 20px;
+    }
+
+    /* =========================
+       METEO
+    ========================= */
+
+    .meteo-wrap {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 31px 28px 0;
+    }
+
+    /* =========================
+       MAIN
+    ========================= */
+
+    .main {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 39px 28px 75px;
+    }
+
+    .context-head {
+      margin-bottom: 34px;
+
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 30px;
+      align-items: end;
+    }
+
+    .section-eyebrow {
+      margin-bottom: 8px;
+
+      color: var(--orange);
+
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .context-title {
+      margin: 0;
+
+      font-family: "Playfair Display", serif;
+      font-size: clamp(30px, 4vw, 45px);
+      line-height: 1.05;
+    }
+
+    .context-description {
+      max-width: 720px;
+      margin: 10px 0 0;
+
+      color: var(--muted);
+
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .location-button {
+      padding: 13px 17px;
+
+      border: 0;
+      border-radius: 999px;
+
+      background: var(--yellow);
+      color: var(--ink);
+
+      cursor: pointer;
+
+      font-size: 11px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .location-button.active {
+      background: var(--green);
+      color: white;
+    }
+
+    .location-status {
+      margin-top: 7px;
+
+      color: var(--muted);
+
+      font-size: 10px;
+      text-align: center;
+    }
+
+    /* =========================
+       SECTIONS
+    ========================= */
+
+    .recommendation-section {
+      margin-top: 45px;
+    }
+
+    .recommendation-section:first-of-type {
+      margin-top: 0;
+    }
+
+    .section-head {
+      margin-bottom: 16px;
+
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .section-title {
+      margin: 0;
+
+      font-family: "Playfair Display", serif;
+      font-size: 27px;
+    }
+
+    .section-subtitle {
+      margin-top: 5px;
+
+      color: var(--muted);
+
+      font-size: 12px;
+    }
+
+    .section-link {
+      color: var(--green);
+
+      font-size: 10px;
+      font-weight: 900;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 13px;
+    }
+
+    .card {
+      min-height: 188px;
+      padding: 20px;
+
+      display: flex;
+      flex-direction: column;
+
+      border: 1px solid rgba(23, 35, 29, 0.09);
+      border-radius: 18px;
+
+      background: var(--paper);
+
+      box-shadow: 0 7px 25px rgba(23, 35, 29, 0.035);
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 11px 28px rgba(23, 35, 29, 0.07);
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .card-type {
+      color: var(--orange);
+
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .distance {
+      padding: 5px 8px;
+
+      border-radius: 999px;
+
+      background: #e5eee9;
+      color: var(--green);
+
+      font-size: 9px;
+      font-weight: 900;
+    }
+
+    .card h3 {
+      margin: 11px 0 6px;
+
+      font-family: "Playfair Display", serif;
+      font-size: 20px;
+      line-height: 1.15;
+    }
+
+    .card-description {
+      margin: 0 0 12px;
+
+      color: var(--muted);
+
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .card-meta {
+      margin-top: auto;
+
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
+    .chip {
+      padding: 5px 8px;
+
+      border-radius: 999px;
+
+      background: #f0ece3;
+      color: #59615c;
+
+      font-size: 9px;
+      font-weight: 800;
+    }
+
+    .chip.free {
+      background: #e3eee8;
+      color: var(--green);
+    }
+
+    .event-time {
+      color: var(--green);
+
+      font-weight: 900;
+    }
+
+    .empty {
+      grid-column: 1 / -1;
+
+      padding: 30px;
+
+      border: 1px dashed rgba(23, 35, 29, 0.18);
+      border-radius: 17px;
+
+      color: var(--muted);
+
+      text-align: center;
+      font-size: 12px;
+    }
+
+    /* =========================
+       WHY
+    ========================= */
+
+    .why-box {
+      margin-top: 54px;
+      padding: 29px 31px;
+
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 18px;
+      align-items: center;
+
+      border-radius: 20px;
+
+      background: var(--green);
+      color: white;
+    }
+
+    .why-icon {
+      width: 54px;
+      height: 54px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 50%;
+
+      background: rgba(255, 255, 255, 0.08);
+
+      font-size: 25px;
+    }
+
+    .why-box strong {
+      display: block;
+      margin-bottom: 5px;
+
+      font-family: "Playfair Display", serif;
+      font-size: 20px;
+    }
+
+    .why-box p {
+      margin: 0;
+
+      color: rgba(255, 255, 255, 0.7);
+
+      font-size: 11px;
+      line-height: 1.55;
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    .footer {
+      padding: 35px 28px;
+
+      background: #17231d;
+      color: rgba(255, 255, 255, 0.66);
+
+      font-size: 11px;
+    }
+
+    .footer-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .footer-brand {
+      color: white;
+
+      font-family: "Playfair Display", serif;
+      font-size: 19px;
+      font-weight: 800;
+    }
+
+    .footer-brand span {
+      color: var(--orange);
+    }
+
+    .footer-contact {
+      margin-top: 7px;
+    }
+
+    .footer-contact a {
+      color: white;
+      text-decoration: none;
+      font-weight: 800;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 17px;
+    }
+
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.74);
+      text-decoration: none;
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
+    @media (max-width: 900px) {
+      .mode-bar {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 650px) {
+      .topbar {
+        min-height: 66px;
+        padding: 0 18px;
+      }
+
+      .logo {
+        font-size: 25px;
+      }
+
+      .topbar-right {
+        gap: 10px;
+      }
+
+      .hero-inner {
+        min-height: auto;
+        padding: 47px 18px 48px;
+
+        grid-template-columns: 1fr;
+      }
+
+      .hero-icon {
+        display: none;
+      }
+
+      .hero h1 {
+        font-size: 47px;
+        letter-spacing: -1.5px;
+      }
+
+      .mode-wrap,
+      .meteo-wrap,
+      .main {
+        padding-left: 17px;
+        padding-right: 17px;
+      }
+
+      .mode-wrap {
+        margin-top: -18px;
+      }
+
+      .mode-bar {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .context-head {
+        grid-template-columns: 1fr;
+        align-items: start;
+      }
+
+      .location-status {
+        text-align: left;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .section-head {
+        align-items: start;
+        flex-direction: column;
+      }
+
+      .why-box {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-links {
+        justify-content: flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- =========================
+       TOPBAR
+  ========================== -->
+
+  <header class="topbar">
+
+    <a href="index.html" class="logo">
+      Ora<span>Vicino</span>
+    </a>
+
+    <div class="topbar-right">
+      <span>📍 Trento</span>
+      <span>IT</span>
+    </div>
+
+  </header>
+
+  <!-- =========================
+       HERO
+  ========================== -->
+
+  <section class="hero">
+
+    <div class="hero-inner">
+
+      <div>
+
+        <div
+          id="heroEyebrow"
+          class="eyebrow"
+        >
+          ORAVICINO · ADESSO
+        </div>
+
+        <h1 id="heroTitle">
+          Cosa ha senso fare adesso?
+        </h1>
+
+        <p
+          id="heroDescription"
+          class="hero-description"
+        >
+          Non cercare tutto. Trova quello che ha senso qui, adesso.
+        </p>
+
+      </div>
+
+      <div
+        id="heroIcon"
+        class="hero-icon"
+        aria-hidden="true"
+      >
+        ✦
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- =========================
+       MODES
+  ========================== -->
+
+  <div class="mode-wrap">
+
+    <nav
+      class="mode-bar"
+      aria-label="Situazioni"
+    >
+
+      <button
+        class="mode-button"
+        data-mode="piove"
+        type="button"
+      >
+        <span>🌧️</span>
+        Piove
+      </button>
+
+      <button
+        class="mode-button"
+        data-mode="2ore"
+        type="button"
+      >
+        <span>⏱️</span>
+        Ho 2 ore
+      </button>
+
+      <button
+        class="mode-button"
+        data-mode="bambini"
+        type="button"
+      >
+        <span>👨‍👩‍👧</span>
+        Con bambini
+      </button>
+
+      <button
+        class="mode-button"
+        data-mode="economico"
+        type="button"
+      >
+        <span>€</span>
+        Spendere poco
+      </button>
+
+      <button
+        class="mode-button"
+        data-mode="fuori"
+        type="button"
+      >
+        <span>🧭</span>
+        Fuori dal percorso
+      </button>
+
+    </nav>
+
+  </div>
+
+  <!-- =========================
+       METEO
+  ========================== -->
+
+  <div class="meteo-wrap">
+    <div id="meteo"></div>
+  </div>
+
+  <!-- =========================
+       MAIN
+  ========================== -->
+
+  <main class="main">
+
+    <div class="context-head">
+
+      <div>
+
+        <div class="section-eyebrow">
+          ORAVICINO · PER TE
+        </div>
+
+        <h2
+          id="contextTitle"
+          class="context-title"
+        >
+          Una selezione per questo momento.
+        </h2>
+
+        <p
+          id="contextDescription"
+          class="context-description"
+        >
+          Incrociamo le informazioni già disponibili su Trento
+          per ridurre il tempo passato a cercare.
+        </p>
+
+      </div>
+
+      <div>
+
+        <button
+          id="locationButton"
+          class="location-button"
+          type="button"
+        >
+          📍 VICINO A ME
+        </button>
+
+        <div
+          id="locationStatus"
+          class="location-status"
+        ></div>
+
+      </div>
+
+    </div>
+
+    <!-- SCOPRIRE -->
+
+    <section
+      id="discoverSection"
+      class="recommendation-section"
+    >
+
+      <div class="section-head">
+
+        <div>
+          <h2
+            id="discoverTitle"
+            class="section-title"
+          >
+            Da fare
+          </h2>
+
+          <div
+            id="discoverSubtitle"
+            class="section-subtitle"
+          >
+            Luoghi selezionati in base alla situazione.
+          </div>
+        </div>
+
+        <a
+          href="scoprire.html"
+          class="section-link"
+        >
+          VEDI SCOPRIRE →
+        </a>
+
+      </div>
+
+      <div
+        id="discoverCards"
+        class="cards"
+      ></div>
+
+    </section>
+
+    <!-- MANGIARE -->
+
+    <section
+      id="foodSection"
+      class="recommendation-section"
+    >
+
+      <div class="section-head">
+
+        <div>
+          <h2 class="section-title">
+            Mangiare
+          </h2>
+
+          <div
+            id="foodSubtitle"
+            class="section-subtitle"
+          >
+            Qualcosa da mangiare senza complicarti la giornata.
+          </div>
+        </div>
+
+        <a
+          href="mangiare.html"
+          class="section-link"
+        >
+          VEDI MANGIARE →
+        </a>
+
+      </div>
+
+      <div
+        id="foodCards"
+        class="cards"
+      ></div>
+
+    </section>
+
+    <!-- BERE -->
+
+    <section
+      id="drinkSection"
+      class="recommendation-section"
+    >
+
+      <div class="section-head">
+
+        <div>
+          <h2 class="section-title">
+            Bere
+          </h2>
+
+          <div
+            id="drinkSubtitle"
+            class="section-subtitle"
+          >
+            Un posto per fermarti.
+          </div>
+        </div>
+
+        <a
+          href="bere.html"
+          class="section-link"
+        >
+          VEDI BERE →
+        </a>
+
+      </div>
+
+      <div
+        id="drinkCards"
+        class="cards"
+      ></div>
+
+    </section>
+
+    <!-- EVENTS -->
+
+    <section
+      id="eventsSection"
+      class="recommendation-section"
+    >
+
+      <div class="section-head">
+
+        <div>
+          <h2 class="section-title">
+            Oggi e stasera
+          </h2>
+
+          <div
+            id="eventSubtitle"
+            class="section-subtitle"
+          >
+            Eventi che possono completare la giornata.
+          </div>
+        </div>
+
+        <a
+          href="stasera.html"
+          class="section-link"
+        >
+          VEDI STASERA →
+        </a>
+
+      </div>
+
+      <div
+        id="eventCards"
+        class="cards"
+      ></div>
+
+    </section>
+
+    <!-- WHY -->
+
+    <section class="why-box">
+
+      <div class="why-icon">
+        ✦
+      </div>
+
+      <div>
+
+        <strong>
+          Meno ricerca. Più Trento.
+        </strong>
+
+        <p>
+          OraVicino usa il contesto per restringere le possibilità.
+          Le indicazioni sono suggerimenti basati sui dati disponibili:
+          verifica sempre orari e informazioni direttamente con il luogo.
+        </p>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- =========================
+       FOOTER
+  ========================== -->
+
+  <footer class="footer">
+
+    <div class="footer-inner">
+
+      <div>
+
+        <div class="footer-brand">
+          Ora<span>Vicino</span>
+        </div>
+
+        <div class="footer-contact">
+          Trento ·
+          <a href="mailto:ciao@oravicino.com">
+            ciao@oravicino.com
+          </a>
+        </div>
+
+      </div>
+
+      <div class="footer-links">
+
+        <a href="index.html">
+          Home
+        </a>
+
+        <a href="mailto:ciao@oravicino.com?subject=Segnalazione%20OraVicino">
+          Segnala un errore
+        </a>
+
+        <a href="mailto:ciao@oravicino.com?subject=Modifica%20o%20rimozione%20attivita">
+          Modifica / rimozione
+        </a>
+
+      </div>
+
+    </div>
+
+  </footer>
+
+  <script src="meteo.js"></script>
+
+  <script>
+    const MAX_RESULTS = 6;
+
+    let discoverPlaces = [];
+    let restaurants = [];
+    let drinks = [];
+    let events = [];
+
+    let currentMode = "2ore";
+    let userPosition = null;
+
+    const MODES = {
+      piove: {
+        icon: "🌧️",
+        eyebrow: "ORAVICINO · PIOVE",
+        title: "Piove. E quindi?",
+        description:
+          "Trento non si ferma con la pioggia. Partiamo dai luoghi al coperto e aggiungiamo qualcosa da mangiare, bere o fare.",
+        contextTitle:
+          "Idee che funzionano anche con la pioggia.",
+        contextDescription:
+          "Diamo priorità alle attività indicate come al coperto e alle alternative che richiedono meno spostamenti.",
+        discoverTitle: "Da fare al coperto",
+        discoverSubtitle:
+          "Musei, cultura, arte e altri luoghi indicati come indoor.",
+        foodSubtitle:
+          "Dove rifugiarti e mangiare qualcosa.",
+        drinkSubtitle:
+          "Un posto dove fermarti mentre fuori piove.",
+        eventSubtitle:
+          "Eventi di oggi che possono funzionare anche con brutto tempo."
+      },
+
+      "2ore": {
+        icon: "⏱️",
+        eyebrow: "ORAVICINO · HO 2 ORE",
+        title: "Hai due ore. Usale bene.",
+        description:
+          "Niente itinerari infiniti. Una selezione compatta per sfruttare il tempo che hai davvero.",
+        contextTitle:
+          "Poche idee, abbastanza vicine.",
+        contextDescription:
+          "Con la posizione attiva diamo priorità ai luoghi più vicini. Senza posizione, partiamo da Trento.",
+        discoverTitle: "Scopri qualcosa",
+        discoverSubtitle:
+          "Luoghi adatti a una visita relativamente breve.",
+        foodSubtitle:
+          "Una pausa senza trasformarla in un programma di mezza giornata.",
+        drinkSubtitle:
+          "Una sosta veloce prima di continuare.",
+        eventSubtitle:
+          "Controlla se c'è qualcosa in programma oggi."
+      },
+
+      bambini: {
+        icon: "👨‍👩‍👧",
+        eyebrow: "ORAVICINO · CON BAMBINI",
+        title: "Trento con bambini.",
+        description:
+          "Meno tentativi. Cerchiamo prima le attività che i dati indicano come adatte alle famiglie.",
+        contextTitle:
+          "Qualcosa che funzioni per tutti.",
+        contextDescription:
+          "Diamo priorità ai luoghi con indicazioni family e ad alcune categorie generalmente più semplici da vivere in famiglia.",
+        discoverTitle: "Da fare insieme",
+        discoverSubtitle:
+          "Luoghi con indicazioni family, parchi, natura e attrazioni.",
+        foodSubtitle:
+          "Dove fare una pausa e mangiare.",
+        drinkSubtitle:
+          "Alternative per una sosta durante il giro.",
+        eventSubtitle:
+          "Eventi con segnali utili per famiglie quando disponibili."
+      },
+
+      economico: {
+        icon: "€",
+        eyebrow: "ORAVICINO · SPENDERE POCO",
+        title: "Fare qualcosa senza spendere troppo.",
+        description:
+          "Partiamo dalle attività gratuite e dalle alternative con segnali di prezzo più contenuto.",
+        contextTitle:
+          "Prima quello che costa poco. O niente.",
+        contextDescription:
+          "I dati economici non sono completi: quando il prezzo non è disponibile non lo inventiamo.",
+        discoverTitle: "Gratis o quasi",
+        discoverSubtitle:
+          "Prima i luoghi indicati come gratuiti.",
+        foodSubtitle:
+          "Opzioni con indicazioni di prezzo più contenuto.",
+        drinkSubtitle:
+          "Posti con fascia di prezzo più bassa quando disponibile.",
+        eventSubtitle:
+          "Prima gli eventi indicati come gratuiti."
+      },
+
+      fuori: {
+        icon: "🧭",
+        eyebrow: "ORAVICINO · FUORI DAL PERCORSO",
+        title: "Esci dal percorso più ovvio.",
+        description:
+          "Non tutto ciò che vale la pena vedere deve essere la prima cosa che appare in una guida.",
+        contextTitle:
+          "Qualcosa di meno scontato.",
+        contextDescription:
+          "Diamo spazio a natura, arte, quartieri e luoghi fuori dalle categorie turistiche più evidenti.",
+        discoverTitle: "Scopri un'altra Trento",
+        discoverSubtitle:
+          "Natura, arte, panorami e luoghi meno convenzionali.",
+        foodSubtitle:
+          "Mangia fuori dal percorso più prevedibile.",
+        drinkSubtitle:
+          "Un posto dove fermarti senza inseguire solo i nomi più evidenti.",
+        eventSubtitle:
+          "Guarda cosa succede oggi fuori dal classico itinerario."
+      }
+    };
+
+    const heroEyebrow =
+      document.getElementById("heroEyebrow");
+
+    const heroTitle =
+      document.getElementById("heroTitle");
+
+    const heroDescription =
+      document.getElementById("heroDescription");
+
+    const heroIcon =
+      document.getElementById("heroIcon");
+
+    const contextTitle =
+      document.getElementById("contextTitle");
+
+    const contextDescription =
+      document.getElementById("contextDescription");
+
+    const discoverTitle =
+      document.getElementById("discoverTitle");
+
+    const discoverSubtitle =
+      document.getElementById("discoverSubtitle");
+
+    const foodSubtitle =
+      document.getElementById("foodSubtitle");
+
+    const drinkSubtitle =
+      document.getElementById("drinkSubtitle");
+
+    const eventSubtitle =
+      document.getElementById("eventSubtitle");
+
+    const discoverCards =
+      document.getElementById("discoverCards");
+
+    const foodCards =
+      document.getElementById("foodCards");
+
+    const drinkCards =
+      document.getElementById("drinkCards");
+
+    const eventCards =
+      document.getElementById("eventCards");
+
+    const locationButton =
+      document.getElementById("locationButton");
+
+    const locationStatus =
+      document.getElementById("locationStatus");
+
+    /* =========================
+       UTILITIES
+    ========================== */
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function normalize(value) {
+      return String(value ?? "")
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+    }
+
+    function radians(value) {
+      return value * Math.PI / 180;
+    }
+
+    function distanceKm(
+      lat1,
+      lng1,
+      lat2,
+      lng2
+    ) {
+      const R = 6371;
+
+      const dLat =
+        radians(lat2 - lat1);
+
+      const dLng =
+        radians(lng2 - lng1);
+
+      const a =
+        Math.sin(dLat / 2) ** 2 +
+        Math.cos(radians(lat1)) *
+        Math.cos(radians(lat2)) *
+        Math.sin(dLng / 2) ** 2;
+
+      return R * 2 * Math.atan2(
+        Math.sqrt(a),
+        Math.sqrt(1 - a)
+      );
+    }
+
+    function formatDistance(distance) {
+      if (!Number.isFinite(distance)) {
+        return null;
+      }
+
+      if (distance < 1) {
+        return `${Math.round(distance * 1000)} m`;
+      }
+
+      if (distance < 10) {
+        return `${distance.toFixed(1)} km`;
+      }
+
+      return `${Math.round(distance)} km`;
+    }
+
+    function calculateDistance(item) {
+      if (!userPosition) {
+        return null;
+      }
+
+      const lat = Number(item.lat);
+      const lng = Number(item.lng);
+
+      if (
+        !Number.isFinite(lat) ||
+        !Number.isFinite(lng)
+      ) {
+        return null;
+      }
+
+      return distanceKm(
+        userPosition.lat,
+        userPosition.lng,
+        lat,
+        lng
+      );
+    }
+
+    function priceText(item) {
+      return String(
+        item.price ??
+        item.prezzo ??
+        item.fasciaPrezzo ??
+        ""
+      );
+    }
+
+    function textFromItem(item) {
+      return normalize([
+        item.name,
+        item.title,
+        item.category,
+        item.label,
+        item.description,
+        item.tags,
+        item.area,
+        item.address,
+        item.venue,
+        item.price
+      ]
+      .flat()
+      .filter(Boolean)
+      .join(" "));
+    }
+
+    function getTodayISO() {
+      const now = new Date();
+
+      const year =
+        now.getFullYear();
+
+      const month =
+        String(now.getMonth() + 1)
+          .padStart(2, "0");
+
+      const day =
+        String(now.getDate())
+          .padStart(2, "0");
+
+      return `${year}-${month}-${day}`;
+    }
+
+    /* =========================
+       LOAD JSON
+    ========================== */
+
+    async function fetchJson(url) {
+      try {
+        const response =
+          await fetch(
+            url,
+            { cache: "no-store" }
+          );
+
+        if (!response.ok) {
+          throw new Error(
+            `${url}: HTTP ${response.status}`
+          );
+        }
+
+        return await response.json();
+
+      } catch (error) {
+        console.warn(error);
+        return null;
+      }
+    }
+
+    async function loadData() {
+      const [
+        discoverData,
+        restaurantData,
+        drinkData,
+        eventData
+      ] = await Promise.all([
+        fetchJson("data/scoprire.json"),
+        fetchJson("data/restaurants.json"),
+        fetchJson("data/bere.json"),
+        fetchJson("data/eventi.json")
+      ]);
+
+      discoverPlaces =
+        Array.isArray(discoverData)
+          ? discoverData
+          : Array.isArray(discoverData?.places)
+            ? discoverData.places
+            : [];
+
+      restaurants =
+        Array.isArray(restaurantData)
+          ? restaurantData
+          : Array.isArray(restaurantData?.restaurants)
+            ? restaurantData.restaurants
+            : [];
+
+      drinks =
+        Array.isArray(drinkData)
+          ? drinkData
+          : Array.isArray(drinkData?.places)
+            ? drinkData.places
+            : Array.isArray(drinkData?.venues)
+              ? drinkData.venues
+              : [];
+
+      events =
+        Array.isArray(eventData)
+          ? eventData
+          : Array.isArray(eventData?.events)
+            ? eventData.events
+            : [];
+
+      render();
+    }
+
+    /* =========================
+       RANKING
+    ========================== */
+
+    function discoverScore(item) {
+      const text = textFromItem(item);
+      let score = 0;
+
+      if (item.website) score += 2;
+      if (item.wikipedia) score += 2;
+      if (item.wikidata) score += 1;
+      if (item.description) score += 2;
+
+      if (currentMode === "piove") {
+        if (item.indoor === true) score += 20;
+
+        if (
+          ["museum", "arte", "storico"]
+            .includes(item.category)
+        ) {
+          score += 7;
+        }
+
+        if (
+          text.includes("museum") ||
+          text.includes("museo") ||
+          text.includes("galleria")
+        ) {
+          score += 5;
+        }
+      }
+
+      if (currentMode === "2ore") {
+        if (
+          ["museum", "panorama", "monumento", "arte", "attrazione"]
+            .includes(item.category)
+        ) {
+          score += 7;
+        }
+      }
+
+      if (currentMode === "bambini") {
+        if (item.family === true) {
+          score += 20;
+        }
+
+        if (
+          ["parco", "natura", "attrazione"]
+            .includes(item.category)
+        ) {
+          score += 8;
+        }
+
+        if (
+          text.includes("bambin") ||
+          text.includes("family") ||
+          text.includes("parco")
+        ) {
+          score += 5;
+        }
+      }
+
+      if (currentMode === "economico") {
+        if (item.free === true) {
+          score += 25;
+        }
+
+        if (
+          String(item.fee).toLowerCase() === "no"
+        ) {
+          score += 20;
+        }
+
+        if (
+          ["parco", "panorama", "natura", "monumento"]
+            .includes(item.category)
+        ) {
+          score += 5;
+        }
+      }
+
+      if (currentMode === "fuori") {
+        if (
+          ["natura", "arte", "panorama", "parco"]
+            .includes(item.category)
+        ) {
+          score += 14;
+        }
+
+        if (
+          ["museum", "monumento"]
+            .includes(item.category)
+        ) {
+          score -= 2;
+        }
+      }
+
+      const distance =
+        calculateDistance(item);
+
+      if (Number.isFinite(distance)) {
+        score += Math.max(
+          0,
+          12 - distance
+        );
+      }
+
+      return score;
+    }
+
+    function commercialScore(item) {
+      let score = 0;
+
+      if (item.website) score += 1;
+      if (item.address) score += 1;
+
+      const price =
+        normalize(priceText(item));
+
+      if (currentMode === "economico") {
+        if (
+          price === "€" ||
+          price.includes("econom")
+        ) {
+          score += 20;
+        }
+
+        if (price === "€€") {
+          score += 5;
+        }
+      }
+
+      if (currentMode === "fuori") {
+        const text = textFromItem(item);
+
+        if (
+          text.includes("locale") ||
+          text.includes("tipico") ||
+          text.includes("quartiere")
+        ) {
+          score += 6;
+        }
+      }
+
+      const distance =
+        calculateDistance(item);
+
+      if (Number.isFinite(distance)) {
+        score += Math.max(
+          0,
+          12 - distance
+        );
+      }
+
+      return score;
+    }
+
+    function eventScore(item) {
+      const text = textFromItem(item);
+      let score = 0;
+
+      if (currentMode === "economico") {
+        if (
+          text.includes("gratis") ||
+          text.includes("gratuito") ||
+          text.includes("free")
+        ) {
+          score += 20;
+        }
+      }
+
+      if (currentMode === "bambini") {
+        if (
+          text.includes("bambin") ||
+          text.includes("famigl") ||
+          text.includes("family")
+        ) {
+          score += 20;
+        }
+      }
+
+      if (currentMode === "piove") {
+        if (
+          text.includes("teatro") ||
+          text.includes("museo") ||
+          text.includes("cinema") ||
+          text.includes("sala")
+        ) {
+          score += 8;
+        }
+      }
+
+      return score;
+    }
+
+    function rank(items, scoreFunction) {
+      return [...items]
+        .map(item => ({
+          ...item,
+          _score: scoreFunction(item),
+          _distance: calculateDistance(item)
+        }))
+        .sort((a, b) => {
+          if (b._score !== a._score) {
+            return b._score - a._score;
+          }
+
+          if (
+            Number.isFinite(a._distance) &&
+            Number.isFinite(b._distance)
+          ) {
+            return a._distance - b._distance;
+          }
+
+          return String(
+            a.name || a.title || ""
+          ).localeCompare(
+            String(
+              b.name || b.title || ""
+            ),
+            "it"
+          );
+        })
+        .slice(0, MAX_RESULTS);
+    }
+
+    /* =========================
+       EVENT DATE
+    ========================== */
+
+    function eventIsRelevant(item) {
+      const today = getTodayISO();
+
+      const candidates = [
+        item.date,
+        item.startDate,
+        item.start,
+        item.data,
+        item.from
+      ]
+      .filter(Boolean)
+      .map(String);
+
+      if (!candidates.length) {
+        return true;
+      }
+
+      return candidates.some(
+        value =>
+          value.includes(today)
+      );
+    }
+
+    /* =========================
+       CARD
+    ========================== */
+
+    function genericCard(item, type) {
+      const name =
+        item.name ||
+        item.title ||
+        "Senza nome";
+
+      const category =
+        item.label ||
+        item.category ||
+        type;
+
+      const description =
+        item.description ||
+        item.address ||
+        item.venue ||
+        "";
+
+      const distance =
+        formatDistance(item._distance);
+
+      const chips = [];
+
+      if (item.free === true) {
+        chips.push(
+          `<span class="chip free">GRATIS</span>`
+        );
+      }
+
+      if (
+        String(item.fee).toLowerCase() === "no"
+      ) {
+        chips.push(
+          `<span class="chip free">GRATIS</span>`
+        );
+      }
+
+      if (item.indoor === true) {
+        chips.push(
+          `<span class="chip">AL COPERTO</span>`
+        );
+      }
+
+      if (item.family === true) {
+        chips.push(
+          `<span class="chip">FAMIGLIE</span>`
+        );
+      }
+
+      if (item.price) {
+        chips.push(
+          `<span class="chip">${escapeHtml(item.price)}</span>`
+        );
+      }
+
+      return `
+        <article class="card">
+
+          <div class="card-top">
+
+            <div class="card-type">
+              ${escapeHtml(category)}
+            </div>
+
+            ${
+              distance
+                ? `
+                  <div class="distance">
+                    📍 ${escapeHtml(distance)}
+                  </div>
+                `
+                : ""
+            }
+
+          </div>
+
+          <h3>
+            ${escapeHtml(name)}
+          </h3>
+
+          ${
+            description
+              ? `
+                <p class="card-description">
+                  ${escapeHtml(description)}
+                </p>
+              `
+              : ""
+          }
+
+          ${
+            chips.length
+              ? `
+                <div class="card-meta">
+                  ${chips.join("")}
+                </div>
+              `
+              : ""
+          }
+
+        </article>
+      `;
+    }
+
+    function eventCard(item) {
+      const title =
+        item.title ||
+        item.name ||
+        "Evento";
+
+      const category =
+        item.category ||
+        item.type ||
+        "Evento";
+
+      const venue =
+        item.venue ||
+        item.location ||
+        item.place ||
+        "";
+
+      const time =
+        item.time ||
+        item.startTime ||
+        item.hour ||
+        "";
+
+      const price =
+        item.price ||
+        item.prezzo ||
+        "";
+
+      return `
+        <article class="card">
+
+          <div class="card-type">
+            ${escapeHtml(category)}
+          </div>
+
+          <h3>
+            ${escapeHtml(title)}
+          </h3>
+
+          ${
+            venue
+              ? `
+                <p class="card-description">
+                  📍 ${escapeHtml(venue)}
+                </p>
+              `
+              : ""
+          }
+
+          <div class="card-meta">
+
+            ${
+              time
+                ? `
+                  <span class="chip event-time">
+                    ${escapeHtml(time)}
+                  </span>
+                `
+                : ""
+            }
+
+            ${
+              price
+                ? `
+                  <span class="chip">
+                    ${escapeHtml(price)}
+                  </span>
+                `
+                : ""
+            }
+
+          </div>
+
+        </article>
+      `;
+    }
+
+    function renderCards(
+      element,
+      items,
+      type
+    ) {
+      if (!items.length) {
+        element.innerHTML = `
+          <div class="empty">
+            Nessun risultato affidabile disponibile
+            per questo contesto.
+          </div>
+        `;
+
+        return;
+      }
+
+      element.innerHTML =
+        items
+          .map(item =>
+            genericCard(item, type)
+          )
+          .join("");
+    }
+
+    /* =========================
+       RENDER
+    ========================== */
+
+    function render() {
+      const mode =
+        MODES[currentMode] ||
+        MODES["2ore"];
+
+      heroEyebrow.textContent =
+        mode.eyebrow;
+
+      heroTitle.textContent =
+        mode.title;
+
+      heroDescription.textContent =
+        mode.description;
+
+      heroIcon.textContent =
+        mode.icon;
+
+      contextTitle.textContent =
+        mode.contextTitle;
+
+      contextDescription.textContent =
+        mode.contextDescription;
+
+      discoverTitle.textContent =
+        mode.discoverTitle;
+
+      discoverSubtitle.textContent =
+        mode.discoverSubtitle;
+
+      foodSubtitle.textContent =
+        mode.foodSubtitle;
+
+      drinkSubtitle.textContent =
+        mode.drinkSubtitle;
+
+      eventSubtitle.textContent =
+        mode.eventSubtitle;
+
+      document
+        .querySelectorAll(".mode-button")
+        .forEach(button => {
+          button.classList.toggle(
+            "active",
+            button.dataset.mode ===
+            currentMode
+          );
+        });
+
+      const selectedDiscover =
+        rank(
+          discoverPlaces,
+          discoverScore
+        );
+
+      const selectedRestaurants =
+        rank(
+          restaurants,
+          commercialScore
+        );
+
+      const selectedDrinks =
+        rank(
+          drinks,
+          commercialScore
+        );
+
+      const todayEvents =
+        events.filter(eventIsRelevant);
+
+      const selectedEvents =
+        rank(
+          todayEvents.length
+            ? todayEvents
+            : events,
+          eventScore
+        );
+
+      renderCards(
+        discoverCards,
+        selectedDiscover,
+        "Scoprire"
+      );
+
+      renderCards(
+        foodCards,
+        selectedRestaurants,
+        "Mangiare"
+      );
+
+      renderCards(
+        drinkCards,
+        selectedDrinks,
+        "Bere"
+      );
+
+      if (!selectedEvents.length) {
+        eventCards.innerHTML = `
+          <div class="empty">
+            Nessun evento disponibile
+            nei dati caricati.
+          </div>
+        `;
+      } else {
+        eventCards.innerHTML =
+          selectedEvents
+            .map(eventCard)
+            .join("");
+      }
+    }
+
+    /* =========================
+       MODES
+    ========================== */
+
+    function setMode(mode) {
+      if (!MODES[mode]) {
+        mode = "2ore";
+      }
+
+      currentMode = mode;
+
+      const url =
+        new URL(window.location.href);
+
+      url.searchParams.set(
+        "modo",
+        mode
+      );
+
+      window.history.replaceState(
+        {},
+        "",
+        url
+      );
+
+      render();
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    }
+
+    document
+      .querySelectorAll(".mode-button")
+      .forEach(button => {
+        button.addEventListener(
+          "click",
+          () => {
+            setMode(
+              button.dataset.mode
+            );
+          }
+        );
+      });
+
+    /* =========================
+       GEOLOCATION
+    ========================== */
+
+    locationButton.addEventListener(
+      "click",
+      () => {
+
+        if (!navigator.geolocation) {
+          locationStatus.textContent =
+            "Geolocalizzazione non disponibile.";
+
+          return;
+        }
+
+        locationButton.disabled = true;
+        locationButton.textContent =
+          "CERCO...";
+
+        locationStatus.textContent =
+          "Sto cercando la tua posizione.";
+
+        navigator.geolocation
+          .getCurrentPosition(
+
+            position => {
+              userPosition = {
+                lat:
+                  position.coords.latitude,
+                lng:
+                  position.coords.longitude
+              };
+
+              locationButton.disabled =
+                false;
+
+              locationButton.classList.add(
+                "active"
+              );
+
+              locationButton.textContent =
+                "✓ POSIZIONE ATTIVA";
+
+              locationStatus.textContent =
+                "Risultati riordinati usando la tua posizione.";
+
+              render();
+            },
+
+            error => {
+              console.warn(error);
+
+              locationButton.disabled =
+                false;
+
+              locationButton.textContent =
+                "📍 VICINO A ME";
+
+              locationStatus.textContent =
+                "Non riesco ad accedere alla posizione.";
+            },
+
+            {
+              enableHighAccuracy: false,
+              timeout: 10000,
+              maximumAge: 300000
+            }
+          );
+      }
+    );
+
+    /* =========================
+       START
+    ========================== */
+
+    const params =
+      new URLSearchParams(
+        window.location.search
+      );
+
+    const requestedMode =
+      params.get("modo");
+
+    if (
+      requestedMode &&
+      MODES[requestedMode]
+    ) {
+      currentMode =
+        requestedMode;
+    }
+
+    loadData();
+  </script>
+
+</body>
+</html>
