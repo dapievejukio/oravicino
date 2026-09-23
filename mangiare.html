@@ -48,7 +48,7 @@
     ======================================== */
 
     :root {
-      --page-color: var(--mangiare, #173f32);
+      --page-color: var(--mangiare, #245b48);
       --page-color-2: #245b48;
       --page-accent: #f2c14e;
     }
@@ -125,128 +125,6 @@
       margin: auto;
 
       padding: 35px 30px 110px;
-
-    }
-
-
-
-    /* ========================================
-       NAVEGAÇÃO RÁPIDA
-    ======================================== */
-
-    .section-nav {
-
-      display: flex;
-
-      align-items: center;
-
-      gap: 8px;
-
-      margin:
-        15px 0 32px;
-
-      overflow-x: auto;
-
-      scrollbar-width: none;
-
-      -webkit-overflow-scrolling: touch;
-
-    }
-
-
-    .section-nav::-webkit-scrollbar {
-
-      display: none;
-
-    }
-
-
-    .section-nav-home,
-    .section-nav-link {
-
-      flex: 0 0 auto;
-
-      min-height: 44px;
-
-      display: inline-flex;
-
-      align-items: center;
-
-      justify-content: center;
-
-      gap: 7px;
-
-      padding:
-        0 15px;
-
-      border-radius: 999px;
-
-      border:
-        1px solid
-        rgba(23,35,29,.11);
-
-      background:
-        rgba(255,253,248,.62);
-
-      color: #59645d;
-
-      text-decoration: none;
-
-      font-size: 12px;
-
-      font-weight: 700;
-
-      white-space: nowrap;
-
-      transition:
-        transform .2s ease,
-        background .2s ease,
-        color .2s ease,
-        border-color .2s ease;
-
-    }
-
-
-    .section-nav-home {
-
-      width: 44px;
-
-      padding: 0;
-
-      font-size: 17px;
-
-    }
-
-
-    .section-nav-link:hover,
-    .section-nav-home:hover {
-
-      transform:
-        translateY(-1px);
-
-      background: #fffdf8;
-
-      color: #17231d;
-
-      border-color:
-        rgba(23,35,29,.22);
-
-    }
-
-
-    .section-nav-link.active {
-
-      background:
-        var(--page-color);
-
-      color: #fffdf8;
-
-      border-color:
-        var(--page-color);
-
-      box-shadow:
-        0 7px 18px
-        rgba(23,63,50,.14);
 
     }
 
@@ -750,7 +628,7 @@
 
 
     /* ========================================
-       VICINO A ME · DESTAQUE
+       VICINO A ME
     ======================================== */
 
     .nearby-feature {
@@ -1226,13 +1104,11 @@
       overflow: hidden;
 
       background:
-
         radial-gradient(
           circle at 75% 20%,
           rgba(242,193,78,.58),
           transparent 25%
         ),
-
         linear-gradient(
           145deg,
           #28604b,
@@ -1997,24 +1873,6 @@
       }
 
 
-      .section-nav {
-
-        margin:
-          10px 0 24px;
-
-        padding-bottom: 3px;
-
-      }
-
-
-      .section-nav-home,
-      .section-nav-link {
-
-        min-height: 42px;
-
-      }
-
-
       .food-hero {
 
         min-height: 0;
@@ -2210,7 +2068,7 @@
 
 
 
-<body>
+<body class="page-mangiare">
 
 
   <!-- ========================================
@@ -2251,15 +2109,10 @@
 
 
   <!-- ========================================
-       CONTEÚDO
+       NAVEGAÇÃO GLOBAL ENTRE ÁREAS
   ======================================== -->
 
-  <main class="food-page">
-
-
-    <!-- ========================================
-         NAVEGAÇÃO ENTRE ÁREAS
-    ======================================== -->
+  <div class="section-nav-wrap">
 
     <nav
       class="section-nav"
@@ -2267,17 +2120,7 @@
     >
 
       <a
-        class="section-nav-home"
-        href="index.html"
-        aria-label="Home OraVicino"
-        title="Home"
-      >
-        ←
-      </a>
-
-
-      <a
-        class="section-nav-link active"
+        class="nav-mangiare active"
         href="mangiare.html"
         aria-current="page"
       >
@@ -2286,7 +2129,7 @@
 
 
       <a
-        class="section-nav-link"
+        class="nav-bere"
         href="bere.html"
       >
         🍷 Bere
@@ -2294,7 +2137,7 @@
 
 
       <a
-        class="section-nav-link"
+        class="nav-stasera"
         href="stasera.html"
       >
         🌙 Stasera
@@ -2302,23 +2145,23 @@
 
 
       <a
-        class="section-nav-link"
+        class="nav-scoprire"
         href="scoprire.html"
       >
-        🏔️ Scoprire
+        🧭 Scoprire
       </a>
 
 
       <a
-        class="section-nav-link"
+        class="nav-servizi"
         href="servizi.html"
       >
-        ◉ Servizi
+        🏥 Servizi
       </a>
 
 
       <a
-        class="section-nav-link"
+        class="nav-dormire"
         href="dormire.html"
       >
         🛏️ Dormire
@@ -2326,6 +2169,15 @@
 
     </nav>
 
+  </div>
+
+
+
+  <!-- ========================================
+       CONTEÚDO
+  ======================================== -->
+
+  <main class="food-page">
 
 
     <!-- ========================================
@@ -2467,8 +2319,6 @@
 
 
 
-      <!-- CRÉDITO -->
-
       <a
         class="hero-photo-credit"
         href="https://commons.wikimedia.org/wiki/File:Trento-panorama_from_Bindesi_2.jpg"
@@ -2497,7 +2347,7 @@
 
 
     <!-- ========================================
-         VICINO A ME · DESTAQUE
+         VICINO A ME
     ======================================== -->
 
     <section
@@ -2625,9 +2475,7 @@
     </p>
 
     <p>
-      <a
-        href="mailto:ciao@oravicino.com"
-      >
+      <a href="mailto:ciao@oravicino.com">
         ciao@oravicino.com
       </a>
     </p>
