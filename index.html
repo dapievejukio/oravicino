@@ -14,7 +14,7 @@
 
   <meta
     name="description"
-    content="Scopri dove mangiare, bere, cosa fare e cosa vedere vicino a te a Trento."
+    content="Scopri dove mangiare, bere, dormire, cosa fare e cosa vedere vicino a te a Trento."
   >
 
   <link
@@ -397,7 +397,7 @@
 
 
     /* =====================================================
-       CATEGORIAS
+       CATEGORIAS — 6 ÁREAS OFICIAIS
     ===================================================== */
 
     .category-grid {
@@ -418,14 +418,10 @@
 
       border-radius: 28px;
       text-decoration: none;
-      color: #17231d;
 
       border:
         1px solid
         rgba(23,35,29,.09);
-
-      background:
-        rgba(255,253,248,.82);
 
       box-shadow:
         0 12px 35px
@@ -433,7 +429,8 @@
 
       transition:
         transform .25s ease,
-        box-shadow .25s ease;
+        box-shadow .25s ease,
+        filter .25s ease;
 
       box-sizing: border-box;
     }
@@ -442,48 +439,75 @@
       cursor: pointer;
     }
 
-    div.category-card {
-      cursor: default;
-    }
-
     a.category-card:hover {
       transform: translateY(-5px);
 
       box-shadow:
         0 22px 55px
-        rgba(25,39,32,.10);
+        rgba(25,39,32,.13);
+
+      filter: saturate(1.04);
     }
+
+
+    /* MANGIARE — VERDE */
 
     .category-card.mangiare {
       grid-column: span 5;
       color: #fffdf8;
-      background: #173f32;
+      background: var(--mangiare);
     }
+
+
+    /* BERE — VINHO */
 
     .category-card.bere {
       grid-column: span 4;
-      background: #f2c14e;
+      color: #fffdf8;
+      background: var(--bere);
     }
+
+
+    /* STASERA — LARANJA */
 
     .category-card.stasera {
       grid-column: span 3;
       color: #fffdf8;
-      background: #ef6a3a;
+      background: var(--stasera);
     }
+
+
+    /* SCOPRIRE — PETRÓLEO */
 
     .category-card.scoprire {
-      grid-column: span 7;
-      background: #dfe8dc;
+      grid-column: span 4;
+      color: #fffdf8;
+      background: var(--scoprire);
     }
 
+
+    /* SERVIZI — AZUL */
+
     .category-card.servizi {
-      grid-column: span 5;
-      background: #eee2d4;
+      grid-column: span 4;
+      color: #fffdf8;
+      background: var(--servizi);
     }
+
+
+    /* DORMIRE — MARROM */
+
+    .category-card.dormire {
+      grid-column: span 4;
+      color: #fffdf8;
+      background: var(--dormire);
+    }
+
 
     .category-icon {
       position: relative;
       z-index: 2;
+
       width: 56px;
       height: 56px;
 
@@ -492,13 +516,15 @@
       justify-content: center;
 
       border-radius: 18px;
-      background: rgba(255,255,255,.17);
-      font-size: 27px;
-    }
 
-    .category-card:not(.mangiare)
-    .category-icon {
-      background: rgba(255,255,255,.47);
+      background:
+        rgba(255,255,255,.16);
+
+      border:
+        1px solid
+        rgba(255,255,255,.09);
+
+      font-size: 27px;
     }
 
     .category-content {
@@ -509,11 +535,14 @@
     .category-status {
       display: inline-flex;
       margin-bottom: 9px;
+
+      color:
+        rgba(255,255,255,.72);
+
       font-size: 9px;
       font-weight: 800;
       letter-spacing: 1.4px;
       text-transform: uppercase;
-      opacity: .66;
     }
 
     .category-card h3 {
@@ -527,7 +556,7 @@
       max-width: 400px;
       margin: 0;
       color: inherit;
-      opacity: .75;
+      opacity: .78;
       font-size: 13px;
       line-height: 1.5;
     }
@@ -537,6 +566,10 @@
       z-index: 2;
       right: 25px;
       top: 25px;
+
+      color:
+        rgba(255,255,255,.90);
+
       font-size: 19px;
 
       transition:
@@ -545,16 +578,21 @@
 
     a.category-card:hover
     .category-arrow {
-      transform: translate(3px, -3px);
+      transform:
+        translate(3px, -3px);
     }
 
     .category-card::after {
       content: "";
+
       position: absolute;
+
       width: 190px;
       height: 190px;
+
       right: -80px;
       bottom: -105px;
+
       border-radius: 50%;
 
       border:
@@ -652,7 +690,10 @@
       justify-content: center;
 
       border-radius: 17px;
-      background: rgba(23,63,50,.08);
+
+      background:
+        rgba(23,63,50,.08);
+
       font-size: 24px;
     }
 
@@ -718,7 +759,8 @@
       box-sizing: border-box;
     }
 
-    .local-content .section-kicker {
+    .local-content
+    .section-kicker {
       color: #f2c14e;
     }
 
@@ -750,15 +792,22 @@
       display: inline-flex;
       align-items: center;
       gap: 10px;
+
       min-height: 49px;
       padding: 0 19px;
+
       border-radius: 15px;
+
       text-decoration: none;
+
       background: #f2c14e;
       color: #17231d;
+
       font-size: 12px;
       font-weight: 800;
-      transition: transform .2s ease;
+
+      transition:
+        transform .2s ease;
     }
 
     .local-button:hover {
@@ -779,9 +828,12 @@
 
       gap: 40px;
       align-items: center;
+
       margin-bottom: 110px;
       padding: 47px 50px;
+
       border-radius: 30px;
+
       background: #efe5d6;
 
       border:
@@ -812,15 +864,30 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
+
       min-height: 51px;
       padding: 0 21px;
+
       border-radius: 16px;
+
       color: white;
       background: #173f32;
+
       text-decoration: none;
+
       font-size: 12px;
       font-weight: 800;
+
       white-space: nowrap;
+
+      transition:
+        transform .2s ease,
+        background .2s ease;
+    }
+
+    .business-button:hover {
+      transform: translateY(-2px);
+      background: #245b48;
     }
 
 
@@ -829,7 +896,9 @@
     ===================================================== */
 
     .home-footer {
-      width: min(calc(100% - 60px), 1240px);
+      width:
+        min(calc(100% - 60px), 1240px);
+
       margin: 0 auto 30px;
       padding: 30px 0;
 
@@ -849,15 +918,27 @@
     .home-footer
     .footer-logo {
       color: #173f32;
+
       font-size: 23px;
       font-weight: 800;
       letter-spacing: -1px;
+
       text-decoration: none;
     }
 
     .home-footer
     .footer-logo span {
       color: #ef6a3a;
+    }
+
+    .footer-contact {
+      color: #6d746f;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .footer-contact:hover {
+      color: #173f32;
     }
 
 
@@ -884,16 +965,14 @@
       .category-card.bere,
       .category-card.stasera,
       .category-card.scoprire,
-      .category-card.servizi {
+      .category-card.servizi,
+      .category-card.dormire {
         grid-column: span 6;
       }
 
-      .category-card.servizi {
-        grid-column: 1 / -1;
-      }
-
       .moment-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns:
+          repeat(2, 1fr);
       }
 
       .now-top {
@@ -989,7 +1068,8 @@
       .category-card.bere,
       .category-card.stasera,
       .category-card.scoprire,
-      .category-card.servizi {
+      .category-card.servizi,
+      .category-card.dormire {
         grid-column: 1 / -1;
       }
 
@@ -1041,8 +1121,11 @@
 
       .home-footer {
         width: calc(100% - 30px);
+
         align-items: flex-start;
         flex-direction: column;
+
+        gap: 13px;
       }
 
     }
@@ -1221,7 +1304,7 @@
           <!-- MANGIARE -->
 
           <a
-            class="category-card mangiare"
+            class="category-card mangiare category-mangiare"
             href="mangiare.html"
           >
 
@@ -1260,7 +1343,7 @@
           <!-- BERE -->
 
           <a
-            class="category-card bere"
+            class="category-card bere category-bere"
             href="bere.html"
           >
 
@@ -1299,7 +1382,7 @@
           <!-- STASERA -->
 
           <a
-            class="category-card stasera"
+            class="category-card stasera category-stasera"
             href="stasera.html"
           >
 
@@ -1338,7 +1421,7 @@
           <!-- SCOPRIRE -->
 
           <a
-            class="category-card scoprire"
+            class="category-card scoprire category-scoprire"
             href="scoprire.html"
           >
 
@@ -1355,7 +1438,7 @@
             <div class="category-content">
 
               <span class="category-status">
-                PRESTO
+                DISPONIBILE
               </span>
 
 
@@ -1377,7 +1460,7 @@
           <!-- SERVIZI -->
 
           <a
-            class="category-card servizi"
+            class="category-card servizi category-servizi"
             href="servizi.html"
           >
 
@@ -1406,6 +1489,45 @@
               <p>
                 Quello che può servirti
                 quando sei già qui.
+              </p>
+
+            </div>
+
+          </a>
+
+
+          <!-- DORMIRE -->
+
+          <a
+            class="category-card dormire category-dormire"
+            href="dormire.html"
+          >
+
+            <span class="category-arrow">
+              ↗
+            </span>
+
+
+            <div class="category-icon">
+              🛏️
+            </div>
+
+
+            <div class="category-content">
+
+              <span class="category-status">
+                DISPONIBILE
+              </span>
+
+
+              <h3>
+                Dormire
+              </h3>
+
+
+              <p>
+                Hotel, appartamenti,
+                B&amp;B, ostelli e rifugi.
               </p>
 
             </div>
@@ -1454,9 +1576,11 @@
         <div class="moment-grid">
 
 
+          <!-- HO 2 ORE -->
+
           <a
             class="moment"
-            href="mangiare.html"
+            href="adesso.html?modo=2ore"
           >
 
             <div class="moment-icon">
@@ -1480,9 +1604,11 @@
           </a>
 
 
+          <!-- PIOVE -->
+
           <a
             class="moment"
-            href="mangiare.html"
+            href="adesso.html?modo=piove"
           >
 
             <div class="moment-icon">
@@ -1506,9 +1632,11 @@
           </a>
 
 
+          <!-- BAMBINI -->
+
           <a
             class="moment"
-            href="mangiare.html"
+            href="adesso.html?modo=bambini"
           >
 
             <div class="moment-icon">
@@ -1532,9 +1660,11 @@
           </a>
 
 
+          <!-- ECONOMICO -->
+
           <a
             class="moment"
-            href="mangiare.html"
+            href="adesso.html?modo=economico"
           >
 
             <div class="moment-icon">
@@ -1558,9 +1688,11 @@
           </a>
 
 
+          <!-- FUORI DAL PERCORSO -->
+
           <a
             class="moment"
-            href="mangiare.html"
+            href="adesso.html?modo=fuori"
           >
 
             <div class="moment-icon">
@@ -1583,6 +1715,8 @@
 
           </a>
 
+
+          <!-- STASERA -->
 
           <a
             class="moment"
@@ -1653,9 +1787,9 @@
 
           <a
             class="local-button"
-            href="mangiare.html"
+            href="adesso.html?modo=fuori"
           >
-            Scopri dove mangiare
+            Esci dal percorso
             <span>→</span>
           </a>
 
@@ -1696,7 +1830,7 @@
 
         <a
           class="business-button"
-          href="mailto:ciao@oravicino.it"
+          href="mailto:ciao@oravicino.com?subject=Rivendica%20la%20tua%20attivita"
         >
           RIVENDICA LA TUA ATTIVITÀ →
         </a>
@@ -1725,6 +1859,14 @@
     <span>
       Trento · Progetto pilota
     </span>
+
+
+    <a
+      class="footer-contact"
+      href="mailto:ciao@oravicino.com"
+    >
+      ciao@oravicino.com
+    </a>
 
 
     <span>
