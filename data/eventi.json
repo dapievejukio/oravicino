@@ -33,37 +33,6 @@
     "modified": "2026-09-21T14:39:38+02:00"
   },
   {
-    "id": "trento-4124",
-    "sourceId": 4124,
-    "title": "Sport nel verde 2026",
-    "category": "Sport",
-    "description": "Tanti appuntamenti ludico-sportivi nei parchi della città per provare nuove discipline e attività",
-    "venue": "Evento diffuso",
-    "address": "Evento diffuso",
-    "city": "Trento",
-    "area": "Evento diffuso",
-    "dateStart": "2026-09-25",
-    "dateEnd": "2026-09-30",
-    "timeStart": "10:00",
-    "timeEnd": "10:01",
-    "originalDateStart": "2026-06-02",
-    "originalDateEnd": "2026-09-30",
-    "ongoing": true,
-    "price": "Gratis",
-    "lat": 46.06741,
-    "lng": 11.121442,
-    "tags": [
-      "sport",
-      "gratis",
-      "evento-sportivo"
-    ],
-    "image": null,
-    "url": "/Eventi/Sport-nel-verde-2026",
-    "source": "Agenda Trento",
-    "sourceUrl": "/Eventi/Sport-nel-verde-2026",
-    "modified": "2026-08-24T17:18:14+02:00"
-  },
-  {
     "id": "trento-4188",
     "sourceId": 4188,
     "title": "Trento Aperta 2026",
@@ -576,7 +545,7 @@
     "url": "/Eventi/Scopriamo-il-Doss-Trento",
     "source": "Agenda Trento",
     "sourceUrl": "/Eventi/Scopriamo-il-Doss-Trento",
-    "modified": "2026-09-24T15:04:32+02:00"
+    "modified": "2026-09-25T09:15:36+02:00"
   },
   {
     "id": "trento-5465",
@@ -610,37 +579,6 @@
     "modified": "2026-09-07T08:54:38+02:00"
   },
   {
-    "id": "trento-5486",
-    "sourceId": 5486,
-    "title": "Festa dello sport a Mattarello",
-    "category": "Sport",
-    "description": "Una giornata deditata allo sport e al movimento per piccoli e grandi (in caso di maltempo la manifestazione si svolgerà il 3 ottobre 2026)",
-    "venue": "Parco di Mattarello",
-    "address": "Parco di Mattarello",
-    "city": "Trento",
-    "area": "Parco di Mattarello",
-    "dateStart": "2026-09-26",
-    "dateEnd": "2026-09-26",
-    "timeStart": "14:00",
-    "timeEnd": "18:00",
-    "originalDateStart": "2026-09-26",
-    "originalDateEnd": "2026-09-26",
-    "ongoing": false,
-    "price": "Gratis",
-    "lat": 46.007261,
-    "lng": 11.129612,
-    "tags": [
-      "sport",
-      "gratis",
-      "evento-sportivo"
-    ],
-    "image": null,
-    "url": "/Eventi/Festa-dello-sport-a-Mattarello",
-    "source": "Agenda Trento",
-    "sourceUrl": "/Eventi/Festa-dello-sport-a-Mattarello",
-    "modified": "2026-09-07T17:38:07+02:00"
-  },
-  {
     "id": "trento-5611",
     "sourceId": 5611,
     "title": "MUSE Party - Un mondo sommerso",
@@ -671,6 +609,37 @@
     "source": "Agenda Trento",
     "sourceUrl": "/Eventi/MUSE-Party-Un-mondo-sommerso",
     "modified": "2026-09-23T15:20:31+02:00"
+  },
+  {
+    "id": "trento-5486",
+    "sourceId": 5486,
+    "title": "Festa dello sport a Mattarello",
+    "category": "Sport",
+    "description": "Una giornata dedicata allo sport e al movimento per piccoli e grandi (in caso di maltempo la manifestazione si svolgerà il 3 ottobre 2026)",
+    "venue": "Parco di Mattarello",
+    "address": "Parco di Mattarello",
+    "city": "Trento",
+    "area": "Parco di Mattarello",
+    "dateStart": "2026-09-26",
+    "dateEnd": "2026-09-26",
+    "timeStart": "14:00",
+    "timeEnd": "18:00",
+    "originalDateStart": "2026-09-26",
+    "originalDateEnd": "2026-09-26",
+    "ongoing": false,
+    "price": "Gratis",
+    "lat": 46.007261,
+    "lng": 11.129612,
+    "tags": [
+      "sport",
+      "gratis",
+      "evento-sportivo"
+    ],
+    "image": null,
+    "url": "/Eventi/Festa-dello-sport-a-Mattarello",
+    "source": "Agenda Trento",
+    "sourceUrl": "/Eventi/Festa-dello-sport-a-Mattarello",
+    "modified": "2026-09-25T09:20:13+02:00"
   },
   {
     "id": "trento-5463",
@@ -835,7 +804,7 @@
     "url": "/Eventi/Scopriamo-il-Doss-Trento2",
     "source": "Agenda Trento",
     "sourceUrl": "/Eventi/Scopriamo-il-Doss-Trento2",
-    "modified": "2026-09-24T15:05:46+02:00"
+    "modified": "2026-09-25T09:22:29+02:00"
   },
   {
     "id": "trento-4336",
@@ -1093,7 +1062,7 @@
     "url": "/Eventi/Pulizia-ambientale-per-il-World-Cleanup-Day",
     "source": "Agenda Trento",
     "sourceUrl": "/Eventi/Pulizia-ambientale-per-il-World-Cleanup-Day",
-    "modified": "2026-09-23T10:21:52+02:00"
+    "modified": "2026-09-25T09:25:26+02:00"
   },
   {
     "id": "trento-3583",
@@ -1304,6 +1273,37 @@
     "modified": "2026-06-17T15:38:33+02:00"
   },
   {
+    "id": "trento-5613",
+    "sourceId": 5613,
+    "title": "SomAtomica, così prendo corpo",
+    "category": "Cultura",
+    "description": "Incontro scientifico e performance rituale",
+    "venue": "MUSE - Museo delle Scienze",
+    "address": "MUSE - Museo delle Scienze",
+    "city": "Trento",
+    "area": "MUSE - Museo delle Scienze",
+    "dateStart": "2026-09-30",
+    "dateEnd": "2026-09-30",
+    "timeStart": "17:00",
+    "timeEnd": "23:00",
+    "originalDateStart": "2026-09-30",
+    "originalDateEnd": "2026-09-30",
+    "ongoing": false,
+    "price": "Incontro gratuito Spettacolo: €7,70 intero €5,50 ridotto",
+    "lat": 46.062657,
+    "lng": 11.114725,
+    "tags": [
+      "cultura",
+      "evento-culturale",
+      "tempo-libero"
+    ],
+    "image": null,
+    "url": "/Eventi/SomAtomica-cosi-prendo-corpo",
+    "source": "Agenda Trento",
+    "sourceUrl": "/Eventi/SomAtomica-cosi-prendo-corpo",
+    "modified": "2026-09-25T11:13:42+02:00"
+  },
+  {
     "id": "trento-5632",
     "sourceId": 5632,
     "title": "Corso di base per amministratore/trice di sostegno",
@@ -1442,7 +1442,7 @@
     "url": "/Eventi/Autumnus2",
     "source": "Agenda Trento",
     "sourceUrl": "/Eventi/Autumnus2",
-    "modified": "2026-09-21T13:22:46+02:00"
+    "modified": "2026-09-25T09:29:45+02:00"
   },
   {
     "id": "trento-3890",
@@ -1474,7 +1474,7 @@
     "url": "/Eventi/Festival-dello-Sport",
     "source": "Agenda Trento",
     "sourceUrl": "/Eventi/Festival-dello-Sport",
-    "modified": "2026-09-16T14:24:39+02:00"
+    "modified": "2026-09-25T09:33:57+02:00"
   },
   {
     "id": "trento-5595",
@@ -1818,6 +1818,39 @@
     "source": "Agenda Trento",
     "sourceUrl": "/Eventi/Eddy-Serafini-Codex-Discantas-Musicantica",
     "modified": "2026-09-23T13:55:29+02:00"
+  },
+  {
+    "id": "trento-5637",
+    "sourceId": 5637,
+    "title": "Tra silenzi e colori: un’esperienza pratica per scoprire la comunicazione con i nostri figli, oltre le parole",
+    "category": "Famiglie",
+    "description": "Comunicare con i figli adolescenti, un laboratorio per genitori",
+    "venue": "Associazione A.M.A. Trento",
+    "address": "Associazione A.M.A. Trento",
+    "city": "Trento",
+    "area": "Associazione A.M.A. Trento",
+    "dateStart": "2026-10-05",
+    "dateEnd": "2026-10-05",
+    "timeStart": "20:00",
+    "timeEnd": "22:00",
+    "originalDateStart": "2026-10-05",
+    "originalDateEnd": "2026-10-05",
+    "ongoing": false,
+    "price": "Gratis",
+    "lat": 46.061453,
+    "lng": 11.118429,
+    "tags": [
+      "famiglie",
+      "gratis",
+      "evento-sociale",
+      "famiglia",
+      "politica-sociale"
+    ],
+    "image": null,
+    "url": "/Eventi/Tra-silenzi-e-colori-un-esperienza-pratica-per-scoprire-la-comunicazione-con-i-nostri-figli-oltre-le-parole",
+    "source": "Agenda Trento",
+    "sourceUrl": "/Eventi/Tra-silenzi-e-colori-un-esperienza-pratica-per-scoprire-la-comunicazione-con-i-nostri-figli-oltre-le-parole",
+    "modified": "2026-09-25T11:50:32+02:00"
   },
   {
     "id": "trento-5582",
