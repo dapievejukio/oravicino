@@ -3564,5 +3564,37 @@
     "source": "Agenda Trento",
     "sourceUrl": "/Eventi/Ciclo-di-incontri-a-tema-salute-e-prevenzione3",
     "modified": "2026-09-29T11:48:20+02:00"
+  },
+  {
+    "id": "trento-5607",
+    "sourceId": 5607,
+    "title": "Sia Laudato San Francesco",
+    "category": "Musica",
+    "description": "A 800 anni dalla morte di San Francesco, il Gruppo vocale Laurence Feininger, propone un programma dedicato alla tradizione liturgica e devozionale francescana.",
+    "venue": "Castello del Buonconsiglio",
+    "address": "Castello del Buonconsiglio",
+    "city": "Trento",
+    "area": "Castello del Buonconsiglio",
+    "dateStart": "2026-10-30",
+    "dateEnd": "2026-10-30",
+    "timeStart": "20:30",
+    "timeEnd": "21:50",
+    "originalDateStart": "2026-10-30",
+    "originalDateEnd": "2026-10-30",
+    "ongoing": false,
+    "price": "Gratis",
+    "lat": 46.071482,
+    "lng": 11.126684,
+    "tags": [
+      "musica",
+      "gratis",
+      "evento-culturale",
+      "concerto"
+    ],
+    "image": null,
+    "url": "/Eventi/Sia-Laudato-San-Francesco",
+    "source": "Agenda Trento",
+    "sourceUrl": "/Eventi/Sia-Laudato-San-Francesco",
+    "modified": "2026-09-23T14:00:07+02:00"
   }
 ]
