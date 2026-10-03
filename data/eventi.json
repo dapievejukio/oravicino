@@ -3851,5 +3851,40 @@
     "source": "Agenda Trento",
     "sourceUrl": "/Eventi/L-equivoco",
     "modified": "2026-09-15T11:57:58+02:00"
+  },
+  {
+    "id": "trento-5692",
+    "sourceId": 5692,
+    "title": "Crepe nel mondo",
+    "category": "Festival",
+    "description": "Un Festival di geopolitica che vuole analizzare alcune crepe nel mondo",
+    "venue": "Dipartimento di Sociologia e ricerca sociale - Università degli studi di Trento",
+    "address": "Dipartimento di Sociologia e ricerca sociale - Università degli studi di Trento",
+    "city": "Trento",
+    "area": "Dipartimento di Sociologia e ricerca sociale - Università degli studi di Trento",
+    "dateStart": "2026-11-02",
+    "dateEnd": "2026-11-02",
+    "timeStart": "18:00",
+    "timeEnd": "20:00",
+    "originalDateStart": "2026-11-02",
+    "originalDateEnd": "2026-11-02",
+    "ongoing": false,
+    "price": "Gratis",
+    "lat": 46.06671,
+    "lng": 11.119623,
+    "tags": [
+      "festival",
+      "gratis",
+      "evento-politico",
+      "evento-sociale",
+      "economia",
+      "festival-ed-eventi",
+      "politica"
+    ],
+    "image": null,
+    "url": "/Eventi/Crepe-nel-mondo6",
+    "source": "Agenda Trento",
+    "sourceUrl": "/Eventi/Crepe-nel-mondo6",
+    "modified": "2026-09-29T10:32:46+02:00"
   }
 ]
