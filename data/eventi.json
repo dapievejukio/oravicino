@@ -1673,7 +1673,7 @@
   {
     "id": "trento-5757",
     "sourceId": 5757,
-    "title": "NICOLÒ DORIGATI. Nel segno del Barocco",
+    "title": "Nicolò Dorigati. Nel segno del Barocco",
     "category": "Cultura",
     "description": "Inaugurazione nuova mostra venerdì 16 ottobre 2026",
     "venue": "Museo diocesano tridentino",
@@ -1697,10 +1697,10 @@
       "arte"
     ],
     "image": null,
-    "url": "/Eventi/NICOLO-DORIGATI.-Nel-segno-del-Barocco2",
+    "url": "/Eventi/Nicolo-Dorigati.-Nel-segno-del-Barocco2",
     "source": "Agenda Trento",
-    "sourceUrl": "/Eventi/NICOLO-DORIGATI.-Nel-segno-del-Barocco2",
-    "modified": "2026-10-01T15:30:49+02:00"
+    "sourceUrl": "/Eventi/Nicolo-Dorigati.-Nel-segno-del-Barocco2",
+    "modified": "2026-10-05T14:40:58+02:00"
   },
   {
     "id": "trento-5682",
@@ -2459,6 +2459,41 @@
     "source": "Agenda Trento",
     "sourceUrl": "/Eventi/Mercatino-dei-Gaudenti-di-piazza-Dante10",
     "modified": "2026-01-21T12:25:47+01:00"
+  },
+  {
+    "id": "trento-5763",
+    "sourceId": 5763,
+    "title": "Giornata del riuso a Ravina",
+    "category": "Cultura",
+    "description": "Tornano le giornate del riuso alla Circoscrizione di Ravina – Romagnano nello spirito del Riduci, Riusa, Ricicla.",
+    "venue": "Circoscrizione Ravina - Romagnano",
+    "address": "Circoscrizione Ravina - Romagnano",
+    "city": "Trento",
+    "area": "Circoscrizione Ravina - Romagnano",
+    "dateStart": "2026-10-24",
+    "dateEnd": "2026-10-24",
+    "timeStart": "09:00",
+    "timeEnd": "17:00",
+    "originalDateStart": "2026-10-24",
+    "originalDateEnd": "2026-10-24",
+    "ongoing": false,
+    "price": "Gratis",
+    "lat": 46.03791,
+    "lng": 11.106513,
+    "tags": [
+      "cultura",
+      "gratis",
+      "evento-sociale",
+      "marcato-mercatino",
+      "giornata-informativa",
+      "ambiente",
+      "gestione-rifiuti"
+    ],
+    "image": null,
+    "url": "/Eventi/Giornata-del-riuso-a-Ravina7",
+    "source": "Agenda Trento",
+    "sourceUrl": "/Eventi/Giornata-del-riuso-a-Ravina7",
+    "modified": "2026-10-05T11:37:01+02:00"
   },
   {
     "id": "trento-4625",
