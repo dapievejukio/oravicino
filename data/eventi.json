@@ -282,7 +282,7 @@
   {
     "id": "trento-5652",
     "sourceId": 5652,
-    "title": "Il finto tedesco",
+    "title": "Presentazione libro Il finto tedesco",
     "category": "Cultura",
     "description": "Presentazione del libro di Hugo Tovazzi",
     "venue": "Biblioteca centrale di Trento",
@@ -308,10 +308,10 @@
       "tempo-libero"
     ],
     "image": null,
-    "url": "/Eventi/Il-finto-tedesco",
+    "url": "/Eventi/Presentazione-libro-Il-finto-tedesco",
     "source": "Agenda Trento",
-    "sourceUrl": "/Eventi/Il-finto-tedesco",
-    "modified": "2026-09-25T17:15:22+02:00"
+    "sourceUrl": "/Eventi/Presentazione-libro-Il-finto-tedesco",
+    "modified": "2026-10-06T08:51:24+02:00"
   },
   {
     "id": "trento-3539",
@@ -461,7 +461,7 @@
   {
     "id": "trento-5653",
     "sourceId": 5653,
-    "title": "La dimensione mistica secondo Raimon Panikkar",
+    "title": "Presentazione libro La dimensione mistica secondo Raimon Panikkar",
     "category": "Cultura",
     "description": "Presentazione del libro di Francesco Roat",
     "venue": "Biblioteca centrale di Trento",
@@ -487,10 +487,43 @@
       "tempo-libero"
     ],
     "image": null,
-    "url": "/Eventi/La-dimensione-mistica-secondo-Raimon-Panikkar",
+    "url": "/Eventi/Presentazione-libro-La-dimensione-mistica-secondo-Raimon-Panikkar",
     "source": "Agenda Trento",
-    "sourceUrl": "/Eventi/La-dimensione-mistica-secondo-Raimon-Panikkar",
-    "modified": "2026-09-25T17:22:38+02:00"
+    "sourceUrl": "/Eventi/Presentazione-libro-La-dimensione-mistica-secondo-Raimon-Panikkar",
+    "modified": "2026-10-06T08:52:09+02:00"
+  },
+  {
+    "id": "trento-5770",
+    "sourceId": 5770,
+    "title": "Inaugurazione della mostra \"Da piazza delle armi a giardino. Piazza Venezia e il monumento ad Alcide De Gasperi\"",
+    "category": "Cultura",
+    "description": "La Fondazione Museo storico del Trentino, in collaborazione con il Comune di Trento, invita all’inaugurazione della mostra \"Da piazza della armi a giardino: piazza Venezia e il monumento ad Alcide De Gasperi\".",
+    "venue": "Trento, Piazza Venezia",
+    "address": "Trento, Piazza Venezia",
+    "city": "Trento",
+    "area": "Trento, Piazza Venezia",
+    "dateStart": "2026-10-08",
+    "dateEnd": "2026-10-08",
+    "timeStart": "17:30",
+    "timeEnd": "19:00",
+    "originalDateStart": "2026-10-08",
+    "originalDateEnd": "2026-10-08",
+    "ongoing": false,
+    "price": "Gratis",
+    "lat": 46.070089,
+    "lng": 11.129142,
+    "tags": [
+      "cultura",
+      "gratis",
+      "evento-culturale",
+      "evento-sociale",
+      "storie"
+    ],
+    "image": null,
+    "url": "/Eventi/Inaugurazione-della-mostra-Da-piazza-delle-armi-a-giardino.-Piazza-Venezia-e-il-monumento-ad-Alcide-De-Gasperi",
+    "source": "Agenda Trento",
+    "sourceUrl": "/Eventi/Inaugurazione-della-mostra-Da-piazza-delle-armi-a-giardino.-Piazza-Venezia-e-il-monumento-ad-Alcide-De-Gasperi",
+    "modified": "2026-10-06T16:50:49+02:00"
   },
   {
     "id": "trento-5655",
@@ -661,6 +694,40 @@
     "source": "Agenda Trento",
     "sourceUrl": "/Eventi/Escape-Room-La-Lacrima-dell-ultimo-atto",
     "modified": "2026-09-29T16:45:19+02:00"
+  },
+  {
+    "id": "trento-5765",
+    "sourceId": 5765,
+    "title": "Torneo di Burraco e Castagnata",
+    "category": "Cultura",
+    "description": "Ultimo torneo di burraco dell'anno seguito da castagnata al Malgone di Candriai",
+    "venue": "Malgone di Candriai",
+    "address": "Malgone di Candriai",
+    "city": "Trento",
+    "area": "Malgone di Candriai",
+    "dateStart": "2026-10-10",
+    "dateEnd": "2026-10-10",
+    "timeStart": "14:30",
+    "timeEnd": "18:00",
+    "originalDateStart": "2026-10-10",
+    "originalDateEnd": "2026-10-10",
+    "ongoing": false,
+    "price": "Offerta consigliata a partire da: euro 8,00 per il torneo; euro 10,00 per il torneo e la castagnata; euro 5,00 per la castagnata.",
+    "lat": 46.062221,
+    "lng": 11.080205,
+    "tags": [
+      "cultura",
+      "evento-sociale",
+      "associazioni",
+      "beni-comuni",
+      "tempo-libero",
+      "volontariato"
+    ],
+    "image": null,
+    "url": "/Eventi/Torneo-di-Burraco-e-Castagnata",
+    "source": "Agenda Trento",
+    "sourceUrl": "/Eventi/Torneo-di-Burraco-e-Castagnata",
+    "modified": "2026-10-06T17:03:30+02:00"
   },
   {
     "id": "trento-5665",
@@ -2046,6 +2113,44 @@
     "modified": "2026-06-17T15:40:33+02:00"
   },
   {
+    "id": "trento-5766",
+    "sourceId": 5766,
+    "title": "Formazione per l'amministratore di sostegno",
+    "category": "Cultura",
+    "description": "Incontro di approfondimento - corso online L'iniziativa rientra nel Progetto per l'amministratore di sostegno in Trentino per promuovere la figura dell'amministratore di sostegno",
+    "venue": "Evento diffuso",
+    "address": "Evento diffuso",
+    "city": "Trento",
+    "area": "Evento diffuso",
+    "dateStart": "2026-10-21",
+    "dateEnd": "2026-10-21",
+    "timeStart": "17:30",
+    "timeEnd": "19:30",
+    "originalDateStart": "2026-10-21",
+    "originalDateEnd": "2026-10-21",
+    "ongoing": false,
+    "price": "Gratis",
+    "lat": 46.06741,
+    "lng": 11.121442,
+    "tags": [
+      "cultura",
+      "gratis",
+      "corso",
+      "webinar",
+      "evento-sociale",
+      "anziano",
+      "assistenza-agli-invalidi",
+      "assistenza-sociale",
+      "politica-sociale",
+      "volontariato"
+    ],
+    "image": null,
+    "url": "/Eventi/Formazione-per-l-amministratore-di-sostegno3",
+    "source": "Agenda Trento",
+    "sourceUrl": "/Eventi/Formazione-per-l-amministratore-di-sostegno3",
+    "modified": "2026-10-06T09:00:32+02:00"
+  },
+  {
     "id": "trento-5606",
     "sourceId": 5606,
     "title": "Viaggio nella memoria del Medioevo Latino",
@@ -2453,7 +2558,7 @@
   {
     "id": "trento-5686",
     "sourceId": 5686,
-    "title": "L'orso di Shakespeare",
+    "title": "Presentazione libro L'orso di Shakespeare",
     "category": "Cultura",
     "description": "Presentazione del libro di Steve Penner",
     "venue": "Biblioteca centrale di Trento",
@@ -2479,10 +2584,10 @@
       "tempo-libero"
     ],
     "image": null,
-    "url": "/Eventi/L-orso-di-Shakespeare",
+    "url": "/Eventi/Presentazione-libro-L-orso-di-Shakespeare",
     "source": "Agenda Trento",
-    "sourceUrl": "/Eventi/L-orso-di-Shakespeare",
-    "modified": "2026-09-29T09:12:47+02:00"
+    "sourceUrl": "/Eventi/Presentazione-libro-L-orso-di-Shakespeare",
+    "modified": "2026-10-06T08:53:00+02:00"
   },
   {
     "id": "trento-5553",
@@ -2691,6 +2796,40 @@
     "source": "Agenda Trento",
     "sourceUrl": "/Eventi/Curainsieme5",
     "modified": "2026-09-18T11:56:03+02:00"
+  },
+  {
+    "id": "trento-5767",
+    "sourceId": 5767,
+    "title": "Presentazione libro Terre promesse",
+    "category": "Cultura",
+    "description": "Presentazione del libro di Mauro Neri",
+    "venue": "Biblioteca centrale di Trento",
+    "address": "Biblioteca centrale di Trento",
+    "city": "Trento",
+    "area": "Biblioteca centrale di Trento",
+    "dateStart": "2026-10-27",
+    "dateEnd": "2026-10-27",
+    "timeStart": "17:30",
+    "timeEnd": "19:00",
+    "originalDateStart": "2026-10-27",
+    "originalDateEnd": "2026-10-27",
+    "ongoing": false,
+    "price": "Gratis",
+    "lat": 46.069796,
+    "lng": 11.120243,
+    "tags": [
+      "cultura",
+      "gratis",
+      "riunione-d-affari",
+      "biblioteca",
+      "storie",
+      "tempo-libero"
+    ],
+    "image": null,
+    "url": "/Eventi/Presentazione-libro-Terre-promesse",
+    "source": "Agenda Trento",
+    "sourceUrl": "/Eventi/Presentazione-libro-Terre-promesse",
+    "modified": "2026-10-06T08:57:30+02:00"
   },
   {
     "id": "trento-5689",
