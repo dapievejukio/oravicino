@@ -629,7 +629,7 @@
   {
     "id": "trento-5765",
     "sourceId": 5765,
-    "title": "Torneo di Burraco e Castagnata",
+    "title": "Torneo di Burraco e castagnata",
     "category": "Cultura",
     "description": "Ultimo torneo di burraco dell'anno seguito da castagnata al Malgone di Candriai",
     "venue": "Malgone di Candriai",
@@ -655,10 +655,10 @@
       "volontariato"
     ],
     "image": null,
-    "url": "/Eventi/Torneo-di-Burraco-e-Castagnata",
+    "url": "/Eventi/Torneo-di-Burraco-e-castagnata",
     "source": "Agenda Trento",
-    "sourceUrl": "/Eventi/Torneo-di-Burraco-e-Castagnata",
-    "modified": "2026-10-06T17:03:30+02:00"
+    "sourceUrl": "/Eventi/Torneo-di-Burraco-e-castagnata",
+    "modified": "2026-10-07T13:53:25+02:00"
   },
   {
     "id": "trento-5665",
@@ -1974,6 +1974,40 @@
     "source": "Agenda Trento",
     "sourceUrl": "/Eventi/Gruppo-di-conversazione-sul-cinema9",
     "modified": "2026-09-29T08:51:04+02:00"
+  },
+  {
+    "id": "trento-5774",
+    "sourceId": 5774,
+    "title": "Cancro in due atti",
+    "category": "Cultura",
+    "description": "Un incontro dedicato al rapporto tra ricerca sul cancro e intelligenza artificiale",
+    "venue": "MUSE - Museo delle Scienze",
+    "address": "MUSE - Museo delle Scienze",
+    "city": "Trento",
+    "area": "MUSE - Museo delle Scienze",
+    "dateStart": "2026-10-19",
+    "dateEnd": "2026-10-19",
+    "timeStart": "19:30",
+    "timeEnd": "23:30",
+    "originalDateStart": "2026-10-19",
+    "originalDateEnd": "2026-10-19",
+    "ongoing": false,
+    "price": "Gratis",
+    "lat": 46.062657,
+    "lng": 11.114725,
+    "tags": [
+      "cultura",
+      "gratis",
+      "evento-culturale",
+      "incontro-con-esperti",
+      "evento-sociale",
+      "innovazione"
+    ],
+    "image": null,
+    "url": "/Eventi/Cancro-in-due-atti",
+    "source": "Agenda Trento",
+    "sourceUrl": "/Eventi/Cancro-in-due-atti",
+    "modified": "2026-10-07T14:50:04+02:00"
   },
   {
     "id": "trento-5584",
