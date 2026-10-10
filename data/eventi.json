@@ -3756,5 +3756,38 @@
     "source": "Agenda Trento",
     "sourceUrl": "/Eventi/L-importanza-de-ciamarse-Onesto",
     "modified": "2026-09-15T12:03:41+02:00"
+  },
+  {
+    "id": "trento-5494",
+    "sourceId": 5494,
+    "title": "La gallinella rossa",
+    "category": "Cultura",
+    "description": "La scuola va a teatro. Stagione 2026/2027. XX edizione",
+    "venue": "Teatro San Marco",
+    "address": "Teatro San Marco",
+    "city": "Trento",
+    "area": "Teatro San Marco",
+    "dateStart": "2026-11-09",
+    "dateEnd": "2026-11-09",
+    "timeStart": "10:15",
+    "timeEnd": "11:15",
+    "originalDateStart": "2026-11-09",
+    "originalDateEnd": "2026-11-09",
+    "ongoing": false,
+    "price": "È possibile prenotare a partire dal 7 settembre 2026. Prenota . Il costo del biglietto d’entrata è di 6,00 €, a meno che non sia diversamente indicato sotto al titolo dello spettacolo. Gli insegnanti entrano gratuitamente.",
+    "lat": 46.063764,
+    "lng": 11.12873,
+    "tags": [
+      "cultura",
+      "evento-culturale",
+      "spettacolo-teatrale",
+      "istruzione",
+      "teatro"
+    ],
+    "image": null,
+    "url": "/Eventi/La-gallinella-rossa",
+    "source": "Agenda Trento",
+    "sourceUrl": "/Eventi/La-gallinella-rossa",
+    "modified": "2026-09-08T15:18:42+02:00"
   }
 ]
