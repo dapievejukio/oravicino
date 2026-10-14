@@ -1618,6 +1618,37 @@
     "modified": "2026-09-29T11:46:28+02:00"
   },
   {
+    "id": "trento-5824",
+    "sourceId": 5824,
+    "title": "Bambu di Roberto Castello",
+    "category": "Cultura",
+    "description": "Tre artiste africane, tre assoli di danza contemporanea per esplorare libertà, memoria e identità femminile, in un dialogo tra tradizioni, culture e nuovi linguaggi del corpo.",
+    "venue": "Teatro di Villazzano",
+    "address": "Teatro di Villazzano",
+    "city": "Trento",
+    "area": "Teatro di Villazzano",
+    "dateStart": "2026-10-22",
+    "dateEnd": "2026-10-22",
+    "timeStart": "20:30",
+    "timeEnd": "22:30",
+    "originalDateStart": "2026-10-22",
+    "originalDateEnd": "2026-10-22",
+    "ongoing": false,
+    "price": "Prenota ora i tuoi biglietti",
+    "lat": 46.049352,
+    "lng": 11.147218,
+    "tags": [
+      "cultura",
+      "evento-culturale",
+      "danza"
+    ],
+    "image": null,
+    "url": "/Eventi/Bambu-di-Roberto-Castello",
+    "source": "Agenda Trento",
+    "sourceUrl": "/Eventi/Bambu-di-Roberto-Castello",
+    "modified": "2026-10-14T16:42:26+02:00"
+  },
+  {
     "id": "trento-4555",
     "sourceId": 4555,
     "title": "Mercato contadino di piazza Dante",
