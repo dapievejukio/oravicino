@@ -1139,11 +1139,11 @@
     "city": "Trento",
     "area": "Malgone di Candriai",
     "dateStart": "2026-10-31",
-    "dateEnd": "2026-11-08",
+    "dateEnd": "2026-10-31",
     "timeStart": "17:00",
     "timeEnd": "19:00",
     "originalDateStart": "2026-10-31",
-    "originalDateEnd": "2026-11-08",
+    "originalDateEnd": "2026-10-31",
     "ongoing": false,
     "price": "Gratis",
     "lat": 46.062221,
@@ -1162,7 +1162,7 @@
     "url": "/Eventi/Halloween-a-1000-metri-il-Bondone-dei-bambini",
     "source": "Agenda Trento",
     "sourceUrl": "/Eventi/Halloween-a-1000-metri-il-Bondone-dei-bambini",
-    "modified": "2026-10-26T16:29:01+01:00"
+    "modified": "2026-10-27T14:31:25+01:00"
   },
   {
     "id": "trento-5557",
