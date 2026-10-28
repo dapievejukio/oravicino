@@ -2,6 +2,7 @@
 (() => {
   "use strict";
   const messages = {
+  "maintainer": {"it": "© 2026 OraVicino · A cura del gruppo Tuttiora", "en": "© 2026 OraVicino · Maintained by the Tuttiora group", "pt": "© 2026 OraVicino · Mantido pelo grupo Tuttiora"},
   "text0": {
     "it": "SCOPRI TRENTO INTORNO A TE",
     "en": "DISCOVER TRENTO AROUND YOU",
