@@ -1132,6 +1132,8 @@
 
   </style>
 
+<link rel="stylesheet" href="home-brand.css">
+<link rel="icon" href="oravicino-mark.svg" type="image/svg+xml">
 </head>
 
 
@@ -1148,26 +1150,16 @@
       class="logo"
       href="index.html"
     >
-      ora<span>vicino</span>
+      <img class="brand-mark" src="oravicino-mark.svg" alt=""><span class="brand-name">Ora<span>Vicino</span></span>
     </a>
 
 
     <div class="top-actions">
 
-      <button
-        class="city-button"
-        type="button"
-      >
-        📍 Trento
-      </button>
+      <span class="city-button">📍 Trento</span>
 
 
-      <button
-        class="language-button"
-        type="button"
-      >
-        IT ▾
-      </button>
+      <label class="language-picker"><span class="sr-only" data-i18n="language">Lingua</span><select id="homeLanguage" aria-label="Lingua"><option value="it">IT · Italiano</option><option value="en">EN · English</option><option value="pt">PT · Português</option></select></label>
 
     </div>
 
@@ -1188,24 +1180,24 @@
         <img
           class="home-hero-photo"
           src="images/trento-panorama.jpg"
-          alt="Panorama di Trento"
+          alt="Panorama di Trento" data-alt="panorama"
         >
 
 
         <div class="hero-content">
 
-          <span class="hero-eyebrow">
+          <span class="hero-eyebrow" data-i18n="text0">
             SCOPRI TRENTO INTORNO A TE
           </span>
 
 
           <h1>
-            Cosa facciamo
-            <em>adesso?</em>
+            <span data-i18n="text1">Scopri il mondo</span>
+            <em data-i18n="text2">più vicino a te.</em>
           </h1>
 
 
-          <p class="hero-description">
+          <p class="hero-description" data-i18n="text3">
 
             Mangiare, bere, uscire
             o semplicemente scoprire qualcosa
@@ -1227,12 +1219,12 @@
             <input
               id="homeSearchInput"
               type="text"
-              placeholder="Cosa cerchi a Trento?"
+              placeholder="Cosa cerchi a Trento?" aria-label="Cosa cerchi a Trento?" data-placeholder="search"
               autocomplete="off"
             >
 
 
-            <button type="submit">
+            <button type="submit" data-i18n="text4">
               CERCA
             </button>
 
@@ -1245,7 +1237,7 @@
 
           <span>📍</span>
 
-          <span>
+          <span data-i18n="text5">
             Trento · Italia
           </span>
 
@@ -1257,7 +1249,7 @@
           href="https://commons.wikimedia.org/wiki/File:Trento-panorama_from_Bindesi_2.jpg"
           target="_blank"
           rel="noopener noreferrer"
-        >
+         data-i18n="text6">
           Foto: Matteo Ianeselli · Wikimedia Commons
         </a>
 
@@ -1274,12 +1266,12 @@
 
           <div>
 
-            <span class="section-kicker">
+            <span class="section-kicker" data-i18n="text7">
               COSA CERCHI?
             </span>
 
 
-            <h2>
+            <h2 data-i18n="text8">
               Una città.
               Molti modi di viverla.
             </h2>
@@ -1287,7 +1279,7 @@
           </div>
 
 
-          <p>
+          <p data-i18n="text9">
 
             Parti da quello che vuoi fare.
             OraVicino ti porta direttamente
@@ -1320,17 +1312,17 @@
 
             <div class="category-content">
 
-              <span class="category-status">
+              <span class="category-status" data-i18n="text10">
                 DISPONIBILE
               </span>
 
 
-              <h3>
+              <h3 data-i18n="text11">
                 Mangiare
               </h3>
 
 
-              <p>
+              <p data-i18n="text12">
                 Ristoranti, trattorie,
                 pizza e cucina del territorio.
               </p>
@@ -1359,17 +1351,17 @@
 
             <div class="category-content">
 
-              <span class="category-status">
+              <span class="category-status" data-i18n="text10">
                 DISPONIBILE
               </span>
 
 
-              <h3>
+              <h3 data-i18n="text13">
                 Bere
               </h3>
 
 
-              <p>
+              <p data-i18n="text14">
                 Enoteche, birrerie,
                 cocktail e aperitivo.
               </p>
@@ -1398,17 +1390,17 @@
 
             <div class="category-content">
 
-              <span class="category-status">
+              <span class="category-status" data-i18n="text10">
                 DISPONIBILE
               </span>
 
 
-              <h3>
+              <h3 data-i18n="text15">
                 Stasera
               </h3>
 
 
-              <p>
+              <p data-i18n="text16">
                 Musica, eventi
                 e cose da fare oggi.
               </p>
@@ -1437,17 +1429,17 @@
 
             <div class="category-content">
 
-              <span class="category-status">
+              <span class="category-status" data-i18n="text10">
                 DISPONIBILE
               </span>
 
 
-              <h3>
+              <h3 data-i18n="text17">
                 Scoprire
               </h3>
 
 
-              <p>
+              <p data-i18n="text18">
                 Luoghi, passeggiate,
                 quartieri e piccole sorprese.
               </p>
@@ -1476,17 +1468,17 @@
 
             <div class="category-content">
 
-              <span class="category-status">
+              <span class="category-status" data-i18n="text10">
                 DISPONIBILE
               </span>
 
 
-              <h3>
+              <h3 data-i18n="text19">
                 Servizi
               </h3>
 
 
-              <p>
+              <p data-i18n="text20">
                 Quello che può servirti
                 quando sei già qui.
               </p>
@@ -1515,17 +1507,17 @@
 
             <div class="category-content">
 
-              <span class="category-status">
+              <span class="category-status" data-i18n="text10">
                 DISPONIBILE
               </span>
 
 
-              <h3>
+              <h3 data-i18n="text21">
                 Dormire
               </h3>
 
 
-              <p>
+              <p data-i18n="text22">
                 Hotel, appartamenti,
                 B&amp;B, ostelli e rifugi.
               </p>
@@ -1549,12 +1541,12 @@
 
           <div>
 
-            <span class="section-kicker">
+            <span class="section-kicker" data-i18n="text23">
               NON SAI COSA CERCARE?
             </span>
 
 
-            <h2>
+            <h2 data-i18n="text24">
               Dicci solo
               che momento stai vivendo.
             </h2>
@@ -1562,7 +1554,7 @@
           </div>
 
 
-          <p>
+          <p data-i18n="text25">
 
             A volte non serve conoscere
             il nome di un posto.
@@ -1590,11 +1582,11 @@
 
             <div>
 
-              <strong>
+              <strong data-i18n="text26">
                 Ho 2 ore
               </strong>
 
-              <span>
+              <span data-i18n="text27">
                 Qualcosa di vicino
                 senza perdere tempo.
               </span>
@@ -1618,11 +1610,11 @@
 
             <div>
 
-              <strong>
+              <strong data-i18n="text28">
                 Piove
               </strong>
 
-              <span>
+              <span data-i18n="text29">
                 Idee al coperto
                 per non fermarsi.
               </span>
@@ -1646,11 +1638,11 @@
 
             <div>
 
-              <strong>
+              <strong data-i18n="text30">
                 Con bambini
               </strong>
 
-              <span>
+              <span data-i18n="text31">
                 Posti più semplici
                 da vivere in famiglia.
               </span>
@@ -1674,11 +1666,11 @@
 
             <div>
 
-              <strong>
+              <strong data-i18n="text32">
                 Voglio spendere poco
               </strong>
 
-              <span>
+              <span data-i18n="text33">
                 Parti dal budget,
                 non dal nome.
               </span>
@@ -1702,11 +1694,11 @@
 
             <div>
 
-              <strong>
+              <strong data-i18n="text34">
                 Fuori dal percorso
               </strong>
 
-              <span>
+              <span data-i18n="text35">
                 Meno cartoline.
                 Più città.
               </span>
@@ -1730,11 +1722,11 @@
 
             <div>
 
-              <strong>
+              <strong data-i18n="text36">
                 Cosa faccio stasera?
               </strong>
 
-              <span>
+              <span data-i18n="text37">
                 Eventi e musica
                 in programma a Trento.
               </span>
@@ -1763,19 +1755,19 @@
 
         <div class="local-content">
 
-          <span class="section-kicker">
+          <span class="section-kicker" data-i18n="text38">
             FUORI DAL PERCORSO
           </span>
 
 
-          <h2>
+          <h2 data-i18n="text39">
             Trento,
             come la vive
             chi è qui.
           </h2>
 
 
-          <p>
+          <p data-i18n="text40">
 
             Non solo i posti più famosi.
             Quartieri, piccole attività,
@@ -1789,7 +1781,7 @@
             class="local-button"
             href="adesso.html?modo=fuori"
           >
-            Esci dal percorso
+            <span data-i18n="text41">Esci dal percorso</span>
             <span>→</span>
           </a>
 
@@ -1806,18 +1798,18 @@
 
         <div>
 
-          <span class="section-kicker">
+          <span class="section-kicker" data-i18n="text42">
             SEI UN'ATTIVITÀ?
           </span>
 
 
-          <h2>
+          <h2 data-i18n="text43">
             Sei già vicino.
             Fatti trovare.
           </h2>
 
 
-          <p>
+          <p data-i18n="text44">
 
             OraVicino nasce anche per
             ristoranti, bar e piccole attività locali.
@@ -1831,7 +1823,7 @@
         <a
           class="business-button"
           href="mailto:ciao@oravicino.com?subject=Rivendica%20la%20tua%20attivita"
-        >
+         data-i18n="text45">
           RIVENDICA LA TUA ATTIVITÀ →
         </a>
 
@@ -1852,11 +1844,11 @@
       class="footer-logo"
       href="index.html"
     >
-      ora<span>vicino</span>
+      <img class="brand-mark" src="oravicino-mark.svg" alt=""><span class="brand-name">Ora<span>Vicino</span></span>
     </a>
 
 
-    <span>
+    <span data-i18n="text46">
       Trento · Progetto pilota
     </span>
 
@@ -1929,7 +1921,8 @@
 
 
   <!-- ORAVICINO METEO -->
-  <script src="meteo.js"></script>
+  <script src="home-i18n.js"></script>
+  <script src="home-weather.js"></script>
 
 
 </body>
