@@ -784,7 +784,7 @@
     "sourceId": 5977,
     "title": "Halloween a 1000 metri: il Bondone dei bambini",
     "category": "Famiglie",
-    "description": "Passeggiata per le vie di Candriai a raccogliere dolcetti e merenda tutti insieme al Malgone",
+    "description": "Passeggiata per le vie di Candriai a raccogliere dolcetti e merenda tutti insieme al Malgone.",
     "venue": "Malgone di Candriai",
     "address": "Malgone di Candriai",
     "city": "Trento",
@@ -813,7 +813,7 @@
     "url": "/Eventi/Halloween-a-1000-metri-il-Bondone-dei-bambini",
     "source": "Agenda Trento",
     "sourceUrl": "/Eventi/Halloween-a-1000-metri-il-Bondone-dei-bambini",
-    "modified": "2026-10-27T14:31:25+01:00"
+    "modified": "2026-10-29T16:13:00+01:00"
   },
   {
     "id": "trento-5557",
@@ -1779,7 +1779,7 @@
     "sourceId": 5972,
     "title": "Lanternata di San Martino: il Bondone dei bambini",
     "category": "Famiglie",
-    "description": "Una suggestiva passeggiata nel bosco con le lanterne a Vaneze per festeggiare San Martino",
+    "description": "Una suggestiva passeggiata nel bosco con le lanterne a Vaneze per festeggiare San Martino.",
     "venue": "Chiesa della Madonna della Neve",
     "address": "Chiesa della Madonna della Neve",
     "city": "Trento",
@@ -1808,7 +1808,7 @@
     "url": "/Eventi/Lanternata-di-San-Martino-il-Bondone-dei-bambini",
     "source": "Agenda Trento",
     "sourceUrl": "/Eventi/Lanternata-di-San-Martino-il-Bondone-dei-bambini",
-    "modified": "2026-10-26T15:56:56+01:00"
+    "modified": "2026-10-29T16:13:28+01:00"
   },
   {
     "id": "trento-5494",
@@ -3329,6 +3329,45 @@
     "source": "Agenda Trento",
     "sourceUrl": "/Eventi/Le-parole-fanno-la-differenza",
     "modified": "2026-10-26T11:23:02+01:00"
+  },
+  {
+    "id": "trento-6014",
+    "sourceId": 6014,
+    "title": "Cineforum alla biblioteca \"Castello di carta\" a Montevaccino",
+    "category": "Famiglie",
+    "description": "Si proietta il film \"Mio fratello rincorre i dinosauri\".",
+    "venue": "Biblioteca di Montevaccino - Castello di Carta",
+    "address": "Biblioteca di Montevaccino - Castello di Carta",
+    "city": "Trento",
+    "area": "Biblioteca di Montevaccino - Castello di Carta",
+    "dateStart": "2026-11-20",
+    "dateEnd": "2026-11-20",
+    "timeStart": "20:30",
+    "timeEnd": "22:30",
+    "originalDateStart": "2026-11-20",
+    "originalDateEnd": "2026-11-20",
+    "ongoing": false,
+    "price": "Gratis",
+    "lat": 46.108072,
+    "lng": 11.14416,
+    "tags": [
+      "famiglie",
+      "gratis",
+      "evento-sociale",
+      "evento-culturale",
+      "associazioni",
+      "bambini",
+      "beni-comuni",
+      "cinema",
+      "partecipazione",
+      "tempo-libero",
+      "volontariato"
+    ],
+    "image": null,
+    "url": "/Eventi/Cineforum-alla-biblioteca-Castello-di-carta-a-Montevaccino",
+    "source": "Agenda Trento",
+    "sourceUrl": "/Eventi/Cineforum-alla-biblioteca-Castello-di-carta-a-Montevaccino",
+    "modified": "2026-10-29T16:06:31+01:00"
   },
   {
     "id": "trento-4559",
