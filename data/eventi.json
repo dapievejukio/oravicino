@@ -777,7 +777,7 @@
     "url": "/Eventi/Pane-e-Femminismi",
     "source": "Agenda Trento",
     "sourceUrl": "/Eventi/Pane-e-Femminismi",
-    "modified": "2026-10-29T11:59:44+01:00"
+    "modified": "2026-10-30T11:59:11+01:00"
   },
   {
     "id": "trento-4669",
@@ -3473,6 +3473,40 @@
     "modified": "2026-10-23T09:56:01+02:00"
   },
   {
+    "id": "trento-6008",
+    "sourceId": 6008,
+    "title": "Alessio Boni & Omar Pedrini in “Uomini si diventa\" - PARIDEE",
+    "category": "Cultura",
+    "description": "Un viaggio nella mente del femminicida per interrogare le radici culturali della violenza contro le donne.",
+    "venue": "Teatro di Villazzano",
+    "address": "Teatro di Villazzano",
+    "city": "Trento",
+    "area": "Teatro di Villazzano",
+    "dateStart": "2026-11-24",
+    "dateEnd": "2026-11-24",
+    "timeStart": "20:30",
+    "timeEnd": "22:30",
+    "originalDateStart": "2026-11-24",
+    "originalDateEnd": "2026-11-24",
+    "ongoing": false,
+    "price": "Gratis",
+    "lat": 46.050043,
+    "lng": 11.148735,
+    "tags": [
+      "cultura",
+      "gratis",
+      "evento-culturale",
+      "evento-sociale",
+      "istruzione",
+      "teatro"
+    ],
+    "image": null,
+    "url": "/Eventi/Alessio-Boni-Omar-Pedrini-in-Uomini-si-diventa-PARIDEE",
+    "source": "Agenda Trento",
+    "sourceUrl": "/Eventi/Alessio-Boni-Omar-Pedrini-in-Uomini-si-diventa-PARIDEE",
+    "modified": "2026-10-30T11:20:34+01:00"
+  },
+  {
     "id": "trento-4672",
     "sourceId": 4672,
     "title": "Mercato contadino di via Fabio Filzi",
@@ -3574,7 +3608,7 @@
     "url": "/Eventi/Non-sempre-si-vede.-Riconoscere-la-violenza-contro-le-donne-con-disabilita",
     "source": "Agenda Trento",
     "sourceUrl": "/Eventi/Non-sempre-si-vede.-Riconoscere-la-violenza-contro-le-donne-con-disabilita",
-    "modified": "2026-10-26T09:54:27+01:00"
+    "modified": "2026-10-30T09:39:55+01:00"
   },
   {
     "id": "trento-5970",
