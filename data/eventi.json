@@ -1557,6 +1557,42 @@
     "modified": "2026-10-20T15:15:35+02:00"
   },
   {
+    "id": "trento-6023",
+    "sourceId": 6023,
+    "title": "Conversazione d'autore: Monica Maggioni",
+    "category": "Cultura",
+    "description": "La giornalista, conduttrice televisiva e dirigente d'azienda italiana Monica Maggioni, Presidente della Rai dal 2015 al 2018, in una conversazione con la giornalista Fausta Slanzi",
+    "venue": "Sala della Filarmonica",
+    "address": "Sala della Filarmonica",
+    "city": "Trento",
+    "area": "Sala della Filarmonica",
+    "dateStart": "2026-11-11",
+    "dateEnd": "2026-11-11",
+    "timeStart": "20:30",
+    "timeEnd": "22:30",
+    "originalDateStart": "2026-11-11",
+    "originalDateEnd": "2026-11-11",
+    "ongoing": false,
+    "price": "Gratis",
+    "lat": 46.06668,
+    "lng": 11.120528,
+    "tags": [
+      "cultura",
+      "gratis",
+      "convegno-conferenza",
+      "accesso-all-informazione",
+      "imprese",
+      "istruzione",
+      "lavoro",
+      "politica"
+    ],
+    "image": null,
+    "url": "/Eventi/Conversazione-d-autore-Monica-Maggioni",
+    "source": "Agenda Trento",
+    "sourceUrl": "/Eventi/Conversazione-d-autore-Monica-Maggioni",
+    "modified": "2026-11-02T14:19:46+01:00"
+  },
+  {
     "id": "trento-3544",
     "sourceId": 3544,
     "title": "Mercato del giovedì",
@@ -3317,7 +3353,7 @@
   {
     "id": "trento-6008",
     "sourceId": 6008,
-    "title": "Alessio Boni & Omar Pedrini in “Uomini si diventa\" - PARIDEE",
+    "title": "Uomini si diventa ",
     "category": "Cultura",
     "description": "Un viaggio nella mente del femminicida per interrogare le radici culturali della violenza contro le donne.",
     "venue": "Teatro di Villazzano",
@@ -3340,13 +3376,14 @@
       "evento-culturale",
       "evento-sociale",
       "istruzione",
+      "politica-sociale",
       "teatro"
     ],
     "image": null,
-    "url": "/Eventi/Alessio-Boni-Omar-Pedrini-in-Uomini-si-diventa-PARIDEE",
+    "url": "/Eventi/Uomini-si-diventa",
     "source": "Agenda Trento",
-    "sourceUrl": "/Eventi/Alessio-Boni-Omar-Pedrini-in-Uomini-si-diventa-PARIDEE",
-    "modified": "2026-10-30T11:20:34+01:00"
+    "sourceUrl": "/Eventi/Uomini-si-diventa",
+    "modified": "2026-11-02T14:35:48+01:00"
   },
   {
     "id": "trento-4672",
