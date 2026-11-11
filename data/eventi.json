@@ -1462,7 +1462,7 @@
     "url": "/Eventi/Vai-via2",
     "source": "Agenda Trento",
     "sourceUrl": "/Eventi/Vai-via2",
-    "modified": "2026-11-09T15:02:14+01:00"
+    "modified": "2026-11-11T13:31:13+01:00"
   },
   {
     "id": "trento-6044",
@@ -2045,6 +2045,40 @@
     "modified": "2026-10-30T15:22:23+01:00"
   },
   {
+    "id": "trento-6194",
+    "sourceId": 6194,
+    "title": "Comunità energetiche",
+    "category": "Cultura",
+    "description": "Cosa sono le comunità energetiche rinnovabili?",
+    "venue": "07 - Sala Video Nichelatti - Povo",
+    "address": "07 - Sala Video Nichelatti - Povo",
+    "city": "Trento",
+    "area": "07 - Sala Video Nichelatti - Povo",
+    "dateStart": "2026-11-19",
+    "dateEnd": "2026-11-19",
+    "timeStart": "20:30",
+    "timeEnd": "22:00",
+    "originalDateStart": "2026-11-19",
+    "originalDateEnd": "2026-11-19",
+    "ongoing": false,
+    "price": "Gratis",
+    "lat": 46.064965,
+    "lng": 11.153505,
+    "tags": [
+      "cultura",
+      "gratis",
+      "evento-culturale",
+      "innovazione",
+      "politica-energetica",
+      "sviluppo-sostenibile"
+    ],
+    "image": null,
+    "url": "/Eventi/Comunita-energetiche",
+    "source": "Agenda Trento",
+    "sourceUrl": "/Eventi/Comunita-energetiche",
+    "modified": "2026-11-11T11:15:32+01:00"
+  },
+  {
     "id": "trento-5418",
     "sourceId": 5418,
     "title": "Un libro ben scelto ti salva da tutto, persino da te stesso",
@@ -2283,6 +2317,39 @@
     "source": "Agenda Trento",
     "sourceUrl": "/Eventi/Rompi-il-silenzio.-Amore-non-e-Violenza",
     "modified": "2026-10-26T11:21:52+01:00"
+  },
+  {
+    "id": "trento-6195",
+    "sourceId": 6195,
+    "title": "Il dono invisibile",
+    "category": "Cultura",
+    "description": "Storie di chi ha ricevuto un trapianto",
+    "venue": "07 - Sala Video Nichelatti - Povo",
+    "address": "07 - Sala Video Nichelatti - Povo",
+    "city": "Trento",
+    "area": "07 - Sala Video Nichelatti - Povo",
+    "dateStart": "2026-11-20",
+    "dateEnd": "2026-11-20",
+    "timeStart": "20:00",
+    "timeEnd": "22:00",
+    "originalDateStart": "2026-11-20",
+    "originalDateEnd": "2026-11-20",
+    "ongoing": false,
+    "price": "Gratis",
+    "lat": 46.064965,
+    "lng": 11.153505,
+    "tags": [
+      "cultura",
+      "gratis",
+      "evento-culturale",
+      "evento-sociale",
+      "storie"
+    ],
+    "image": null,
+    "url": "/Eventi/Il-dono-invisibile",
+    "source": "Agenda Trento",
+    "sourceUrl": "/Eventi/Il-dono-invisibile",
+    "modified": "2026-11-11T11:20:14+01:00"
   },
   {
     "id": "trento-6014",
