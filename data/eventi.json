@@ -778,6 +778,38 @@
     "modified": "2026-06-17T09:25:50+02:00"
   },
   {
+    "id": "trento-6197",
+    "sourceId": 6197,
+    "title": "Giornata mondiale del diabete",
+    "category": "Cultura",
+    "description": "Giornata di sensibilizzazione sulla malattia con misurazioni gratuite e riscontro medico",
+    "venue": "Sede della Fondazione Caritro",
+    "address": "Sede della Fondazione Caritro",
+    "city": "Trento",
+    "area": "Sede della Fondazione Caritro",
+    "dateStart": "2026-11-14",
+    "dateEnd": "2026-11-14",
+    "timeStart": "10:00",
+    "timeEnd": "16:00",
+    "originalDateStart": "2026-11-14",
+    "originalDateEnd": "2026-11-14",
+    "ongoing": false,
+    "price": "Gratis",
+    "lat": 46.066877,
+    "lng": 11.122617,
+    "tags": [
+      "cultura",
+      "gratis",
+      "evento-sociale",
+      "ricerca"
+    ],
+    "image": null,
+    "url": "/Eventi/Giornata-mondiale-del-diabete",
+    "source": "Agenda Trento",
+    "sourceUrl": "/Eventi/Giornata-mondiale-del-diabete",
+    "modified": "2026-11-12T09:44:18+01:00"
+  },
+  {
     "id": "trento-6135",
     "sourceId": 6135,
     "title": "Let's read another story",
@@ -1223,7 +1255,7 @@
     "sourceId": 5962,
     "title": "Giornata mondiale della prematurità",
     "category": "Cultura",
-    "description": "Fontana del Nettuno illuminata di viola per la Giornata mondiale della prematurità",
+    "description": "A causa di sopravvenuti problemi tecnici, non sarà possibile realizzare la prevista illuminazione in viola della Fontana del Nettuno. L’iniziativa sarà comunque promossa attraverso il ledwall dell’Ostello Giovane Europa.",
     "venue": "Evento diffuso",
     "address": "Evento diffuso",
     "city": "Trento",
@@ -1249,7 +1281,7 @@
     "url": "/Eventi/Giornata-mondiale-della-prematurita",
     "source": "Agenda Trento",
     "sourceUrl": "/Eventi/Giornata-mondiale-della-prematurita",
-    "modified": "2026-10-23T10:10:34+02:00"
+    "modified": "2026-11-12T10:49:21+01:00"
   },
   {
     "id": "trento-5786",
@@ -1393,7 +1425,7 @@
     "sourceId": 5844,
     "title": " Mese mondiale della sensibilizzazione sul cancro del polmone",
     "category": "Cultura",
-    "description": "Fontana del Nettuno illuminata di bianco per il Mese mondiale della sensibilizzazione sul cancro del polmone",
+    "description": "A causa di sopravvenuti problemi tecnici, non sarà possibile realizzare la prevista illuminazione in bianco della Fontana del Nettuno. L’iniziativa sarà comunque promossa attraverso il ledwall dell’Ostello Giovane Europa.",
     "venue": "Evento diffuso",
     "address": "Evento diffuso",
     "city": "Trento",
@@ -1419,7 +1451,7 @@
     "url": "/Eventi/Mese-mondiale-della-sensibilizzazione-sul-cancro-del-polmone",
     "source": "Agenda Trento",
     "sourceUrl": "/Eventi/Mese-mondiale-della-sensibilizzazione-sul-cancro-del-polmone",
-    "modified": "2026-10-20T14:34:56+02:00"
+    "modified": "2026-11-12T10:58:06+01:00"
   },
   {
     "id": "trento-6001",
@@ -1559,6 +1591,39 @@
     "modified": "2026-09-08T15:46:00+02:00"
   },
   {
+    "id": "trento-6199",
+    "sourceId": 6199,
+    "title": "Le parole non dette",
+    "category": "Cultura",
+    "description": "\"Storie di violenza e silenzi da interpretare\" : seminario",
+    "venue": "Sede della Fondazione Caritro",
+    "address": "Sede della Fondazione Caritro",
+    "city": "Trento",
+    "area": "Sede della Fondazione Caritro",
+    "dateStart": "2026-11-18",
+    "dateEnd": "2026-11-18",
+    "timeStart": "14:30",
+    "timeEnd": "17:30",
+    "originalDateStart": "2026-11-18",
+    "originalDateEnd": "2026-11-18",
+    "ongoing": false,
+    "price": "Gratis",
+    "lat": 46.066877,
+    "lng": 11.122617,
+    "tags": [
+      "cultura",
+      "gratis",
+      "evento-culturale",
+      "evento-sociale",
+      "tempo-libero"
+    ],
+    "image": null,
+    "url": "/Eventi/Le-parole-non-dette",
+    "source": "Agenda Trento",
+    "sourceUrl": "/Eventi/Le-parole-non-dette",
+    "modified": "2026-11-12T12:20:06+01:00"
+  },
+  {
     "id": "trento-5790",
     "sourceId": 5790,
     "title": "Corso avanzato per amministratore/trice di sostegno",
@@ -1595,6 +1660,39 @@
     "source": "Agenda Trento",
     "sourceUrl": "/Eventi/Corso-avanzato-per-amministratore-trice-di-sostegno2",
     "modified": "2026-10-08T13:44:20+02:00"
+  },
+  {
+    "id": "trento-6201",
+    "sourceId": 6201,
+    "title": "Come i lasciti solidali possono fare la differenza in Italia e nel mondo",
+    "category": "Famiglie",
+    "description": "Come opera Save the Children? Cos’è un lascito solidale? E in che modo può trasformarsi in un futuro concreto per bambini e bambine di tutto il mondo?",
+    "venue": "Palazzo Geremia",
+    "address": "Palazzo Geremia",
+    "city": "Trento",
+    "area": "Palazzo Geremia",
+    "dateStart": "2026-11-18",
+    "dateEnd": "2026-11-18",
+    "timeStart": "17:30",
+    "timeEnd": "19:00",
+    "originalDateStart": "2026-11-18",
+    "originalDateEnd": "2026-11-18",
+    "ongoing": false,
+    "price": "Gratis",
+    "lat": 46.069105,
+    "lng": 11.120949,
+    "tags": [
+      "famiglie",
+      "gratis",
+      "evento-sociale",
+      "bambini",
+      "politica-sociale"
+    ],
+    "image": null,
+    "url": "/Eventi/Come-i-lasciti-solidali-possono-fare-la-differenza-in-Italia-e-nel-mondo",
+    "source": "Agenda Trento",
+    "sourceUrl": "/Eventi/Come-i-lasciti-solidali-possono-fare-la-differenza-in-Italia-e-nel-mondo",
+    "modified": "2026-11-12T15:37:33+01:00"
   },
   {
     "id": "trento-6092",
@@ -1837,40 +1935,6 @@
     "modified": "2026-08-25T11:19:40+02:00"
   },
   {
-    "id": "trento-5909",
-    "sourceId": 5909,
-    "title": "Primo amore",
-    "category": "Cultura",
-    "description": "Proiezione film e dibattito",
-    "venue": "HarpoLab",
-    "address": "HarpoLab",
-    "city": "Trento",
-    "area": "HarpoLab",
-    "dateStart": "2026-11-20",
-    "dateEnd": "2026-11-20",
-    "timeStart": "17:00",
-    "timeEnd": "20:00",
-    "originalDateStart": "2026-11-20",
-    "originalDateEnd": "2026-11-20",
-    "ongoing": false,
-    "price": "Gratis",
-    "lat": 46.065854,
-    "lng": 11.124398,
-    "tags": [
-      "cultura",
-      "gratis",
-      "evento-culturale",
-      "evento-sociale",
-      "associazioni",
-      "partecipazione"
-    ],
-    "image": null,
-    "url": "/Eventi/Primo-amore",
-    "source": "Agenda Trento",
-    "sourceUrl": "/Eventi/Primo-amore",
-    "modified": "2026-10-26T10:02:24+01:00"
-  },
-  {
     "id": "trento-5901",
     "sourceId": 5901,
     "title": "Le parole fanno la differenza",
@@ -1903,6 +1967,40 @@
     "source": "Agenda Trento",
     "sourceUrl": "/Eventi/Le-parole-fanno-la-differenza",
     "modified": "2026-11-04T11:11:19+01:00"
+  },
+  {
+    "id": "trento-5909",
+    "sourceId": 5909,
+    "title": "Primo amore",
+    "category": "Cultura",
+    "description": "Proiezione film e dibattito",
+    "venue": "HarpoLab",
+    "address": "HarpoLab",
+    "city": "Trento",
+    "area": "HarpoLab",
+    "dateStart": "2026-11-20",
+    "dateEnd": "2026-11-20",
+    "timeStart": "17:00",
+    "timeEnd": "20:00",
+    "originalDateStart": "2026-11-20",
+    "originalDateEnd": "2026-11-20",
+    "ongoing": false,
+    "price": "Gratis",
+    "lat": 46.065854,
+    "lng": 11.124398,
+    "tags": [
+      "cultura",
+      "gratis",
+      "evento-culturale",
+      "evento-sociale",
+      "associazioni",
+      "partecipazione"
+    ],
+    "image": null,
+    "url": "/Eventi/Primo-amore",
+    "source": "Agenda Trento",
+    "sourceUrl": "/Eventi/Primo-amore",
+    "modified": "2026-11-12T15:49:36+01:00"
   },
   {
     "id": "trento-5989",
@@ -3980,7 +4078,7 @@
     "sourceId": 5307,
     "title": "Giornata internazionale di \"Cities for Life\" Città per la vita - Città contro la pena di morte",
     "category": "Cultura",
-    "description": "Il Comune di Trento aderisce alla Giornata internazionale \"Città per la vita - Città contro la pena di morte\", promossa dalla Comunità di Sant'Egidio",
+    "description": "A causa di sopravvenuti problemi tecnici, non sarà possibile realizzare la prevista illuminazione in azzurro della Fontana del Nettuno. L’iniziativa sarà comunque promossa attraverso il ledwall dell’Ostello Giovane Europa.",
     "venue": "Piazza Duomo",
     "address": "Piazza Duomo",
     "city": "Trento",
@@ -4008,7 +4106,7 @@
     "url": "/Eventi/Giornata-internazionale-di-Cities-for-Life-Citta-per-la-vita-Citta-contro-la-pena-di-morte2",
     "source": "Agenda Trento",
     "sourceUrl": "/Eventi/Giornata-internazionale-di-Cities-for-Life-Citta-per-la-vita-Citta-contro-la-pena-di-morte2",
-    "modified": "2026-07-30T11:59:44+02:00"
+    "modified": "2026-11-12T11:02:02+01:00"
   },
   {
     "id": "trento-5957",
@@ -4118,7 +4216,7 @@
     "sourceId": 5947,
     "title": "Giornata mondiale del dono - GivingTuesday",
     "category": "Cultura",
-    "description": "Fontana del Nettuno illuminata di rosso per la Giornata mondiale del dono",
+    "description": "A causa di sopravvenuti problemi tecnici, non sarà possibile realizzare la prevista illuminazione in rosso della Fontana del Nettuno. L’iniziativa sarà comunque promossa attraverso il ledwall dell’Ostello Giovane Europa.",
     "venue": "Evento diffuso",
     "address": "Evento diffuso",
     "city": "Trento",
@@ -4144,7 +4242,7 @@
     "url": "/Eventi/Giornata-mondiale-del-dono-GivingTuesday",
     "source": "Agenda Trento",
     "sourceUrl": "/Eventi/Giornata-mondiale-del-dono-GivingTuesday",
-    "modified": "2026-10-22T14:49:44+02:00"
+    "modified": "2026-11-12T11:05:16+01:00"
   },
   {
     "id": "trento-3760",
