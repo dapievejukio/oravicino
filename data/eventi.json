@@ -546,10 +546,10 @@
     "title": "Verso il Piano del Cibo del Comune di Trento",
     "category": "Cultura",
     "description": "Un Open Space Technology (OST) dedicato alla presentazione delle evidenze emerse nel percorso partecipativo volte ad individuare le priorità della Città di Trento nell'ambito delle politiche del cibo e i possibili campi di azione.",
-    "venue": "Centro storico",
-    "address": "Centro storico",
+    "venue": "Sede della Fondazione Caritro",
+    "address": "Sede della Fondazione Caritro",
     "city": "Trento",
-    "area": "Centro storico",
+    "area": "Sede della Fondazione Caritro",
     "dateStart": "2026-11-20",
     "dateEnd": "2026-11-21",
     "timeStart": "14:00",
@@ -558,8 +558,8 @@
     "originalDateEnd": "2026-11-21",
     "ongoing": false,
     "price": "Gratis",
-    "lat": 46.067352,
-    "lng": 11.121427,
+    "lat": 46.066967,
+    "lng": 11.122536,
     "tags": [
       "cultura",
       "gratis",
@@ -570,7 +570,7 @@
     "url": "/Eventi/Verso-il-Piano-del-Cibo-del-Comune-di-Trento",
     "source": "Agenda Trento",
     "sourceUrl": "/Eventi/Verso-il-Piano-del-Cibo-del-Comune-di-Trento",
-    "modified": "2026-11-18T13:39:43+01:00"
+    "modified": "2026-11-19T09:27:34+01:00"
   },
   {
     "id": "trento-6299",
@@ -1291,41 +1291,6 @@
     "modified": "2026-11-04T13:56:33+01:00"
   },
   {
-    "id": "trento-6099",
-    "sourceId": 6099,
-    "title": "Visita guidata alla collezione egizia del Castello del Buonconsiglio",
-    "category": "Cultura",
-    "description": "Ogni sabato al Castello del Buonconsiglio una visita guidata alla scoperta della collezione di antichità egizie del Museo, che si presenta in un allestimento innovativo e immersivo. Partecipa anche tu e lasciati affascinare dai reperti provenienti dalle “Terre del Nilo”, raccolti da collezionisti e appassionati nell’Ottocento.",
-    "venue": "Castello del Buonconsiglio",
-    "address": "Castello del Buonconsiglio",
-    "city": "Trento",
-    "area": "Castello del Buonconsiglio",
-    "dateStart": "2026-11-21",
-    "dateEnd": "2026-11-21",
-    "timeStart": "15:00",
-    "timeEnd": "16:30",
-    "originalDateStart": "2026-11-21",
-    "originalDateEnd": "2026-11-21",
-    "ongoing": false,
-    "price": "Tariffa: 3,00 € + biglietto di ingresso (gratuito per i possessori di Membership Card OLTRE e OLTRE Plus) Per info e prenotazioni contatta i Servizi educativi del Museo al numero 0461 492811 (da lunedì a venerdì, 9:00-13:00 e 14:00-16:00), oppure acquista la visita online.",
-    "lat": 46.071482,
-    "lng": 11.126684,
-    "tags": [
-      "cultura",
-      "evento-culturale",
-      "arte",
-      "patrimonio-culturale",
-      "storie",
-      "tempo-libero",
-      "turismo"
-    ],
-    "image": null,
-    "url": "/Eventi/Visita-guidata-alla-collezione-egizia-del-Castello-del-Buonconsiglio3",
-    "source": "Agenda Trento",
-    "sourceUrl": "/Eventi/Visita-guidata-alla-collezione-egizia-del-Castello-del-Buonconsiglio3",
-    "modified": "2026-11-04T16:11:28+01:00"
-  },
-  {
     "id": "trento-6184",
     "sourceId": 6184,
     "title": "Notte dei pupazzi - Amici di nanna al castello",
@@ -1358,6 +1323,41 @@
     "source": "Agenda Trento",
     "sourceUrl": "/Eventi/Notte-dei-pupazzi-Amici-di-nanna-al-castello",
     "modified": "2026-11-10T15:59:45+01:00"
+  },
+  {
+    "id": "trento-6099",
+    "sourceId": 6099,
+    "title": "Visita guidata alla collezione egizia del Castello del Buonconsiglio",
+    "category": "Cultura",
+    "description": "Ogni sabato al Castello del Buonconsiglio una visita guidata alla scoperta della collezione di antichità egizie del Museo , che si presenta in un allestimento innovativo e immersivo. Partecipa anche tu e lasciati affascinare dai reperti provenienti dalle “Terre del Nilo”, raccolti da collezionisti e appassionati nell’Ottocento.",
+    "venue": "Castello del Buonconsiglio",
+    "address": "Castello del Buonconsiglio",
+    "city": "Trento",
+    "area": "Castello del Buonconsiglio",
+    "dateStart": "2026-11-21",
+    "dateEnd": "2026-11-21",
+    "timeStart": "15:00",
+    "timeEnd": "16:30",
+    "originalDateStart": "2026-11-21",
+    "originalDateEnd": "2026-11-21",
+    "ongoing": false,
+    "price": "Tariffa: 3,00 € + biglietto di ingresso (gratuito per i possessori di Membership Card OLTRE e OLTRE Plus ) Per info e prenotazioni contatta i Servizi educativi del Museo al numero 0461 492811 (da lunedì a venerdì, 9:00-13:00 e 14:00-16:00), oppure acquista la visita online .",
+    "lat": 46.071482,
+    "lng": 11.126684,
+    "tags": [
+      "cultura",
+      "evento-culturale",
+      "arte",
+      "patrimonio-culturale",
+      "storie",
+      "tempo-libero",
+      "turismo"
+    ],
+    "image": null,
+    "url": "/Eventi/Visita-guidata-alla-collezione-egizia-del-Castello-del-Buonconsiglio3",
+    "source": "Agenda Trento",
+    "sourceUrl": "/Eventi/Visita-guidata-alla-collezione-egizia-del-Castello-del-Buonconsiglio3",
+    "modified": "2026-11-19T14:08:18+01:00"
   },
   {
     "id": "trento-6304",
@@ -3003,7 +3003,7 @@
     "sourceId": 6063,
     "title": "M.A.M. Longevity - Nutrizione e Longevità",
     "category": "Cultura",
-    "description": "Metabolismo - Armonia - Movimento Incontri gratuiti con la dott.ssa Maria Adele Martini (Biologa Nutrizionista specializzata in Biologia applicata alla Biomedicina e Personal Trainer) su temi dedicati alla sana alimentazione e a uno stile di vita consapevole per favorire il benessere e vivere più a lungo in salute.",
+    "description": "Metabolismo - Armonia - Movimento",
     "venue": "Sala conferenze Farmacie Comunali S.p.A.",
     "address": "Sala conferenze Farmacie Comunali S.p.A.",
     "city": "Trento",
@@ -3029,7 +3029,7 @@
     "url": "/Eventi/M.A.M.-Longevity-Nutrizione-e-Longevita2",
     "source": "Agenda Trento",
     "sourceUrl": "/Eventi/M.A.M.-Longevity-Nutrizione-e-Longevita2",
-    "modified": "2026-11-04T09:39:59+01:00"
+    "modified": "2026-11-19T14:12:56+01:00"
   },
   {
     "id": "trento-5968",
@@ -3432,7 +3432,7 @@
     "sourceId": 6100,
     "title": "Visita guidata alla collezione egizia del Castello del Buonconsiglio",
     "category": "Cultura",
-    "description": "Ogni sabato al Castello del Buonconsiglio una visita guidata alla scoperta della collezione di antichità egizie del Museo, che si presenta in un allestimento innovativo e immersivo. Partecipa anche tu e lasciati affascinare dai reperti provenienti dalle “Terre del Nilo”, raccolti da collezionisti e appassionati nell’Ottocento.",
+    "description": "Ogni sabato al Castello del Buonconsiglio una visita guidata alla scoperta della collezione di antichità egizie del Museo , che si presenta in un allestimento innovativo e immersivo. Partecipa anche tu e lasciati affascinare dai reperti provenienti dalle “Terre del Nilo”, raccolti da collezionisti e appassionati nell’Ottocento.",
     "venue": "Castello del Buonconsiglio",
     "address": "Castello del Buonconsiglio",
     "city": "Trento",
@@ -3444,7 +3444,7 @@
     "originalDateStart": "2026-11-28",
     "originalDateEnd": "2026-11-28",
     "ongoing": false,
-    "price": "Tariffa: 3,00 € + biglietto di ingresso (gratuito per i possessori di Membership Card OLTRE e OLTRE Plus) Per info e prenotazioni contatta i Servizi educativi del Museo al numero 0461 492811 (da lunedì a venerdì, 9:00-13:00 e 14:00-16:00), oppure acquista la visita online.",
+    "price": "Tariffa: 3,00 € + biglietto di ingresso (gratuito per i possessori di Membership Card OLTRE e OLTRE Plus ) Per info e prenotazioni contatta i Servizi educativi del Museo al numero 0461 492811 (da lunedì a venerdì, 9:00-13:00 e 14:00-16:00), oppure acquista la visita online .",
     "lat": 46.071482,
     "lng": 11.126684,
     "tags": [
@@ -3460,7 +3460,7 @@
     "url": "/Eventi/Visita-guidata-alla-collezione-egizia-del-Castello-del-Buonconsiglio4",
     "source": "Agenda Trento",
     "sourceUrl": "/Eventi/Visita-guidata-alla-collezione-egizia-del-Castello-del-Buonconsiglio4",
-    "modified": "2026-11-04T16:12:00+01:00"
+    "modified": "2026-11-19T14:17:56+01:00"
   },
   {
     "id": "trento-5610",
@@ -4755,7 +4755,7 @@
     "sourceId": 6102,
     "title": "Visita guidata alla collezione egizia del Castello del Buonconsiglio",
     "category": "Cultura",
-    "description": "Ogni sabato al Castello del Buonconsiglio una visita guidata alla scoperta della collezione di antichità egizie del Museo, che si presenta in un allestimento innovativo e immersivo. Partecipa anche tu e lasciati affascinare dai reperti provenienti dalle “Terre del Nilo”, raccolti da collezionisti e appassionati nell’Ottocento.",
+    "description": "Ogni sabato al Castello del Buonconsiglio una visita guidata alla scoperta della collezione di antichità egizie del Museo , che si presenta in un allestimento innovativo e immersivo. Partecipa anche tu e lasciati affascinare dai reperti provenienti dalle “Terre del Nilo”, raccolti da collezionisti e appassionati nell’Ottocento.",
     "venue": "Castello del Buonconsiglio",
     "address": "Castello del Buonconsiglio",
     "city": "Trento",
@@ -4767,7 +4767,7 @@
     "originalDateStart": "2026-12-05",
     "originalDateEnd": "2026-12-05",
     "ongoing": false,
-    "price": "Tariffa: 3,00 € + biglietto di ingresso (gratuito per i possessori di Membership Card OLTRE e OLTRE Plus) Per info e prenotazioni contatta i Servizi educativi del Museo al numero 0461 492811 (da lunedì a venerdì, 9:00-13:00 e 14:00-16:00), oppure acquista la visita online.",
+    "price": "Tariffa: 3,00 € + biglietto di ingresso (gratuito per i possessori di Membership Card OLTRE e OLTRE Plus ) Per info e prenotazioni contatta i Servizi educativi del Museo al numero 0461 492811 (da lunedì a venerdì, 9:00-13:00 e 14:00-16:00), oppure acquista la visita online .",
     "lat": 46.071482,
     "lng": 11.126684,
     "tags": [
@@ -4783,7 +4783,7 @@
     "url": "/Eventi/Visita-guidata-alla-collezione-egizia-del-Castello-del-Buonconsiglio5",
     "source": "Agenda Trento",
     "sourceUrl": "/Eventi/Visita-guidata-alla-collezione-egizia-del-Castello-del-Buonconsiglio5",
-    "modified": "2026-11-04T16:12:37+01:00"
+    "modified": "2026-11-19T14:20:09+01:00"
   },
   {
     "id": "trento-6158",
@@ -4848,38 +4848,6 @@
     "source": "Agenda Trento",
     "sourceUrl": "/Eventi/Il-libro-vagante-a-Natale",
     "modified": "2026-11-18T10:01:24+01:00"
-  },
-  {
-    "id": "trento-6373",
-    "sourceId": 6373,
-    "title": "Laboratori esperienziali e di movimento attivo: Kokedama e terrari di Natale",
-    "category": "Cultura",
-    "description": "Momenti esperienziali, inclusivi e di movimento attivo per creare perle di muschio natalizie e piccoli ecosistemi in vetro.",
-    "venue": "Piazza S. Maria Maggiore",
-    "address": "Piazza S. Maria Maggiore",
-    "city": "Trento",
-    "area": "Piazza S. Maria Maggiore",
-    "dateStart": "2026-12-05",
-    "dateEnd": "2026-12-05",
-    "timeStart": "15:30",
-    "timeEnd": "18:30",
-    "originalDateStart": "2026-12-05",
-    "originalDateEnd": "2026-12-05",
-    "ongoing": false,
-    "price": "Gratis",
-    "lat": 46.068597,
-    "lng": 11.119044,
-    "tags": [
-      "cultura",
-      "gratis",
-      "evento-sociale",
-      "natale"
-    ],
-    "image": null,
-    "url": "/Eventi/Laboratori-esperienziali-e-di-movimento-attivo-Kokedama-e-terrari-di-Natale2",
-    "source": "Agenda Trento",
-    "sourceUrl": "/Eventi/Laboratori-esperienziali-e-di-movimento-attivo-Kokedama-e-terrari-di-Natale2",
-    "modified": "2026-11-18T13:32:41+01:00"
   },
   {
     "id": "trento-6162",
@@ -4979,9 +4947,9 @@
   {
     "id": "trento-6270",
     "sourceId": 6270,
-    "title": "Il Pandottone AISM – Una buona e dolce azione per Natale",
+    "title": "Il Pandottone Aism – Una buona e dolce azione per Natale",
     "category": "Cultura",
-    "description": "Una speciale giornata di sensibilizzazione e raccolta fondi a cura dell'Associazione Italiana Sclerosi Multipla (AISM) per sostenere la ricerca scientifica.",
+    "description": "Una speciale giornata di sensibilizzazione e raccolta fondi a cura dell'Associazione Italiana Sclerosi Multipla (Aism) per sostenere la ricerca scientifica.",
     "venue": "Piazza S. Maria Maggiore",
     "address": "Piazza S. Maria Maggiore",
     "city": "Trento",
@@ -5003,10 +4971,10 @@
       "natale"
     ],
     "image": null,
-    "url": "/Eventi/Il-Pandottone-AISM-Una-buona-e-dolce-azione-per-Natale",
+    "url": "/Eventi/Il-Pandottone-Aism-Una-buona-e-dolce-azione-per-Natale",
     "source": "Agenda Trento",
-    "sourceUrl": "/Eventi/Il-Pandottone-AISM-Una-buona-e-dolce-azione-per-Natale",
-    "modified": "2026-11-17T16:14:53+01:00"
+    "sourceUrl": "/Eventi/Il-Pandottone-Aism-Una-buona-e-dolce-azione-per-Natale",
+    "modified": "2026-11-19T14:22:21+01:00"
   },
   {
     "id": "trento-6070",
@@ -6010,7 +5978,7 @@
     "sourceId": 6064,
     "title": "M.A.M. Longevity - Nutrizione e Longevità",
     "category": "Cultura",
-    "description": "Metabolismo - Armonia - Movimento Incontri gratuiti con la dott.ssa Maria Adele Martini (Biologa Nutrizionista specializzata in Biologia applicata alla Biomedicina e Personal Trainer) su temi dedicati alla sana alimentazione e a uno stile di vita consapevole per favorire il benessere e vivere più a lungo in salute.",
+    "description": "Metabolismo - Armonia - Movimento",
     "venue": "Sala conferenze Farmacie Comunali S.p.A.",
     "address": "Sala conferenze Farmacie Comunali S.p.A.",
     "city": "Trento",
@@ -6036,7 +6004,7 @@
     "url": "/Eventi/M.A.M.-Longevity-Nutrizione-e-Longevita3",
     "source": "Agenda Trento",
     "sourceUrl": "/Eventi/M.A.M.-Longevity-Nutrizione-e-Longevita3",
-    "modified": "2026-11-04T09:38:01+01:00"
+    "modified": "2026-11-19T14:14:19+01:00"
   },
   {
     "id": "trento-4563",
@@ -6341,7 +6309,7 @@
     "sourceId": 6103,
     "title": "Visita guidata alla collezione egizia del Castello del Buonconsiglio",
     "category": "Cultura",
-    "description": "Ogni sabato al Castello del Buonconsiglio una visita guidata alla scoperta della collezione di antichità egizie del Museo, che si presenta in un allestimento innovativo e immersivo. Partecipa anche tu e lasciati affascinare dai reperti provenienti dalle “Terre del Nilo”, raccolti da collezionisti e appassionati nell’Ottocento.",
+    "description": "Ogni sabato al Castello del Buonconsiglio una visita guidata alla scoperta della collezione di antichità egizie del Museo , che si presenta in un allestimento innovativo e immersivo. Partecipa anche tu e lasciati affascinare dai reperti provenienti dalle “Terre del Nilo”, raccolti da collezionisti e appassionati nell’Ottocento.",
     "venue": "Castello del Buonconsiglio",
     "address": "Castello del Buonconsiglio",
     "city": "Trento",
@@ -6353,7 +6321,7 @@
     "originalDateStart": "2026-12-12",
     "originalDateEnd": "2026-12-12",
     "ongoing": false,
-    "price": "Tariffa: 3,00 € + biglietto di ingresso (gratuito per i possessori di Membership Card OLTRE e OLTRE Plus) Per info e prenotazioni contatta i Servizi educativi del Museo al numero 0461 492811 (da lunedì a venerdì, 9:00-13:00 e 14:00-16:00), oppure acquista la visita online.",
+    "price": "Tariffa: 3,00 € + biglietto di ingresso (gratuito per i possessori di Membership Card OLTRE e OLTRE Plus ) Per info e prenotazioni contatta i Servizi educativi del Museo al numero 0461 492811 (da lunedì a venerdì, 9:00-13:00 e 14:00-16:00), oppure acquista la visita online .",
     "lat": 46.071482,
     "lng": 11.126684,
     "tags": [
@@ -6369,7 +6337,7 @@
     "url": "/Eventi/Visita-guidata-alla-collezione-egizia-del-Castello-del-Buonconsiglio6",
     "source": "Agenda Trento",
     "sourceUrl": "/Eventi/Visita-guidata-alla-collezione-egizia-del-Castello-del-Buonconsiglio6",
-    "modified": "2026-11-04T16:14:10+01:00"
+    "modified": "2026-11-19T14:24:33+01:00"
   },
   {
     "id": "trento-6381",
@@ -6532,45 +6500,14 @@
     "url": "/Eventi/Atomic-Tales",
     "source": "Agenda Trento",
     "sourceUrl": "/Eventi/Atomic-Tales",
-    "modified": "2026-11-06T09:18:43+01:00"
-  },
-  {
-    "id": "trento-6124",
-    "sourceId": 6124,
-    "title": "Atomic talent",
-    "category": "Cultura",
-    "description": "Teatro contemporaneo",
-    "venue": "Teatro di Villazzano",
-    "address": "Teatro di Villazzano",
-    "city": "Trento",
-    "area": "Teatro di Villazzano",
-    "dateStart": "2026-12-12",
-    "dateEnd": "2026-12-12",
-    "timeStart": "20:30",
-    "timeEnd": "20:31",
-    "originalDateStart": "2026-12-12",
-    "originalDateEnd": "2026-12-12",
-    "ongoing": false,
-    "price": "intero € 12,00 ridotto € 10,00",
-    "lat": 46.049352,
-    "lng": 11.147218,
-    "tags": [
-      "cultura",
-      "evento-culturale",
-      "teatro"
-    ],
-    "image": null,
-    "url": "/Eventi/Atomic-talent",
-    "source": "Agenda Trento",
-    "sourceUrl": "/Eventi/Atomic-talent",
-    "modified": "2026-11-16T11:42:11+01:00"
+    "modified": "2026-11-19T14:28:25+01:00"
   },
   {
     "id": "trento-6384",
     "sourceId": 6384,
-    "title": "Il Pandottone AISM – Una buona e dolce azione per Natale",
+    "title": "Il Pandottone Aism – Una buona e dolce azione per Natale",
     "category": "Cultura",
-    "description": "Una speciale giornata di sensibilizzazione e raccolta fondi a cura dell'Associazione Italiana Sclerosi Multipla (AISM) per sostenere la ricerca scientifica.",
+    "description": "Una speciale giornata di sensibilizzazione e raccolta fondi a cura dell'Associazione Italiana Sclerosi Multipla (Aism) per sostenere la ricerca scientifica.",
     "venue": "Piazza S. Maria Maggiore",
     "address": "Piazza S. Maria Maggiore",
     "city": "Trento",
@@ -6592,10 +6529,10 @@
       "natale"
     ],
     "image": null,
-    "url": "/Eventi/Il-Pandottone-AISM-Una-buona-e-dolce-azione-per-Natale2",
+    "url": "/Eventi/Il-Pandottone-Aism-Una-buona-e-dolce-azione-per-Natale2",
     "source": "Agenda Trento",
-    "sourceUrl": "/Eventi/Il-Pandottone-AISM-Una-buona-e-dolce-azione-per-Natale2",
-    "modified": "2026-11-18T11:27:29+01:00"
+    "sourceUrl": "/Eventi/Il-Pandottone-Aism-Una-buona-e-dolce-azione-per-Natale2",
+    "modified": "2026-11-19T14:29:48+01:00"
   },
   {
     "id": "trento-6072",
@@ -8078,7 +8015,7 @@
     "sourceId": 6349,
     "title": "Alchimisti Anonimi a Natale",
     "category": "Cultura",
-    "description": "Serata di divertimento, strategia e socialità in piazza a cura di Amalgama APS, per sfidarsi a tavola tra giochi di ruolo, di carte e da tavolo in un'atmosfera calda e festiva.",
+    "description": "Serata di divertimento, strategia e socialità in piazza a cura di Amalgama Aps, per sfidarsi a tavola tra giochi di ruolo, di carte e da tavolo in un'atmosfera calda e festiva.",
     "venue": "Piazza S. Maria Maggiore",
     "address": "Piazza S. Maria Maggiore",
     "city": "Trento",
@@ -8103,6 +8040,6 @@
     "url": "/Eventi/Alchimisti-Anonimi-a-Natale",
     "source": "Agenda Trento",
     "sourceUrl": "/Eventi/Alchimisti-Anonimi-a-Natale",
-    "modified": "2026-11-17T15:28:03+01:00"
+    "modified": "2026-11-19T14:31:41+01:00"
   }
 ]
